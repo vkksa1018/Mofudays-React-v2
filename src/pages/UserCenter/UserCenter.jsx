@@ -1,8 +1,5 @@
-import {useMemo, useRef, useState } from "react";
+import {useEffect, useMemo, useRef, useState } from "react";
 import * as bootstrap from "bootstrap";
-
-import { useEffect } from "react";
-
 
 // scss載入
 import "./userCenter.scss";
