@@ -59,7 +59,7 @@
 // function App() {
 
 import React from "react";
-// import Header from "./app/layouts/components/Header";
+import Header from "./app/layouts/components/Header/Header";
 
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
@@ -70,6 +70,7 @@ import Footer from "./app/layouts/components/Footer/Footer";
 function App() {
   return (
     <>
+      <Header />
       <Signup />
       <Login />
       <Member />

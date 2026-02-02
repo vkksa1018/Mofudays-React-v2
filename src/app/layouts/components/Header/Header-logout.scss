@@ -1,3 +1,6 @@
+@import "bootstrap/scss/functions";
+@import "../../../../styles/variables";
+
 .login-btn {
   padding: 8.5px 32px;
   background-color: $primary-500;
@@ -14,6 +17,7 @@
 }
 
 .login-btn:hover {
+  border: 2px solid $primary-500;
   background-color: $primary-500;
   color: white;
 }
