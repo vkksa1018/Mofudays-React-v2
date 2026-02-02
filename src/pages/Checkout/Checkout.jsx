@@ -1,5 +1,9 @@
 import "./Checkout.scss";
 
+import serviceStep1 from "./assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "./assets/images/subscribe/service_step_2.svg";
+import serviceStep3 from "./assets/images/subscribe/service_step_3.svg";
+
 function Checkout() {
   return (
     <>
@@ -16,7 +20,7 @@ function Checkout() {
             <div className="step d-flex align-items-center align-item-start-sm">
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_1.svg"
+                  src={serviceStep1}
                   alt="step_1"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -25,7 +29,7 @@ function Checkout() {
               <div className="step-line"></div>
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_2.svg"
+                  src={serviceStep2}
                   alt="step_2"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -34,7 +38,7 @@ function Checkout() {
               <div className="step-line disabled"></div>
               <div className="step-item disabled">
                 <img
-                  src="/assets/images/index/service_step_3.svg"
+                  src={serviceStep3}
                   alt="step_3"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -233,11 +237,11 @@ function Checkout() {
                           className="btn-check w-100"
                           name="payment-method"
                           id="credit-card"
-                          autocomplete="off"
+                          autoComplete="off"
                         />
                         <label
                           className="btn btn-primary btn-diet px-0 py-3 w-100"
-                          for="credit-card"
+                          htmlFor="credit-card"
                         >
                           信用卡
                         </label>
@@ -250,11 +254,11 @@ function Checkout() {
                           className="btn-check"
                           name="payment-method"
                           id="LINE-PAY"
-                          autocomplete="off"
+                          autoComplete="off"
                         />
                         <label
                           className="btn btn-primary btn-diet px-0 py-3 w-100"
-                          for="LINE-PAY"
+                          htmlFor="LINE-PAY"
                         >
                           LINE Pay
                         </label>
@@ -275,7 +279,7 @@ function Checkout() {
                         id="checkout-remark"
                         style={{ height: "100px" }}
                       ></textarea>
-                      <label for="checkout-remark ps-3">備註</label>
+                      <label htmlFor="checkout-remark ps-3">備註</label>
                     </div>
                   </div>
                 </div>

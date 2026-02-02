@@ -1,4 +1,5 @@
-// 元件文字
+@use "../../styles/tokens" as *;
+
 .pet-info {
   span {
     font-size: 0.875rem;

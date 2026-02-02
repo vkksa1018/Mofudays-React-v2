@@ -1,3 +1,5 @@
+@use "../../styles/tokens" as *;
+
 .total-bg {
   background-color: $primary-200;
   border-radius: 8px;

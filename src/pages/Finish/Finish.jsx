@@ -1,5 +1,11 @@
 import "./Finish.scss";
 
+import serviceStep1 from "./assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "./assets/images/subscribe/service_step_2.svg";
+import serviceStep3 from "./assets/images/subscribe/service_step_3.svg";
+import finishIllustration from "./assets/images/subscribe/Illustration-finish.png";
+import balloonIllustration from "./assets/images/subscribe/Illustration-balloon.png";
+
 function Finish() {
   return (
     <>
@@ -10,16 +16,14 @@ function Finish() {
             {/* 標題 */}
             <div className="title py-5-5-sm mb-32-sm">
               <h2 className="fw-bold mb-2 text-center-sm">訂閱成功！</h2>
-              <h2 className="ffw-bold mb-2 text-center-sm">
-                謝謝你成為毛日和的夥伴
-              </h2>
+              <h2 className="mb-2 text-center-sm">謝謝你成為毛日和的夥伴</h2>
             </div>
 
             {/* 進度條 */}
             <div className="step d-flex align-items-center align-item-start-sm">
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_1.svg"
+                  src={serviceStep1}
                   alt="step_1"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -28,7 +32,7 @@ function Finish() {
               <div className="step-line"></div>
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_2.svg"
+                  src={serviceStep2}
                   alt="step_2"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -37,7 +41,7 @@ function Finish() {
               <div className="step-line"></div>
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_3.svg"
+                  src={serviceStep3}
                   alt="step_3"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -201,12 +205,12 @@ function Finish() {
 
             {/* 定位圖 */}
             <img
-              src="/assets/images/subscribe/Illustration-finish.png"
+              src={finishIllustration}
               alt="完成訂閱插畫"
               className="finish-illustration d-none-sm"
             />
             <img
-              src="/assets/images/subscribe/Illustration-balloon.png"
+              src={balloonIllustration}
               alt="氣球插畫"
               className="balloon-illustration d-none-sm"
             />

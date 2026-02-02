@@ -1,5 +1,12 @@
 import "./Cart.scss";
 
+import serviceStep1 from "./assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "./assets/images/subscribe/service_step_2.svg";
+import serviceStep3 from "./assets/images/subscribe/service_step_3.svg";
+import productImg1 from "./assets/images/subscribe/product-img-01.png";
+import productImg2 from "./assets/images/subscribe/product-img-02.png";
+import productImg3 from "./assets/images/subscribe/product-img-03.png";
+
 function Cart() {
   return (
     <>
@@ -15,7 +22,7 @@ function Cart() {
             <div className="step d-flex align-items-center align-item-start-sm">
               <div className="step-item">
                 <img
-                  src="/assets/images/index/service_step_1.svg"
+                  src={serviceStep1}
                   alt="step_1"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -24,7 +31,7 @@ function Cart() {
               <div className="step-line disabled"></div>
               <div className="step-item disabled">
                 <img
-                  src="/assets/images/index/service_step_2.svg"
+                  src={serviceStep2}
                   alt="step_2"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -33,7 +40,7 @@ function Cart() {
               <div className="step-line disabled"></div>
               <div className="step-item disabled">
                 <img
-                  src="/assets/images/index/service_step_3.svg"
+                  src={serviceStep3}
                   alt="step_3"
                   className="mx-auto d-block mb-2 mb-10-sm"
                 />
@@ -65,7 +72,7 @@ function Cart() {
                   {/* 圖片+品項 */}
                   <div className="col-table-5 d-flex ps-4">
                     <img
-                      src="/assets/images/subscribe/product-img-01.png"
+                      src={productImg1}
                       alt="新手爸媽安心組"
                       className="img-fluid table-img rounded-4 me-5"
                     />
@@ -98,8 +105,8 @@ function Cart() {
                         type="text"
                         className="form-control text-center input-number px-0"
                         value="3"
-                        readonly
-                        tabindex="-1"
+                        readOnly
+                        tabIndex="-1"
                         aria-label="Example text with two button addons"
                       />
                       <button
@@ -131,7 +138,7 @@ function Cart() {
                   {/* 圖片+品項 */}
                   <div className="col-table-5 d-flex ps-4">
                     <img
-                      src="/assets/images/subscribe/product-img-02.png"
+                      src={productImg2}
                       alt="青春汪能量補給包"
                       className="img-fluid table-img rounded-4 me-5"
                     />
@@ -164,8 +171,8 @@ function Cart() {
                         type="text"
                         className="form-control text-center input-number px-0"
                         value="2"
-                        readonly
-                        tabindex="-1"
+                        readOnly
+                        tabIndex="-1"
                         aria-label="Example text with two button addons"
                       />
                       <button
@@ -195,7 +202,7 @@ function Cart() {
                   {/* 圖片+品項 */}
                   <div className="col-table-5 d-flex ps-4">
                     <img
-                      src="/assets/images/subscribe/product-img-03.png"
+                      src={productImg3}
                       alt="青春汪能量補給包"
                       className="img-fluid table-img rounded-4 me-5"
                     />
@@ -226,8 +233,8 @@ function Cart() {
                         type="text"
                         className="form-control text-center input-number px-0"
                         value="1"
-                        readonly
-                        tabindex="-1"
+                        readOnly
+                        tabIndex="-1"
                         aria-label="Example text with two button addons"
                       />
                       <button
@@ -261,7 +268,7 @@ function Cart() {
                       {/* 圖片+品項 */}
                       <div className="d-flex align-items-center">
                         <img
-                          src="/assets/images/subscribe/product-img-01.png"
+                          src={productImg1}
                           alt="新手爸媽安心組"
                           className="table-img rounded-4 me-5"
                         />
@@ -300,8 +307,8 @@ function Cart() {
                             type="text"
                             className="form-control text-center input-number fs-14-sm px-0"
                             value="3"
-                            readonly
-                            tabindex="-1"
+                            readOnly
+                            tabIndex="-1"
                             aria-label="Example text with two button addons"
                           />
                           <button
@@ -325,7 +332,7 @@ function Cart() {
                       {/* 圖片+品項 */}
                       <div className="d-flex mb-16-sm">
                         <img
-                          src="/assets/images/subscribe/product-img-02.png"
+                          src={productImg2}
                           alt="青春汪能量補給包"
                           className="img-fluid table-img rounded-4 me-5"
                         />
@@ -364,8 +371,8 @@ function Cart() {
                             type="text"
                             className="form-control text-center input-number fs-14-sm px-0"
                             value="2"
-                            readonly
-                            tabindex="-1"
+                            readOnly
+                            tabIndex="-1"
                             aria-label="Example text with two button addons"
                           />
                           <button
@@ -389,7 +396,7 @@ function Cart() {
                       {/* 圖片+品項 */}
                       <div className="d-flex mb-16-sm">
                         <img
-                          src="/assets/images/subscribe/product-img-03.png"
+                          src={productImg3}
                           alt="牛氣補補能量盒"
                           className="img-fluid table-img rounded-4 me-5"
                         />
@@ -428,8 +435,8 @@ function Cart() {
                             type="text"
                             className="form-control text-center input-number fs-14-sm px-0"
                             value="1"
-                            readonly
-                            tabindex="-1"
+                            readOnly
+                            tabIndex="-1"
                             aria-label="Example text with two button addons"
                           />
                           <button
@@ -461,11 +468,11 @@ function Cart() {
                       className="btn-check"
                       name="subscription-period"
                       id="one-month"
-                      autocomplete="off"
+                      autoComplete="off"
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
-                      for="one-month"
+                      htmlFor="one-month"
                       style={{ height: "48px" }}
                     >
                       1 個月
@@ -477,11 +484,11 @@ function Cart() {
                       className="btn-check"
                       name="subscription-period"
                       id="three-month"
-                      autocomplete="off"
+                      autoComplete="off"
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
-                      for="three-month"
+                      htmlFor="three-month"
                       style={{ height: "48px" }}
                     >
                       3 個月
@@ -493,11 +500,11 @@ function Cart() {
                       className="btn-check"
                       name="subscription-period"
                       id="six-month"
-                      autocomplete="off"
+                      autoComplete="off"
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
-                      for="six-month"
+                      htmlFor="six-month"
                       style={{ height: "48px" }}
                     >
                       6 個月
@@ -509,11 +516,11 @@ function Cart() {
                       className="btn-check"
                       name="subscription-period"
                       id="twelve-month"
-                      autocomplete="off"
+                      autoComplete="off"
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 w-25 w-100-sm"
-                      for="twelve-month"
+                      htmlFor="twelve-month"
                       style={{ height: "48px" }}
                     >
                       12 個月

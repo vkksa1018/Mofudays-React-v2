@@ -1,41 +1,56 @@
 import "./PetInfo.scss";
 
+import serviceStep1 from "./assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "./assets/images/subscribe/service_step_2.svg";
+import healthImg1 from "./assets/images/subscribe/image_btn_01.png";
+import healthImg2 from "./assets/images/subscribe/image_btn_02.png";
+import healthImg3 from "./assets/images/subscribe/image_btn_03.png";
+import playImg1 from "./assets/images/subscribe/image_btn_04.png";
+import playImg2 from "./assets/images/subscribe/image_btn_05.png";
+import playImg3 from "./assets/images/subscribe/image_btn_06.png";
+import dogIllustration from "./assets/images/subscribe/Illustration-dog.png";
+import feedIllustration from "./assets/images/subscribe/Illustration-feed.png";
+
+const ProgressBar = () => {
+  return (
+    <div className="d-flex justify-content-between align-items-center flex-col-sm px-110 px-24-sm mb-6 mb-24-sm">
+      {/* 標題 */}
+      <div className="title py-5-5-sm mb-32-sm">
+        <h2 className="fw-bold mb-2 text-center-sm">簡單 2 步驟</h2>
+        <p className="fw-bold text-center-sm">為毛孩送上每月一盒溫暖心意</p>
+      </div>
+
+      {/* 進度條 */}
+      <div className="step d-flex align-items-center align-item-start-sm">
+        <div className="step-item">
+          <img
+            src={serviceStep1}
+            alt="step_1"
+            className="mx-auto d-block mb-2 mb-10-sm"
+          />
+          <p className="text-center fs-14">填寫毛孩資料</p>
+        </div>
+        <div className="step-line disabled"></div>
+        <div className="step-item disabled">
+          <img
+            src={serviceStep2}
+            alt="step_2"
+            className="mx-auto d-block mb-2 mb-10-sm"
+          />
+          <p className="text-center fs-14">查看方案</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function PetInfo() {
   return (
     <>
       <main className="pet-info py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <div className="d-flex justify-content-between align-items-center flex-col-sm px-110 px-24-sm mb-6 mb-24-sm">
-            {/* 標題 */}
-            <div className="title py-5-5-sm mb-32-sm">
-              <h2 className="fw-bold mb-2 text-center-sm">簡單 2 步驟</h2>
-              <p className="fw-bold text-center-sm">
-                為毛孩送上每月一盒溫暖心意
-              </p>
-            </div>
-
-            {/* 進度條 */}
-            <div className="step d-flex align-items-center align-item-start-sm">
-              <div className="step-item">
-                <img
-                  src="/assets/images/index/service_step_1.svg"
-                  alt="step_1"
-                  className="mx-auto d-block mb-2 mb-10-sm"
-                />
-                <p className="text-center fs-14">填寫毛孩資料</p>
-              </div>
-              <div className="step-line disabled"></div>
-              <div className="step-item disabled">
-                <img
-                  src="/assets/images/index/service_step_2.svg"
-                  alt="step_2"
-                  className="mx-auto d-block mb-2 mb-10-sm"
-                />
-                <p className="text-center fs-14">查看方案</p>
-              </div>
-            </div>
-          </div>
+          <ProgressBar />
 
           {/* 毛孩資料卡片 */}
           <div className="card-bg py-9 px-12-sm mb-6 mb-0-sm">
@@ -489,7 +504,7 @@ function PetInfo() {
                           htmlFor="joint"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_01.png"
+                            src={healthImg1}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="關節保健"
                           />
@@ -512,7 +527,7 @@ function PetInfo() {
                           htmlFor="digestion"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_02.png"
+                            src={healthImg2}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="消化幫助"
                           />
@@ -535,7 +550,7 @@ function PetInfo() {
                           htmlFor="skin"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_03.png"
+                            src={healthImg3}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="美毛/皮膚問題"
                           />
@@ -573,7 +588,7 @@ function PetInfo() {
                           htmlFor="brainpower"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_04.png"
+                            src={playImg1}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="喜歡腦力激盪"
                           />
@@ -596,7 +611,7 @@ function PetInfo() {
                           htmlFor="bite"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_05.png"
+                            src={playImg2}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="愛玩愛咬"
                           />
@@ -619,7 +634,7 @@ function PetInfo() {
                           htmlFor="walk"
                         >
                           <img
-                            src="/assets/images/subscribe/image_btn_06.png"
+                            src={playImg3}
                             className="card-img-top rounded-4 radius-8-sm mb-2 mb-0-sm me-24-sm w-27-sm"
                             alt="愛出門走走"
                           />
@@ -636,12 +651,12 @@ function PetInfo() {
 
             {/* 定位圖 */}
             <img
-              src="/assets/images/subscribe/Illustration-dog.png"
+              src={dogIllustration}
               alt="狗狗插畫"
               className="dog-illustration d-none-sm"
             />
             <img
-              src="/assets/images/subscribe/Illustration-feed.png"
+              src={feedIllustration}
               alt="飼料插畫"
               className="feed-illustration d-none-sm"
             />
