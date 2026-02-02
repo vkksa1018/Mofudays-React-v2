@@ -2,7 +2,7 @@ import {useEffect, useMemo, useRef, useState } from "react";
 import * as bootstrap from "bootstrap";
 
 // scss載入
-import "./userCenter.scss";
+// import "./userCenter.scss";
 
 // 圖片載入
 import heroYellowPattern from "../../assets/images/userCenter/hero_yellow_pattern.png";
