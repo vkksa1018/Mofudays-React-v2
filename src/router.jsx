@@ -6,24 +6,23 @@ import AuthLayout from "./layout/AuthLayout";
 import AdminLayout from "./layout/AdminLayout";
 
 // FrontLayout
-import Home from "./pages/Home/Home";
-import FAQ from "./pages/FAQ/FAQ";
-import Blog from "./pages/Blog/Blog";
-// import BlogPost from "./pages/Blog/BlogPost";
-import Plan from "./pages/Plan/Plan";
-import Checkout from "./pages/Checkout/Checkout";
-import Finish from "./pages/Finish/Finish";
-import UserCenter from "./pages/UserCenter/UserCenter";
-import OrderList from "./pages/OrderList/OrderList";
+import Home from "./pages/FrontEndLayout/Home/Home";
+import FAQ from "./pages/FrontEndLayout/FAQ/FAQ";
+import Blog from "./pages/FrontEndLayout/Blog/Blog";
+import Plan from "./pages/FrontEndLayout/Plan/Plan";
+import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
+import Finish from "./pages/FrontEndLayout/Finish/Finish";
+import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
+import OrderList from "./pages/FrontEndLayout/OrderList/OrderList";
 // import Event from "./pages/Event/Event";
 
 // Auth pages（ 會員/後台共用同一個 Login 頁面 ）
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
+import Login from "./pages/FrontEndLayout/Login/Login";
+import Signup from "./pages/FrontEndLayout/Signup/Signup";
 
 // Admin pages（先做 placeholder 也行）
 // 先放 Dashboard 占位，後續再補其他後台頁
-import AdminDashboard from "./pages/Dashboard/Dashboard";
+import AdminDashboard from "./pages/BackEndLayout/Dashboard/Dashboard";
 
 // 404
 import NotFound from "./layout/NotFound";
@@ -57,7 +56,6 @@ export const router = createHashRouter([
       { index: true, element: <Home /> },
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
-      //   { path: "blog/:postId", element: <BlogPost /> },
       { path: "plan", element: <Plan /> },
 
       // 需要登入
