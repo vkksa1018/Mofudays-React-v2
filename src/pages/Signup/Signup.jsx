@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
+import { Link } from "react-router-dom";
 
 // 這三個對應你的 EJS include
 // import Header from "./app/layouts/components/Header/Header";
@@ -360,14 +361,14 @@ export default function Signup() {
 
                       {/* react-router 建議用 Link */}
                       {/* <Link to="/login" className="btn btn-form-signup fw-bold">立即登入</Link> */}
-                      <a href="login.html">
+                      <Link to="/login">
                         <button
                           type="button"
                           className="btn btn-form-signup fw-bold"
                         >
                           立即登入
                         </button>
-                      </a>
+                      </Link>
                     </div>
                   </form>
                 </div>

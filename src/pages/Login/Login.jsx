@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./Login.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
+import { Link } from "react-router-dom";
 
 //圖片載入
 import loginSlider01 from "../../assets/images/common/login-slider-01.png";
@@ -217,14 +218,14 @@ export default function Login() {
                     {/* <!-- 註冊連結 --> */}
                     <div className="d-flex justify-content-center align-items-center">
                       <p className="mb-0 me-2 text-brown-300">還不是會員嗎？</p>
-                      <a href="signup.html">
+                      <Link to="/signup">
                         <button
                           type="button"
                           className="btn btn-form-signup fw-bold"
                         >
                           馬上加入
                         </button>
-                      </a>
+                      </Link>
                     </div>
                   </form>
                 </div>

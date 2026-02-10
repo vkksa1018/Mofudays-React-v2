@@ -3,9 +3,11 @@ import "./Header-logout.scss";
 import { Menu, ShoppingCart, Newspaper, HeartPlus } from "lucide-react";
 import { useEffect } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { Link } from "react-router-dom";
 
+//匯入圖片
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
 
 export default function Header() {
@@ -133,9 +135,9 @@ function MobileOffcanvasMenu() {
 function MobileTopActions() {
   return (
     <div className="d-flex align-items-center gap-3 d-lg-none">
-      <a href="/cart" className="btn p-0 border-0" aria-label="Cart">
+      <Link to="/cart" className="btn p-0 border-0" aria-label="Cart">
         <ShoppingCart className="nav-icon" />
-      </a>
+      </Link>
 
       <button
         className="btn p-0 border-0"
@@ -353,11 +355,11 @@ function AuthMenu({ variant = "desktop" }) {
     // desktop 是 <li>，mobile 在 offcanvas 裡也可以用 <li> 以保持樣式一致
     return (
       <li className={`nav-item ${variant === "desktop" ? "me-5" : ""}`}>
-        <a href="login.html">
+        <Link to="/login">
           <button className="btn login-btn rounded-pill" type="button">
             登入會員
           </button>
-        </a>
+        </Link>
       </li>
     );
   }
@@ -392,9 +394,13 @@ function AuthMenu({ variant = "desktop" }) {
           </a>
         </li>
         <li>
-          <a className="dropdown-item" href="/member" onClick={handleClickLink}>
+          <Link
+            to="/member"
+            className="dropdown-item"
+            onClick={handleClickLink}
+          >
             個人資料修改
-          </a>
+          </Link>
         </li>
         <li>
           <a

@@ -134,7 +134,7 @@ header .navbar {
 }
 
 @media (min-width: 768px) {
-  .cart-btn {
+  header .cart-btn {
     display: flex;
     justify-content: center;
     width: 44px;
@@ -144,7 +144,7 @@ header .navbar {
     text-decoration: none;
   }
 
-  .cart-btn:hover {
+  header .cart-btn:hover {
     background-color: $primary-500;
   }
 }
