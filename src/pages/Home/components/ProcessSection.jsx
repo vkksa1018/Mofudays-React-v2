@@ -1,6 +1,6 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
-// --- 圖片引入 (請確保路徑與檔名正確) ---
+// --- 圖片引入  ---
 // 標題與裝飾
 import processHeadlineDesktop from "../../../assets/images/index/04_process_headline_desktop.svg";
 import processHeadlineMobile from "../../../assets/images/index/04_process_headline_mobile.svg";
@@ -24,6 +24,30 @@ import box02 from "../../../assets/images/index/box_02.png";
 import box03 from "../../../assets/images/index/box_03.png";
 
 const ProcessSection = () => {
+  const navigate = useNavigate();
+
+  // --- 1. 動態訂閱流程邏輯 ---
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+
+    // 取得 document.cookie 中的 mofuToken
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+    };
+
+    const mofuToken = getCookie("mofuToken");
+
+    if (mofuToken) {
+      // 有 Token：跳轉到 PetInfo
+      navigate("/pet-info");
+    } else {
+      // 無 Token：提示並跳轉到 Signup
+      alert("請先註冊並登入會員，即可開始為毛孩訂閱專屬驚喜盒！");
+      navigate("/signup");
+    }
+  };
   return (
     <section className="process position-relative">
       <div className="container py-9 py-md-11">
@@ -172,10 +196,9 @@ const ProcessSection = () => {
         <button
           type="button"
           className="btn rounded-pill btn-primary btn-subscribe px-160 d-flex mx-auto"
+          onClick={handleSubscribe}
         >
-          <a href="./pet-info.html" className="text-white text-decoration-none">
-            立即訂閱
-          </a>
+          立即訂閱
         </button>
 
         {/* --- 裝飾圖片 --- */}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const NewsModal = () => {
+const NewsModal = ({ onClose }) => {
   return (
     <div className="modal fade" id="newsModal" tabIndex="-1" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered modal-xl">
@@ -11,6 +11,7 @@ const NewsModal = () => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={onClose}
             ></button>
             <div>
               <h5 className="modal-title fw-bold">NEWS</h5>

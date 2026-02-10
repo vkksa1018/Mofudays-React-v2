@@ -1,231 +1,218 @@
+.faq-page-wrapper {
+  padding: 60px 0;
+  position: relative;
+}
+
 .faq {
   padding-left: 110px;
   padding-right: 110px;
-}
-/* ===== tab樣式 ===== */
-.faq-tabs {
-  list-style: none; /* 移除黑點 */
-  margin: 0; /* 移除 ul 預設 margin */
-  padding: 0; /* 移除 ul 預設 padding */
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -16px; /* 調整間距 */
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
-.faq-tabs .nav-link {
-  border: 1px solid $brown-300;
-  border-radius: 50px;
-  padding: 8px 32px;
-  color: $brown-300;
-  margin-left: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.faq-tabs .nav-link.active {
-  background-color: $primary-500;
-  color: white;
-  border-color: $primary-500;
-}
-
+/*  FAQ Header  */
 .faq-header {
-  align-items: flex-end; /* 整個 header 裡的左右項目靠底 */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px; // 增加間距，避免 Tab 與內容太擠
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
 }
 
 .faq-title {
+  h2 {
+    font-size: 36px;
+    color: $brown-500;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 18px;
+    color: $primary-500;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+/*  Tab 樣式  */
+.faq-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* 確保內部文字也靠底 */
+  gap: 16px;
+
+  .nav-link {
+    border: 1px solid $brown-300;
+    border-radius: 50px;
+    padding: 8px 32px;
+    color: $brown-300;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 700;
+    background: white;
+    white-space: nowrap;
+
+    &.active {
+      background-color: $primary-500;
+      color: white;
+      border-color: $primary-500;
+    }
+  }
 
   @media (max-width: 767px) {
-    h2,
-    p {
-      text-align: center;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 12px;
 
-    h2 {
-      font-size: 28px !important;
+    .nav-link {
+      padding: 10px 0;
+      text-align: center;
+      font-size: 14px;
     }
   }
 }
 
-/* ===== 標題樣式 ===== */
-.faq-title h2 {
-  color: $brown-500;
-  font-size: 36px;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: 3%;
-}
-
-.faq-title p {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: $primary-500;
-}
-
+/*  內容區域  */
 .faq-content {
   background-color: $primary-100;
   border-radius: 80px;
-  padding: 32px;
-  margin-top: 24px;
+  // 增加上方 padding，為突出的 bubble 留空間
+  padding: 60px 40px;
+
+  @media (max-width: 767px) {
+    border-radius: 40px;
+    padding: 40px 20px;
+  }
 }
 
-/* card主體切換 */
-.card-container.theme-tertiary {
-  --theme-color: #{$tertiary-500};
-}
-.card-container.theme-primary {
-  --theme-color: #{$primary-500};
+/*  卡片顏色系統  */
+.card-container {
+  &.theme-primary {
+    --theme-color: #{$primary-500};
+  }
+  &.theme-tertiary {
+    --theme-color: #{$tertiary-500};
+  }
 }
 
-/* ===== cards ===== */
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: stretch;
   gap: 32px;
-  max-width: 1076px;
-  margin: 0 auto;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
+/*  卡片內部元件  */
 .card-container {
   position: relative;
-  min-width: 337px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding-top: 28px;
 }
 
 .question-section {
-  background: var(--theme-color);
-  color: white;
-  padding-top: 32px;
-  padding-bottom: 32px;
-  border-radius: 56px 56px 0 0;
+  background-color: var(--theme-color);
+  border-radius: 40px 40px 0 0;
+  padding: 32px 20px;
   position: relative;
-  text-align: center;
-  margin-bottom: 0;
   height: 140px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  /* 確保 section 本身不裁剪溢出的內容，否則三角形會被切掉 */
+  overflow: visible;
+  z-index: 5;
 
-.question-section::after {
-  content: "";
-  position: absolute;
-  bottom: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-top: 15px solid var(--theme-color);
+  &::after {
+    content: "";
+    position: absolute;
+    /* 定位在 question-section 最底部 */
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    /* 製作三角形 */
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid var(--theme-color);
+    /* 確保三角形在 answer-section 之上 */
+    z-index: 10;
+    pointer-events: none;
+  }
 }
 
 .top-bubble {
   position: absolute;
-  top: -4px;
+  top: -24px;
   left: 50%;
   transform: translateX(-50%);
   background: white;
   color: var(--theme-color);
   padding: 16px 24px;
-  border: 3px solid var(--theme-color);
+  border: 2px solid var(--theme-color);
   border-radius: 50px;
   font-size: 16px;
   font-weight: 700;
-  line-height: 1.5;
-  z-index: 2;
-}
-
-.question-text {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: white;
+  // 確保 bubble 在最上層
+  z-index: 10;
+  white-space: nowrap;
 }
 
 .answer-section {
   background: white;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  border-radius: 0 0 56px 56px;
-  color: $brown-500;
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 400;
+  border-radius: 0 0 40px 40px;
+  padding: 40px 24px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: $brown-500;
+  font-size: 15px;
+  line-height: 1.6;
+  flex-grow: 1;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  /* 這裡的 z-index 要比 question-section 的尖角低 */
+  position: relative;
+  z-index: 1;
 }
 
-/* tab content 切換時active顯示 其他tab關閉顯示 */
-.faq-content .tab-content {
-  display: none;
-}
-.faq-content .tab-content.active {
-  display: block;
-}
-
-/* 狗腳印 */
+/* 裝飾腳印 */
 .dog-paw {
   position: absolute;
+  bottom: 20px;
+  right: 110px;
   width: 88px;
-  height: 123px;
-  top: 1201px; /* 距離下邊界 468px */
-  right: 160px; /* 距離右邊界 160px */
-}
-
-/* faq手機板 RWD */
-@media (max-width: 767px) {
-  /* 卡片區 */
-  .cards {
-    grid-template-columns: 1fr; /* 單欄垂直排列 */
-    gap: 24px;
-    padding: 0 16px; /* 左右保持 16px */
-  }
-
-  .card-container {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  /* Tab 區：2x2 排列置中 */
-  .faq-tabs {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 12px 16px !important; /* 行間距12px/列間距16px */
-    margin-left: 0 !important; /* 移除原本負 margin */
-    padding-left: 24px !important; /* 左側 padding */
-    padding-right: 24px !important; /* 右側 padding */
-  }
-
-  .faq-tabs .nav-link {
-    margin-left: 0 !important; /* 移除原本的 margin */
-    text-align: center !important;
-    // padding: 8px 8px !important; /* 進一步縮小 padding */
-    font-size: 14px !important;
-    box-sizing: border-box !important;
-    // min-width: 0 !important; /* 防止文字過長撐開 */
-    width: 100% !important; /* 強制佔滿整個 grid cell */
-    white-space: nowrap !important; /* 防止文字換行 */
-    overflow: hidden !important; /* 隱藏溢出文字 */
-    text-overflow: ellipsis !important; /* 溢出文字顯示省略號 */
-  }
-
-  /* 文字縮小一點避免跑版 */
-  .faq-tabs .nav-link {
-    padding: 6px 20px;
-    font-size: 14px;
+  pointer-events: none;
+  @media (max-width: 767px) {
+    right: 20px;
+    bottom: 10px;
   }
 }
