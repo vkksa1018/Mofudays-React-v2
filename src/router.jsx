@@ -13,6 +13,7 @@ import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
 import Finish from "./pages/FrontEndLayout/Finish/Finish";
 import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
 import OrderList from "./pages/FrontEndLayout/OrderList/OrderList";
+import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 // import Event from "./pages/Event/Event";
 
 // Auth pages（ 會員/後台共用同一個 Login 頁面 ）
@@ -29,13 +30,14 @@ import AdminDashboard from "./pages/BackEndLayout/Dashboard/Dashboard";
 import NotFound from "./layout/NotFound";
 
 // auth hooks
-// import { useAuth } from "../features/auth/hooks";
+import { useAuth } from "./features/auth/hooks";
 
 // 前台會員權限：沒登入 => 去 /login
 function RequireAuth({ children }) {
-  // const { isAuthed } = useAuth();  // 先不檢查 by James
-  // return isAuthed ? children : <Navigate to="/login" replace />;
-  return children; // 直接回傳內容，讓畫面顯示
+  const { isAuthed } = useAuth();
+
+  // 如果沒登入，強制跳轉到登入頁，並記錄原本想去的頁面 (replace: true)
+  return isAuthed ? children : <Navigate to="/login" replace />;
 }
 
 /** 後台管理員權限：沒登入或不是 admin -> 去 /admin/login */
@@ -61,6 +63,14 @@ export const router = createHashRouter([
       // { path: "blog/:postId", element: <BlogPost /> },
       { path: "plan", element: <Plan /> },
       {
+        path: "petinfo",
+        element: (
+          <RequireAuth>
+            <PetInfo />
+          </RequireAuth>
+        ),
+      },
+      {
         path: "checkout",
         element: (
           <RequireAuth>
@@ -79,20 +89,12 @@ export const router = createHashRouter([
 
       // 會員中心
       {
-        // path: "member",
-        // element: (
-        //   <RequireAuth>
-        //     <Member />
-        //   </RequireAuth>
-        // ),
-        // children: [
-        //   { index: true, element: <Navigate to="orders" replace /> },
-        //   { path: "orders", element: <OrderList /> },
-        //   { path: "activities", element: <Event /> },
-        // ],
-        //暫時移除權限檢查 by James
         path: "member",
-        element: <Member />,
+        element: (
+          <RequireAuth>
+            <Member />
+          </RequireAuth>
+        ),
         children: [
           { index: true, element: <Navigate to="orders" replace /> },
           { path: "orders", element: <OrderList /> },

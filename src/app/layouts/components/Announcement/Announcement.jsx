@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import AnnouncementCarousel from "./components/AnnouncementCarousel";
 import AnnouncementButton from "./components/AnnouncementButton";
+import { checkLoginStatus } from "../../../../api/userApi";
 import "./Announcement.scss";
 
 const Announcement = () => {
@@ -14,8 +15,14 @@ const Announcement = () => {
   //公告欄關閉功能狀態
   const [isVisible, setIsVisible] = useState(true);
 
-  //未來串接會員狀態的保留位
-  const isLoggedIn = false;
+  //串接會員狀態
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 初始化時檢查一次登入狀態
+    const status = checkLoginStatus();
+    setIsLoggedIn(status);
+  }, []); // 陣列為空代表只在組件載入時執行一次
 
   if (!isVisible) return null;
 

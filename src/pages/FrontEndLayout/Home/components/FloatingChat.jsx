@@ -1,6 +1,13 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const FloatingChat = ({ isOpen, toggleChat }) => {
+  const navigate = useNavigate();
+
+  const goToFaq = (e) => {
+    e.preventDefault(); // 防止 <a> 標籤預設跳轉
+    navigate("/faq");
+    toggleChat();
+  };
   return (
     <>
       <button
@@ -23,10 +30,17 @@ const FloatingChat = ({ isOpen, toggleChat }) => {
           <div className="title-large px-4">您好，我們能提供什麼幫助？</div>
         </div>
         <div className="chat-body mx-12">
-          <a href="#" className="chat-button mb-2 d-block text-decoration-none">
+          <a
+            href="/faq"
+            onClick={goToFaq}
+            className="chat-button mb-2 d-block text-decoration-none"
+          >
             常見問題 <i className="bi bi-file-earmark"></i>
           </a>
-          <a href="#" className="chat-button d-block text-decoration-none">
+          <a
+            href="mailto:service.maorihe@gmail.com"
+            className="chat-button d-block text-decoration-none"
+          >
             傳訊息給我們 <i className="bi bi-envelope"></i>
           </a>
           <div className="chat-footer mt-4 text-center p3">
