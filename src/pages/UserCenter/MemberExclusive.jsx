@@ -1,6 +1,7 @@
 import UnboxCarousel from "./UnboxCarousel";
 import ThemeEventCard from "./ThemeEventCard";
 
+
 export default function MemberExclusives() {
   return (
     <>
@@ -108,6 +109,7 @@ export default function MemberExclusives() {
           </p>
         </div>
 
+        {/* 主題活動 Card */}
         <div className="row row-cols-1 row-cols-md-3 g-4">
           <ThemeEventCard
             img="/assets/images/member/theme_event_1.png"
@@ -139,6 +141,7 @@ export default function MemberExclusives() {
             href="/member_activities_3.html"
           />
         </div>
+
       </section>
     </>
   );
