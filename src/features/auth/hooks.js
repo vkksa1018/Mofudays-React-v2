@@ -1,27 +1,43 @@
 import { useState, useEffect } from "react";
+import { getUserProfile } from "../../api/userApi"; // 引入你寫的 API
 
 export const useAuth = () => {
-  // 1. 初始化狀態：直接從 localStorage 讀取
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user"); // 假設隊友會把整包 user JSON 存進來
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [isLoading, setIsLoading] = useState(true); // 新增讀取狀態
 
-  // 2. 判斷是否已登入
-  const isAuthed = !!token;
-
-  // 3. 監聽狀態變化（選配，確保同步）
   useEffect(() => {
-    const currentToken = localStorage.getItem("accessToken");
-    if (currentToken !== token) {
-      setToken(currentToken);
-    }
-  }, []);
+    const initAuth = async () => {
+      // 1. 如果連 Token 都沒有，直接結束
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      // 2. 如果有 Token，呼叫 userApi 去確認這個人是誰
+      try {
+        const userData = await getUserProfile();
+        if (userData) {
+          setUser(userData);
+        } else {
+          // 如果拿不到資料，可能 Token 過期了，清除它
+          localStorage.removeItem("accessToken");
+          setToken(null);
+        }
+      } catch (error) {
+        console.error("驗證失敗", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initAuth();
+  }, [token]);
 
   return {
-    isAuthed,
-    user,
+    isAuthed: !!token, // 只要有 token 就視為已登入（前端初步判斷）
+    user, // 這裡會有從 API 拿到的詳細資料（包含 role）
+    isLoading,
     token,
   };
 };

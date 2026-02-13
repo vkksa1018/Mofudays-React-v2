@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 // 1. 先引入圖片
 import heroHeadlineDesktop from "../../../../assets/images/index/01_hero_headline_desktop.svg";
 import heroHeadlineMobile from "../../../../assets/images/index/01_hero_headline_mobile.svg";
@@ -6,8 +6,23 @@ import heroImg from "../../../../assets/images/index/hero_img.png";
 import bonePatten from "../../../../assets/images/index/hero_bone_patten.svg";
 import greenPatten from "../../../../assets/images/index/hero_green_patten.svg";
 import yellowPatten from "../../../../assets/images/index/hero_yellow_patten.svg";
+import { checkLoginStatus } from "../../../../api/userApi";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  // 統一處理「立即訂閱」的點擊事件
+  const handleSubscribeClick = () => {
+    const isAuthed = checkLoginStatus();
+
+    if (isAuthed) {
+      // 已登入：跳轉至寵物資訊頁 (依據你的需求)
+      navigate("/petinfo");
+    } else {
+      // 未登入：跳轉至註冊頁
+      navigate("/signup");
+    }
+  };
   return (
     <section className="hero position-relative">
       <div className="container py-11">
@@ -33,8 +48,8 @@ const HeroSection = () => {
             </h2>
             <a
               className="btn rounded-pill btn-primary btn-subscribe hero-button"
-              href="#"
               role="button"
+              onClick={handleSubscribeClick}
             >
               立即訂閱
             </a>
