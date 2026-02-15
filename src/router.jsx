@@ -37,7 +37,7 @@ import AdminDashboard from "./pages/BackEndLayout/Dashboard/Dashboard";
 import NotFound from "./layout/NotFound";
 
 //API測試頁
-import TestAuthPage from "./pages/Test/TestAuthPage";
+// import TestAuthPage from "./pages/Test/TestAuthPage";
 
 // auth hooks
 import { useAuth } from "./features/auth/hooks";
@@ -148,22 +148,35 @@ export const router = createHashRouter([
       // },
 
       // 會員中心
+      // {
+      //   path: "usercenter",
+      //   element: (
+      //     <RequireAuth>
+      //       <UserCenter />
+      //     </RequireAuth>
+      //   ),
+      //   children: [
+      //     // 預設進入會員中心時導向「會員資料」
+      //     { index: true, element: <Navigate to="profile" replace /> },
+
+      //     // 三個主要 Tab 頁面
+      //     { path: "profile", element: <UserProfile /> },
+      //     { path: "orders", element: <OrderLists /> },
+      //     { 
+      //       path: "events", 
+      //       element: <MemberExclusives />,
+      //     },
+      //   ],
+      // },
       {
         path: "usercenter",
-        element: (
-          <RequireAuth>
-            <UserCenter />
-          </RequireAuth>
-        ),
+        element: <UserCenter />,
         children: [
-          // 預設進入會員中心時導向「會員資料」
           { index: true, element: <Navigate to="profile" replace /> },
-
-          // 三個主要 Tab 頁面
           { path: "profile", element: <UserProfile /> },
           { path: "orders", element: <OrderLists /> },
-          { path: "activities", element: <MemberExclusives /> },
-        ],
+          { path: "events", element: <MemberExclusives /> },
+        ]
       },
 
       // 三個活動詳情頁
@@ -204,10 +217,10 @@ export const router = createHashRouter([
   },
 
   //API測試頁
-  {
-    path: "/test",
-    element: <TestAuthPage />,
-  },
+  // {
+  //   path: "/test",
+  //   element: <TestAuthPage />,
+  // },
 
   // 404
   { path: "*", element: <NotFound /> },
