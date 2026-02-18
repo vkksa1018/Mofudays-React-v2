@@ -12,6 +12,8 @@ import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
 import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
 import longinSlider03 from "../../../assets/images/common/login-slider-03.png";
 
+const API_BASE_URL = "http://localhost:3000";
+
 export default function Signup() {
   const navigate = useNavigate();
   const carouselRef = useRef(null);
@@ -57,17 +59,28 @@ export default function Signup() {
   const onSubmit = async (data) => {
     try {
       // 註冊 API
-      await axios.post("http://localhost:3000/register", data);
+      const { passwordConfirm, ...registerData } = data;
+      await axios.post(`${API_BASE_URL}/register`, registerData);
       console.log("註冊成功回傳資料：", res.data);
 
       alert("註冊成功！");
       navigate("/login");
     } catch (err) {
-      // 如果 Email 已被註冊，回傳錯誤訊息至欄位
-      if (err.response?.status === 409) {
-        setError("email", { type: "manual", message: "此 Email 已被註冊" });
+      // 修正 3: 增加錯誤詳細日誌，幫助調試
+      console.error("API 錯誤詳情：", err.response?.data);
+
+      const status = err.response?.status;
+
+      if (status === 400 || status === 409) {
+        // 檢查後端回傳訊息，如果是 Email 已存在則顯示錯誤
+        const errorMsg = err.response?.data;
+        if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
+          setError("email", { type: "manual", message: "此 Email 已被註冊" });
+        } else {
+          alert("註冊資料格式錯誤，請檢查欄位（密碼需 4 位以上）");
+        }
       } else {
-        alert("註冊失敗，請稍後再試");
+        alert("註冊失敗，伺服器連線異常");
       }
     }
   };

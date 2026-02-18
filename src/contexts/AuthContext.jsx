@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
   const [user, setUser] = useState(null);
 
   // 初始化：檢查本地是否有 token
@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (token) {
-      setIsLogin(true);
+      setIsAuthed(true);
       // 這裡可以選擇透過 API 獲取最新的使用者資料
     }
   }, []);
@@ -19,19 +19,19 @@ export const AuthProvider = ({ children }) => {
   const login = (userData, token, rememberMe) => {
     const storage = rememberMe ? localStorage : sessionStorage;
     storage.setItem("token", token);
-    setIsLogin(true);
+    setIsAuthed(true);
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
-    setIsLogin(false);
+    setIsAuthed(false);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isLogin, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthed, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
