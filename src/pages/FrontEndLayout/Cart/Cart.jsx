@@ -1,71 +1,14 @@
+import { Link } from "react-router-dom";
+
 import "./Cart.scss";
-import ProgressBar2 from "../Subscribe/ProgressBar2.jsx";
 
-import productImg1 from "../../assets/images/subscribe/product-img-01.png";
-import productImg2 from "../../assets/images/subscribe/product-img-02.png";
-import productImg3 from "../../assets/images/subscribe/product-img-03.png";
+import ProgressBar2 from "../Subscribe/ProgressBar2";
+import CartCardWeb from "../Subscribe/CartCardWeb";
+import CartCardPhone from "../Subscribe/CartCardPhone";
 
-const CartCard = ({ productImg, title, price, quantity, total }) => {
-  return (
-    <>
-      <div className="table-container-bg d-flex py-4 mb-2 d-none-sm">
-        {/* 圖片+品項 */}
-        <div className="col-table-5 d-flex ps-4">
-          <img
-            src={productImg}
-            alt={title}
-            className="img-fluid table-img rounded-4 me-5"
-          />
-          <div>
-            <p className="table-title fw-bold mb-4">{title}</p>
-            <p className="table-text fw-normal mb-1">零食 x 3</p>
-            <p className="table-text fw-normal mb-1">保健罐頭 x 2</p>
-            <p className="table-text fw-normal mb-1">互動小物 x 2</p>
-          </div>
-        </div>
-
-        {/* 單價 */}
-        <div className="col-table-1 d-flex justify-content-center align-items-center">
-          ${price}
-        </div>
-
-        {/* 數量 */}
-        <div className="col-table-2 d-flex align-items-center">
-          <div className="input-group px-4" style={{ height: "48px" }}>
-            <button className="btn btn-quantity px-4 py-3" type="button">
-              －
-            </button>
-            <input
-              type="text"
-              className="form-control text-center input-number px-0"
-              value={quantity}
-              readOnly
-              tabIndex="-1"
-              aria-label="Example text with two button addons"
-            />
-            <button className="btn btn-quantity px-4 py-3" type="button">
-              ＋
-            </button>
-          </div>
-        </div>
-
-        {/* 小計 */}
-        <div className="col-table-1 d-flex justify-content-center align-items-center">
-          ${total}
-        </div>
-
-        {/* 關閉 */}
-        <div className="col-table-1 d-flex justify-content-center align-items-center">
-          <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-          ></button>
-        </div>
-      </div>
-    </>
-  );
-};
+import productImg1 from "../../../assets/images/subscribe/product-img-01.png";
+import productImg2 from "../../../assets/images/subscribe/product-img-02.png";
+import productImg3 from "../../../assets/images/subscribe/product-img-03.png";
 
 function Cart() {
   return (
@@ -94,7 +37,7 @@ function Cart() {
 
                 {/* 表格網頁版 */}
                 {/* 第一列 */}
-                <CartCard
+                <CartCardWeb
                   productImg={productImg1}
                   title="新手爸媽安心組"
                   price="699"
@@ -103,7 +46,7 @@ function Cart() {
                 />
 
                 {/* 第二列 */}
-                <CartCard
+                <CartCardWeb
                   productImg={productImg2}
                   title="青春汪能量補給包"
                   price="699"
@@ -112,7 +55,7 @@ function Cart() {
                 />
 
                 {/* 第三列 */}
-                <CartCard
+                <CartCardWeb
                   productImg={productImg3}
                   title="牛氣補補能量盒"
                   price="699"
@@ -122,196 +65,31 @@ function Cart() {
 
                 {/* 表格手機版 */}
                 {/* 第一列 */}
-                <div className="px-16-sm">
-                  <div className="table-container-bg p-16-sm mb-8-sm d-none-min-sm">
-                    {/* 圖片+品項+關閉+單價 */}
-                    <div className="d-flex justify-content-between align-items-center mb-16-sm">
-                      {/* 圖片+品項 */}
-                      <div className="d-flex align-items-center">
-                        <img
-                          src={productImg1}
-                          alt="新手爸媽安心組"
-                          className="table-img rounded-4 me-5"
-                        />
-                        <div className="py-8-sm">
-                          <p className="table-title fw-bold mb-8-sm">
-                            新手爸媽安心組
-                          </p>
-                          <p className="table-text fw-normal">零食 x 3</p>
-                          <p className="table-text fw-normal">保健罐頭 x 2</p>
-                          <p className="table-text fw-normal">互動小物 x 2</p>
-                        </div>
-                      </div>
-
-                      {/* 關閉+單價 */}
-                      <div className="d-flex flex-column align-items-center">
-                        <button
-                          type="button"
-                          className="btn-close p-14-sm mb-24-sm"
-                          aria-label="Close"
-                        ></button>
-                        <p className="text-center text-brown-300 mb-3">$699</p>
-                      </div>
-                    </div>
-
-                    {/* 數量+小計 */}
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center w-40-sm">
-                        <div className="input-group">
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            －
-                          </button>
-                          <input
-                            type="text"
-                            className="form-control text-center input-number fs-14-sm px-0"
-                            value="3"
-                            readOnly
-                            tabIndex="-1"
-                            aria-label="Example text with two button addons"
-                          />
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            ＋
-                          </button>
-                        </div>
-                      </div>
-                      <p className="text-center">小計 $2,097</p>
-                    </div>
-                  </div>
-                </div>
+                <CartCardPhone
+                  productImg={productImg1}
+                  title="新手爸媽安心組"
+                  price="699"
+                  quantity="3"
+                  total="2,097"
+                />
 
                 {/* 第二列 */}
-                <div className="px-16-sm">
-                  <div className="table-container-bg p-16-sm mb-8-sm d-none-min-sm">
-                    {/* 圖片+品項+關閉+單價 */}
-                    <div className="d-flex justify-content-between align-items-center mb-16-sm">
-                      {/* 圖片+品項 */}
-                      <div className="d-flex mb-16-sm">
-                        <img
-                          src={productImg2}
-                          alt="青春汪能量補給包"
-                          className="img-fluid table-img rounded-4 me-5"
-                        />
-                        <div>
-                          <p className="table-title fw-bold mb-8-sm">
-                            青春汪能量補給包
-                          </p>
-                          <p className="table-text fw-normal">零食 x 3</p>
-                          <p className="table-text fw-normal">保健罐頭 x 2</p>
-                          <p className="table-text fw-normal">互動小物 x 2</p>
-                        </div>
-                      </div>
-
-                      {/* 關閉+單價 */}
-                      <div className="d-flex flex-column align-items-center">
-                        <button
-                          type="button"
-                          className="btn-close p-14-sm mb-24-sm"
-                          aria-label="Close"
-                        ></button>
-                        <p className="text-center text-brown-300 mb-3">$699</p>
-                      </div>
-                    </div>
-
-                    {/* 數量+小計 */}
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center w-40-sm">
-                        <div className="input-group">
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            －
-                          </button>
-                          <input
-                            type="text"
-                            className="form-control text-center input-number fs-14-sm px-0"
-                            value="2"
-                            readOnly
-                            tabIndex="-1"
-                            aria-label="Example text with two button addons"
-                          />
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            ＋
-                          </button>
-                        </div>
-                      </div>
-                      <p className="text-center">小計 $2,097</p>
-                    </div>
-                  </div>
-                </div>
+                <CartCardPhone
+                  productImg={productImg2}
+                  title="青春汪能量補給包"
+                  price="699"
+                  quantity="2"
+                  total="1,398"
+                />
 
                 {/* 第三列 */}
-                <div className="px-16-sm">
-                  <div className="table-container-bg p-16-sm mb-8-sm d-none-min-sm">
-                    {/* 圖片+品項+關閉+單價 */}
-                    <div className="d-flex justify-content-between align-items-center mb-16-sm">
-                      {/* 圖片+品項 */}
-                      <div className="d-flex mb-16-sm">
-                        <img
-                          src={productImg3}
-                          alt="牛氣補補能量盒"
-                          className="img-fluid table-img rounded-4 me-5"
-                        />
-                        <div>
-                          <p className="table-title fw-bold mb-8-sm">
-                            牛氣補補能量盒
-                          </p>
-                          <p className="table-text fw-normal">零食 x 3</p>
-                          <p className="table-text fw-normal">保健罐頭 x 2</p>
-                          <p className="table-text fw-normal">互動小物 x 2</p>
-                        </div>
-                      </div>
-
-                      {/* 關閉+單價 */}
-                      <div className="d-flex flex-column align-items-center">
-                        <button
-                          type="button"
-                          className="btn-close p-14-sm mb-24-sm"
-                          aria-label="Close"
-                        ></button>
-                        <p className="text-center text-brown-300 mb-3">$699</p>
-                      </div>
-                    </div>
-
-                    {/* 數量+小計 */}
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center w-40-sm">
-                        <div className="input-group">
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            －
-                          </button>
-                          <input
-                            type="text"
-                            className="form-control text-center input-number fs-14-sm px-0"
-                            value="1"
-                            readOnly
-                            tabIndex="-1"
-                            aria-label="Example text with two button addons"
-                          />
-                          <button
-                            className="btn btn-quantity px-3 py-3"
-                            type="button"
-                          >
-                            ＋
-                          </button>
-                        </div>
-                      </div>
-                      <p className="text-center">小計 $2,097</p>
-                    </div>
-                  </div>
-                </div>
+                <CartCardPhone
+                  productImg={productImg3}
+                  title="牛氣補補能量盒"
+                  price="699"
+                  quantity="1"
+                  total="699"
+                />
               </div>
 
               {/* 選擇訂閱期數 */}
@@ -420,22 +198,22 @@ function Cart() {
             <div className="text-center d-none-min-sm px-5-5-sm">
               <div className="row">
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./pet-info.html"
+                    to="/pet-info"
                     role="button"
                   >
                     繼續訂閱
-                  </a>
+                  </Link>
                 </div>
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./checkout.html"
+                    to="/checkout"
                     role="button"
                   >
                     確認結帳
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -444,20 +222,20 @@ function Cart() {
 
         {/* 儲存按鈕網頁版 */}
         <div className="text-center d-none-sm">
-          <a
+          <Link
             className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
-            href="./pet-info.html"
+            to="/pet-info"
             role="button"
           >
             繼續訂閱
-          </a>
-          <a
+          </Link>
+          <Link
             className="btn btn-primary rounded-pill btn-active fs-18-sm fw-medium-sm ls-10-sm px-40"
-            href="./checkout.html"
+            to="/checkout"
             role="button"
           >
             確認結帳
-          </a>
+          </Link>
         </div>
       </main>
     </>

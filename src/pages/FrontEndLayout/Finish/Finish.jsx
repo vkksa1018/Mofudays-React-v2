@@ -1,8 +1,10 @@
-import "./Finish.scss";
-import ProgressBar2 from "../Subscribe/ProgressBar2.jsx";
+import { Link } from "react-router-dom";
 
-import finishIllustration from "../../assets/images/subscribe/Illustration-finish.png";
-import balloonIllustration from "../../assets/images/subscribe/Illustration-balloon.png";
+import "./Finish.scss";
+import ProgressBar2 from "../Subscribe/ProgressBar2";
+
+import finishIllustration from "../../../assets/images/subscribe/Illustration-finish.png";
+import balloonIllustration from "../../../assets/images/subscribe/Illustration-balloon.png";
 
 function Finish() {
   return (
@@ -181,22 +183,22 @@ function Finish() {
             <div className="text-center d-none-min-sm px-5-5-sm">
               <div className="row">
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./index.html"
+                    to="/"
                     role="button"
                   >
                     返回首頁
-                  </a>
+                  </Link>
                 </div>
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./pet-info.html"
+                    to="/petinfo"
                     role="button"
                   >
                     新增訂單
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -204,20 +206,20 @@ function Finish() {
 
           {/* 儲存按鈕 */}
           <div className="text-center d-none-sm">
-            <a
+            <Link
               className="btn btn-primary rounded-pill btn-active-white px-40 me-6"
-              href="./index.html"
+              to="/"
               role="button"
             >
               返回首頁
-            </a>
-            <a
+            </Link>
+            <Link
               className="btn btn-primary rounded-pill btn-active px-40"
-              href="./pet-info.html"
+              to="/petinfo"
               role="button"
             >
               新增訂單
-            </a>
+            </Link>
           </div>
         </div>
       </main>

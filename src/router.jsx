@@ -5,27 +5,15 @@ import FrontLayout from "./layout/FrontEndLayout";
 import AuthLayout from "./layout/AuthLayout";
 import AdminLayout from "./layout/AdminLayout";
 // FrontLayout
-<<<<<<< HEAD
-import Home from "../pages/FrontEndLayout/Home/Home";
-import FAQ from "../pages/FrontEndLayout/FAQ/FAQ";
-import Blog from "../pages/FrontEndLayout/Blog/Blog";
-import BlogPost from "../pages/FrontEndLayout/Blog/BlogPost";
-import PetInfo from "../pages/FrontEndLayout/PetInfo/PetInfo.jsx";
-import Plan from "../pages/FrontEndLayout/Plan/Plan";
-import Checkout from "../pages/FrontEndLayout/Checkout/Checkout";
-import Finish from "../pages/FrontEndLayout/Finish/Finish";
-import UserCenter from "../pages/FrontEndLayout/UserCenter/UserCenter";
-import OrderList from "../pages/FrontEndLayout/OrderList/OrderList";
-import Event from "../pages/FrontEndLayout/Event/Event";
-=======
 import Home from "./pages/FrontEndLayout/Home/Home";
 import FAQ from "./pages/FrontEndLayout/FAQ/FAQ";
 import Blog from "./pages/FrontEndLayout/Blog/Blog";
+import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 import Plan from "./pages/FrontEndLayout/Plan/Plan";
+import Cart from "./pages/FrontEndLayout/Cart/Cart";
 import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
 import Finish from "./pages/FrontEndLayout/Finish/Finish";
 import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
-import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 
 //usercenter
 import UserProfile from "./pages/FrontEndLayout/UserCenter/UserProfile";
@@ -34,7 +22,6 @@ import MemberExclusives from "./pages/FrontEndLayout/UserCenter/MemberExclusive"
 import MemberEvent1 from "./pages/FrontEndLayout/UserCenter/MemberEvent1";
 import MemberEvent2 from "./pages/FrontEndLayout/UserCenter/MemberEvent2";
 import MemberEvent3 from "./pages/FrontEndLayout/UserCenter/MemberEvent3";
->>>>>>> dev
 
 // Auth pages（ 會員/後台共用同一個 Login 頁面 ）
 import Login from "./pages/FrontEndLayout/Login/Login";
@@ -78,37 +65,36 @@ export const router = createHashRouter([
       { index: true, element: <Home /> },
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
-<<<<<<< HEAD
-      { path: "blog/:postId", element: <BlogPost /> },
       { path: "petinfo", element: <PetInfo /> },
-=======
-      // { path: "blog/:postId", element: <BlogPost /> },
->>>>>>> dev
       { path: "plan", element: <Plan /> },
-      {
-        path: "petinfo",
-        element: (
-          <RequireAuth>
-            <PetInfo />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "checkout",
-        element: (
-          <RequireAuth>
-            <Checkout />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "finish",
-        element: (
-          <RequireAuth>
-            <Finish />
-          </RequireAuth>
-        ),
-      },
+      { path: "cart", element: <Cart /> },
+      { path: "checkout", element: <Checkout /> },
+      { path: "finish", element: <Finish /> },
+      // { path: "blog/:postId", element: <BlogPost /> },
+      // {
+      //   path: "cart",
+      //   element: (
+      //     <RequireAuth>
+      //       <Cart />
+      //     </RequireAuth>
+      //   ),
+      // },
+      // {
+      //   path: "checkout",
+      //   element: (
+      //     <RequireAuth>
+      //       <Checkout />
+      //     </RequireAuth>
+      //   ),
+      // },
+      // {
+      //   path: "finish",
+      //   element: (
+      //     <RequireAuth>
+      //       <Finish />
+      //     </RequireAuth>
+      //   ),
+      // },
 
       // 會員中心
       {

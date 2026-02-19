@@ -1,30 +1,33 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
 import "./Plan.scss";
 import ProgressBar1 from "../Subscribe/ProgressBar1.jsx";
 import PlanCard from "../Subscribe/PlanCard.jsx";
 
-import planImg from "../../assets/images/subscribe/plan-img.png";
+import planImg from "../../../assets/images/subscribe/plan-img.png";
 
 const ActiveButtonPhone = () => {
   return (
     <div className="text-center d-none-min-sm px-5-5-sm">
       <div className="row">
         <div className="col-6-sm">
-          <a
+          <Link
             className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-            href="./pet-info.html"
+            to="/pet-info"
             role="button"
           >
             回上一頁
-          </a>
+          </Link>
         </div>
         <div className="col-6-sm">
-          <a
+          <Link
             className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-            href="./checkout.html"
+            to="/cart"
             role="button"
           >
             儲存並繼續
-          </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -33,25 +36,26 @@ const ActiveButtonPhone = () => {
 const ActiveButtonWeb = () => {
   return (
     <div className="text-center d-none-sm">
-      <a
+      <Link
         className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
-        href="./pet-info.html"
+        to="/pet-info"
         role="button"
       >
         回上一頁
-      </a>
-      <a
+      </Link>
+      <Link
         className="btn btn-primary rounded-pill btn-active fs-18-sm fw-medium-sm ls-10-sm px-40"
-        href="./checkout.html"
+        to="/cart"
         role="button"
       >
         儲存並繼續
-      </a>
+      </Link>
     </div>
   );
 };
 
 function Plan() {
+  const [selectedPlan, setSelectedPlan] = useState(null);
   return (
     <>
       <main className="plan py-11 pt-80-sm pb-0-sm">
@@ -95,6 +99,8 @@ function Plan() {
                     title="新手爸媽安心組"
                     price="699"
                     text="給第一次養毛孩的你，一份剛剛好的照顧"
+                    selectedPlan={selectedPlan}
+                    onSelect={setSelectedPlan}
                   ></PlanCard>
                   {/* 方案二 */}
                   <PlanCard
@@ -102,6 +108,8 @@ function Plan() {
                     title="活力成長探索組"
                     price="899"
                     text="給每天都充滿活力、喜歡探索世界的孩子"
+                    selectedPlan={selectedPlan}
+                    onSelect={setSelectedPlan}
                   ></PlanCard>
                   {/* 方案三 */}
                   <PlanCard
@@ -109,6 +117,8 @@ function Plan() {
                     title="豪華寵愛禮物組"
                     price="1,299"
                     text="每月為毛孩送上一份滿滿儀式感的大禮"
+                    selectedPlan={selectedPlan}
+                    onSelect={setSelectedPlan}
                   ></PlanCard>
                 </div>
               </div>

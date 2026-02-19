@@ -1,6 +1,6 @@
-import serviceStep1 from "../../assets/images/subscribe/service_step_1.svg";
-import serviceStep2 from "../../assets/images/subscribe/service_step_2.svg";
-import serviceStep3 from "../../assets/images/subscribe/service_step_3.svg";
+import serviceStep1 from "../../../assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "../../../assets/images/subscribe/service_step_2.svg";
+import serviceStep3 from "../../../assets/images/subscribe/service_step_3.svg";
 
 const ProgressBar2 = () => {
   return (

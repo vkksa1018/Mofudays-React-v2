@@ -1,5 +1,5 @@
-import serviceStep1 from "../../assets/images/subscribe/service_step_1.svg";
-import serviceStep2 from "../../assets/images/subscribe/service_step_2.svg";
+import serviceStep1 from "../../../assets/images/subscribe/service_step_1.svg";
+import serviceStep2 from "../../../assets/images/subscribe/service_step_2.svg";
 
 const ProgressBar1 = () => {
   return (

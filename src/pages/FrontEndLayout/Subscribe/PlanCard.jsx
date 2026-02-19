@@ -1,4 +1,5 @@
-const PlanCard = ({ id, title, price, text }) => {
+const PlanCard = ({ id, title, price, text, selectedPlan, onSelect }) => {
+  const isSelected = selectedPlan === id;
   return (
     <div
       className="btn-group w-100-sm"
@@ -11,6 +12,7 @@ const PlanCard = ({ id, title, price, text }) => {
         name="recommended-plan"
         id={id}
         autoComplete="off"
+        onChange={() => onSelect(id)}
       />
       <label
         className="btn btn-primary btn-plan fw-normal py-5 px-5"
@@ -24,23 +26,28 @@ const PlanCard = ({ id, title, price, text }) => {
           </p>
         </div>
         <p className="text-brown-300 text-start mb-4">{text}</p>
-        <div className="d-flex justify-content-between align-item-center mb-4">
-          <div className="include-line my-10-5"></div>
-          <p className="fs-14 text-brown-100 mx-5">包含</p>
-          <div className="include-line my-10-5"></div>
-        </div>
-        <div className="d-flex justify-content-between mb-2">
-          <p className="text-brown-300">零食</p>
-          <div className="number-box fw-medium">x3</div>
-        </div>
-        <div className="d-flex justify-content-between mb-2">
-          <p className="text-brown-300">保健罐頭</p>
-          <div className="number-box fw-medium">x2</div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <p className="text-brown-300">互動小玩具</p>
-          <div className="number-box fw-medium">x2</div>
-        </div>
+
+        {isSelected && (
+          <>
+            <div className="d-flex justify-content-between align-item-center mb-4">
+              <div className="include-line my-10-5"></div>
+              <p className="fs-14 text-brown-100 mx-5">包含</p>
+              <div className="include-line my-10-5"></div>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <p className="text-brown-300">零食</p>
+              <div className="number-box fw-medium">x3</div>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <p className="text-brown-300">保健罐頭</p>
+              <div className="number-box fw-medium">x2</div>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p className="text-brown-300">互動小玩具</p>
+              <div className="number-box fw-medium">x2</div>
+            </div>
+          </>
+        )}
       </label>
     </div>
   );
