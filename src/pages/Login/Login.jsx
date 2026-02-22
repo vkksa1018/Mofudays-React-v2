@@ -5,15 +5,13 @@ import * as bootstrap from "bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../../app/layouts/components/Header/Header";
 import Footer from "../../../app/layouts/components/Footer/Footer";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import "./Login.scss";
 
 //圖片載入
-import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
-import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
-import loginSlider03 from "../../../assets/images/common/login-slider-03.png";
-
-const API_BASE_URL = "http://localhost:3000";
+import loginSlider01 from "../../assets/images/common/login-slider-01.png";
+import loginSlider02 from "../../assets/images/common/login-slider-02.png";
+import loginSlider03 from "../../assets/images/common/login-slider-03.png";
 
 export default function Login() {
   const { login } = useAuth(); // 取得全域登入函式
@@ -62,35 +60,32 @@ export default function Login() {
   const onSubmit = async (data) => {
     setApiError("");
     try {
-      const res = await axios.post(`${API_BASE_URL}/login`, {
-        email: data.email,
-        password: data.password,
-      });
+      const res = await axios.post("http://localhost:3000/register", data);
+      const { token, user } = res.data;
 
-      // json-server-auth 成功後會回傳 { accessToken, user }
-      const { accessToken, user } = res.data;
+      if (!token) throw new Error("登入成功但未取得 token");
 
-      if (!accessToken) throw new Error("登入成功但未取得 token");
-
-      // 儲存 Token (注意：json-server-auth 回傳的是 accessToken)
+      // 儲存 Token
       const storage = data.rememberMe ? localStorage : sessionStorage;
-      storage.setItem("token", accessToken);
+      storage.setItem("token", token);
 
-      // 1. 呼叫 Context 的登入 (將 accessToken 傳入)
-      login(user, accessToken, data.rememberMe);
+      // 1. 呼叫 Context 的登入，這會讓 Header 自動變樣式
+      login(user, token, data.rememberMe);
 
       // 2. 跳轉頁面
       navigate("/", { replace: true });
     } catch (err) {
-      console.error("登入錯誤詳情：", err.response?.data);
-
       const status = err?.response?.status;
-      // json-server-auth 帳密錯誤通常回傳 400 或 401
-      if (status === 400 || status === 401) {
+      const message = err?.response?.data?.message || "登入失敗，請稍後再試";
+
+      if (status === 401) {
+        // 4. 利用 setError 將後端錯誤映射到前端欄位
         setError("password", { type: "manual", message: "帳號或密碼錯誤" });
-        setError("email", { type: "manual", message: " " });
+        setError("email", { type: "manual", message: " " }); // 讓 Email 也變紅框但訊息留空
+      } else if (status === 404) {
+        setError("email", { type: "manual", message: "帳號不存在" });
       } else {
-        setApiError("登入失敗，伺服器連線異常");
+        setApiError(message);
       }
     }
   };
