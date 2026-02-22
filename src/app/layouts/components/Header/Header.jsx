@@ -25,12 +25,13 @@ export default function Header() {
               height={28}
             />
           </a>
-
+          <Link to='/usercenter'>會員中心</Link>{/*  20250215 納森測試路由用 */}
           {/* 右邊（手機）：menu + cart */}
           <MobileTopActions />
 
           {/* 右邊（桌機）：nav + cart */}
           <DesktopMenu />
+
         </div>
 
         <NewsModal />
@@ -64,7 +65,6 @@ function DesktopMenu() {
           <NavBlogItem />
 
           <AuthMenu variant="desktop" />
-
           <NavCartItem />
         </ul>
       </div>
