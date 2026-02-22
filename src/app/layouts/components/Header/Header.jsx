@@ -347,7 +347,7 @@ function NavCartItem() {
 
   const handleCartClick = () => {
     if (isAuthed) {
-      navigate("/petinfo");
+      navigate("/cart");
     } else {
       navigate("/signup");
     }
