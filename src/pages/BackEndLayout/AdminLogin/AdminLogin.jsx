@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../../slices/adminAuthSlice";
 
-import "./adminLogin.scss";
+import "../../../styles/AdminStyle/adminLogin.scss";
 import logo from "../../../assets/images/header/maorihe_logo_defalut.svg";
 import { useDispatch } from "react-redux";
 
@@ -26,15 +26,6 @@ export default function AdminLogin() {
   const [showPwd, setShowPwd] = useState(false); // 是否顯示密碼
 
   const onSubmit = async (data) => {
-    // console.log("API_BASE =", API_BASE);
-    // console.log("login url =", `${API_BASE}/login`);
-    // try {
-    //   await axios.post(`${API_BASE}/register`, {
-    //     email: "admin@mofudays.com",
-    //     password: "mofudays123",
-    //     role: "admin",
-    //     name: "後台管理員",
-    //   });
     try {
       await dispatch(adminLogin(data)).unwrap(); // unwrap: 失敗會 throw
       navigate("/admin/dashboard", { replace: true });

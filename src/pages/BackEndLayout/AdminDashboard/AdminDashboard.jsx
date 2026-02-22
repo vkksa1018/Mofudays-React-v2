@@ -1,12 +1,10 @@
-import { useMemo } from "react";
-import "./adminDashboard.scss";
+import { useEffect, useMemo, useState } from "react";
+import axios from "axios";
+import "../../../styles/AdminStyle/adminDashboard.scss";
 
-//（可選）想要圖示更像設計稿：你專案若已有 lucide-react 可直接用；沒有也不影響版面
-import {
-  MessageCircle,
-  Pencil,
-  Info
-} from "lucide-react";
+import { MessageCircle, Pencil, Info } from "lucide-react";
+
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 function StatCard({ title, value, unit }) {
   return (
@@ -43,184 +41,195 @@ function SoftBadge({ variant, children }) {
   );
 }
 
+function toDate(value) {
+  if (!value) return null;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function formatDate(value) {
+  const d = toDate(value);
+  if (!d) return "-";
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}/${m}/${day}`;
+}
+
+function formatDateTime(value) {
+  const d = toDate(value);
+  if (!d) return "-";
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  return `${y}/${m}/${day} ${hh}:${mm}`;
+}
+
+function formatMoney(value) {
+  return `$${Number(value || 0).toLocaleString("zh-TW")}`;
+}
+
+function isToday(value) {
+  const d = toDate(value);
+  if (!d) return false;
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
+}
+
+function isThisMonth(value) {
+  const d = toDate(value);
+  if (!d) return false;
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth()
+  );
+}
+
+function sortByDateDesc(list, dateKey) {
+  return [...list].sort((a, b) => {
+    const aTime = toDate(a?.[dateKey])?.getTime() || 0;
+    const bTime = toDate(b?.[dateKey])?.getTime() || 0;
+    return bTime - aTime;
+  });
+}
+
+function getOrderPlanText(order) {
+  if (!Array.isArray(order.subscriptionPlans) || order.subscriptionPlans.length === 0) {
+    return "-";
+  }
+
+  return order.subscriptionPlans
+    .map((p) => `${p.name}${p.quantity ? ` x${p.quantity}` : ""}`)
+    .join(" / ");
+}
+
+function getOrderQty(order) {
+  if (!Array.isArray(order.subscriptionPlans)) return 0;
+  return order.subscriptionPlans.reduce(
+    (sum, p) => sum + Number(p.quantity || 0),
+    0
+  );
+}
+
+function getOrderStatus(order) {
+  return order.paymentStatus || "待處理";
+}
+
+function getOrderStatusDotVariant(status) {
+  const s = String(status || "");
+  if (s.includes("待處理") || s.includes("處理中")) return "warning";
+  if (s.includes("已付款") || s.includes("完成")) return "success";
+  return "muted";
+}
+
+function getShipStatusDotVariant(status) {
+  const s = String(status || "");
+  if (s.includes("待處理")) return "warning";
+  if (s.includes("處理中")) return "orange";
+  if (s.includes("已出貨")) return "success";
+  if (s.includes("完成")) return "muted";
+  return "muted";
+}
+
 export default function AdminDashboard() {
-  const stats = useMemo(
-    () => ({
-      todayOrders: 150,
-      pendingOrders: 38,
-      monthNewMembers: 15,
-    }),
-    [],
-  );
+  const [orders, setOrders] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [members, setMembers] = useState([]);
 
-  const latestOrders = useMemo(
-    () => [
-      {
-        id: "20092788168493768",
-        date: "2026/02/01",
-        plan: "新手嘗鮮安心盒#2, 青春",
-        qty: 3,
-        amount: 699,
-        status: "待處理",
-        buyer: "陳建宏",
-      },
-      {
-        id: "20092788168493769",
-        date: "2026/02/15",
-        plan: "牛奶補給能量盒#7, 專業",
-        qty: 5,
-        amount: 999,
-        status: "待處理",
-        buyer: "李美瑜",
-      },
-      {
-        id: "20092788168493771",
-        date: "2026/01/25",
-        plan: "溫暖起跑療癒盒#1, 回饋",
-        qty: 4,
-        amount: 999,
-        status: "待處理",
-        buyer: "王中明",
-      },
-      {
-        id: "20092788168493772",
-        date: "2026/04/05",
-        plan: "玩更會跑體驗盒#2, 知識",
-        qty: 6,
-        amount: 3299,
-        status: "已處理",
-        buyer: "張曉雯",
-      },
-      {
-        id: "20092788168493770",
-        date: "2026/03/10",
-        plan: "親子活動盒#3, 親親",
-        qty: 2,
-        amount: 1299,
-        status: "已處理",
-        buyer: "何子豪",
-      },
-    ],
-    [],
-  );
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const latestSubs = useMemo(
-    () => [
-      {
-        id: "20092788168493768",
-        plan: "新手嘗鮮安心盒#2, 青春",
-        start: "2026/02/01",
-        qty: 3,
-        period: 1,
-        shipStatus: "已出貨",
-        shipDate: "2026/02/15",
-        nextShip: "2026/03/15",
-        subStatus: "訂閱中",
-      },
-      {
-        id: "20092788168493769",
-        plan: "牛奶補給能量盒#7, 專業",
-        start: "2026/02/15",
-        qty: 5,
-        period: 2,
-        shipStatus: "待處理",
-        shipDate: "-",
-        nextShip: "-",
-        subStatus: "訂閱中",
-      },
-      {
-        id: "20092788168493771",
-        plan: "溫暖起跑療癒盒#1, 回饋",
-        start: "2026/01/25",
-        qty: 4,
-        period: 1,
-        shipStatus: "處理中",
-        shipDate: "-",
-        nextShip: "-",
-        subStatus: "訂閱中",
-      },
-      {
-        id: "20092788168493772",
-        plan: "玩更會跑體驗盒#2, 知識",
-        start: "2026/04/05",
-        qty: 6,
-        period: 3,
-        shipStatus: "已完成",
-        shipDate: "2026/04/15",
-        nextShip: "2026/05/15",
-        subStatus: "已取消",
-      },
-      {
-        id: "20092788168493770",
-        plan: "親子活動盒#3, 親親",
-        start: "2026/03/10",
-        qty: 2,
-        period: 1,
-        shipStatus: "已完成",
-        shipDate: "2026/04/15",
-        nextShip: "2026/05/15",
-        subStatus: "訂閱中",
-      },
-    ],
-    [],
-  );
+  useEffect(() => {
+    let alive = true;
 
-  const latestMembers = useMemo(
-    () => [
-      {
-        id: "MN0000001",
-        name: "陳建宏",
-        birthday: "1998/02/10",
-        phone: "0912345678",
-        email: "Huhming@gmail.com",
-        address: "台北市中山區建國一路 18 巷 17 號",
-        createdAt: "2026/02/15 10:43",
-      },
-      {
-        id: "MN0000002",
-        name: "李美瑜",
-        birthday: "1995/03/01",
-        phone: "0923456789",
-        email: "LiMeihua@gmail.com",
-        address: "高雄市苓雅區和平一路 56 號",
-        createdAt: "2026/03/12 12:04",
-      },
-      {
-        id: "MN0000003",
-        name: "王中明",
-        birthday: "1992/04/21",
-        phone: "0934567890",
-        email: "WangZhiMin@gmail.com",
-        address: "台南市東區中華東路 100 號",
-        createdAt: "2026/04/10 21:10",
-      },
-      {
-        id: "MN0000004",
-        name: "張曉雯",
-        birthday: "1988/05/12",
-        phone: "0945678901",
-        email: "ChangJingYi@gmail.com",
-        address: "新北市三重區重新路 22 號",
-        createdAt: "2026/05/20 20:49",
-      },
-      {
-        id: "MN0000005",
-        name: "何子豪",
-        birthday: "1990/06/30",
-        phone: "0956789012",
-        email: "GuoZiHao@gmail.com",
-        address: "桃園市中壢區青埔路 888 號",
-        createdAt: "2026/06/30 23:50",
-      },
-    ],
-    [],
-  );
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setErrorMsg("");
+
+        const [ordersRes, subscriptionsRes, usersRes] = await Promise.all([
+          axios.get(`${API_BASE}/orders`),
+          axios.get(`${API_BASE}/subscriptions`),
+          axios.get(`${API_BASE}/users`, { params: { role: "user" } }),
+        ]);
+
+        if (!alive) return;
+
+        setOrders(Array.isArray(ordersRes.data) ? ordersRes.data : []);
+        setSubscriptions(
+          Array.isArray(subscriptionsRes.data) ? subscriptionsRes.data : []
+        );
+        setMembers(Array.isArray(usersRes.data) ? usersRes.data : []);
+      } catch (error) {
+        console.error("AdminDashboard 載入失敗:", error);
+        if (!alive) return;
+        setErrorMsg("資料載入失敗，請稍後再試");
+      } finally {
+        if (!alive) return;
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  /* 最新資料 */
+  const latestOrders = useMemo(() => {
+    return sortByDateDesc(orders, "orderDate").slice(0, 5);
+  }, [orders]);
+
+  const latestSubs = useMemo(() => {
+    return sortByDateDesc(subscriptions, "createdAt").slice(0, 5);
+  }, [subscriptions]);
+
+  const latestMembers = useMemo(() => {
+    return sortByDateDesc(members, "createdAt").slice(0, 5);
+  }, [members]);
+
+  /*  統計卡*/
+  const stats = useMemo(() => {
+    // 本日訂單數：用 orders.orderDate
+    const todayOrders = orders.filter((o) => isToday(o.orderDate)).length;
+
+    // 代處理訂單數：
+    // 你的 orders 沒有 orderStatus，這裡先用 subscriptions.shippingStatus 估算「待處理中的訂單/訂閱」
+    const pendingOrders = subscriptions.filter((s) => {
+      const status = String(s.shippingStatus || "");
+      return status.includes("待") || status.includes("處理中");
+    }).length;
+
+    // 本月新增會員：users(role=user).createdAt
+    const monthNewMembers = members.filter((m) => isThisMonth(m.createdAt)).length;
+
+    return {
+      todayOrders,
+      pendingOrders,
+      monthNewMembers,
+    };
+  }, [orders, subscriptions, members]);
 
   return (
-    <div className="ad-main__inner">
+    <div className="ad-main__inner ad-dashboard-page">
       <div className="d-flex align-items-center justify-content-between mb-3">
         <h2 className="h5 fw-bolder m-0">數據總覽</h2>
       </div>
+
+      {errorMsg && (
+        <div className="alert alert-warning rounded-4 border-0 mb-3" role="alert">
+          {errorMsg}
+        </div>
+      )}
 
       {/* 統計卡 */}
       <div className="row g-3 mb-3">
@@ -228,18 +237,10 @@ export default function AdminDashboard() {
           <StatCard title="本日訂單數" value={stats.todayOrders} unit="筆" />
         </div>
         <div className="col-12 col-lg-4">
-          <StatCard
-            title="代處理訂單數"
-            value={stats.pendingOrders}
-            unit="筆"
-          />
+          <StatCard title="代處理訂單數" value={stats.pendingOrders} unit="筆" />
         </div>
         <div className="col-12 col-lg-4">
-          <StatCard
-            title="本月新增會員"
-            value={stats.monthNewMembers}
-            unit="名"
-          />
+          <StatCard title="本月新增會員" value={stats.monthNewMembers} unit="名" />
         </div>
       </div>
 
@@ -272,50 +273,66 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="small">
-                {latestOrders.map((o) => (
-                  <tr key={o.id}>
-                    <td>
-                      <a
-                        className="ad-link fw-bold"
-                        href="#order"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        {o.id}
-                      </a>
-                    </td>
-                    <td>{o.date}</td>
-                    <td className="text-truncate" style={{ maxWidth: 260 }}>
-                      {o.plan}
-                    </td>
-                    <td className="text-end">{o.qty}</td>
-                    <td className="text-end">${o.amount}</td>
-                    <td>
-                      {o.status === "待處理" ? (
-                        <Dot variant="warning" />
-                      ) : (
-                        <Dot variant="success" />
-                      )}
-                      <span className="ms-2">{o.status}</span>
-                    </td>
-                    <td>{o.buyer}</td>
-                    <td className="text-end">
-                      <button
-                        type="button"
-                        className="btn btn-light border ad-iconBtn me-2"
-                        title="留言"
-                      >
-                        <MessageCircle size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-light border ad-iconBtn"
-                        title="編輯"
-                      >
-                        <Pencil size={16} />
-                      </button>
+                {loading ? (
+                  <tr>
+                    <td colSpan={8} className="text-center py-4 text-secondary">
+                      資料載入中...
                     </td>
                   </tr>
-                ))}
+                ) : latestOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="text-center py-4 text-secondary">
+                      目前沒有訂單資料
+                    </td>
+                  </tr>
+                ) : (
+                  latestOrders.map((o) => {
+                    const status = getOrderStatus(o);
+
+                    return (
+                      <tr key={o.id}>
+                        <td>
+                          <a
+                            className="ad-link fw-bold"
+                            href="#order"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            {o.id}
+                          </a>
+                        </td>
+                        <td>{formatDate(o.orderDate)}</td>
+                        <td className="text-truncate" style={{ maxWidth: 260 }}>
+                          {getOrderPlanText(o)}
+                        </td>
+                        <td className="text-end">{getOrderQty(o)}</td>
+                        <td className="text-end">
+                          {formatMoney(o.orderTotalAmount)}
+                        </td>
+                        <td>
+                          <Dot variant={getOrderStatusDotVariant(status)} />
+                          <span className="ms-2">{status}</span>
+                        </td>
+                        <td>{o.buyerInfo?.name || o.buyer || "-"}</td>
+                        <td className="text-end">
+                          {/* <button
+                            type="button"
+                            className="btn border ad-iconBtn me-2"
+                            title="留言"
+                          >
+                            <MessageCircle size={16} />
+                          </button> */}
+                          <button
+                            type="button"
+                            className="btn ad-iconBtn"
+                            title="編輯"
+                          >
+                            <Pencil size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
@@ -352,41 +369,60 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="small">
-                {latestSubs.map((s) => (
-                  <tr key={s.id}>
-                    <td>
-                      <a
-                        className="ad-link fw-bold"
-                        href="#sub"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        {s.id}
-                      </a>
-                    </td>
-                    <td className="text-truncate" style={{ maxWidth: 260 }}>
-                      {s.plan}
-                    </td>
-                    <td>{s.start}</td>
-                    <td className="text-end">{s.qty}</td>
-                    <td className="text-end">{s.period}</td>
-                    <td>
-                      {s.shipStatus === "已出貨" && <Dot variant="success" />}
-                      {s.shipStatus === "待處理" && <Dot variant="warning" />}
-                      {s.shipStatus === "處理中" && <Dot variant="orange" />}
-                      {s.shipStatus === "已完成" && <Dot variant="muted" />}
-                      <span className="ms-2">{s.shipStatus}</span>
-                    </td>
-                    <td>{s.shipDate}</td>
-                    <td>{s.nextShip}</td>
-                    <td className="text-end">
-                      {s.subStatus === "訂閱中" ? (
-                        <SoftBadge variant="orange">訂閱中</SoftBadge>
-                      ) : (
-                        <SoftBadge variant="gray">已取消</SoftBadge>
-                      )}
+                {loading ? (
+                  <tr>
+                    <td colSpan={9} className="text-center py-4 text-secondary">
+                      資料載入中...
                     </td>
                   </tr>
-                ))}
+                ) : latestSubs.length === 0 ? (
+                  <tr>
+                    <td colSpan={9} className="text-center py-4 text-secondary">
+                      目前沒有訂閱資料
+                    </td>
+                  </tr>
+                ) : (
+                  latestSubs.map((s) => {
+                    const subStatus = s.subscriptionStatus || "-";
+
+                    return (
+                      <tr key={s.id}>
+                        <td>
+                          <a
+                            className="ad-link fw-bold"
+                            href="#sub"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            {s.orderId || s.id}
+                          </a>
+                        </td>
+                        <td className="text-truncate" style={{ maxWidth: 260 }}>
+                          {s.planName || "-"}
+                        </td>
+                        <td>{formatDate(s.startDate)}</td>
+                        <td className="text-end">{s.subscriptionQuantity ?? 0}</td>
+                        <td className="text-end">
+                          {`${s.currentCycleIndex ?? 0}/${s.currentCycleTotal ?? s.termCycles ?? 0}`}
+                        </td>
+                        <td>
+                          <Dot variant={getShipStatusDotVariant(s.shippingStatus)} />
+                          <span className="ms-2">{s.shippingStatus || "-"}</span>
+                        </td>
+                        <td>{s.shippedDate ? formatDate(s.shippedDate) : "-"}</td>
+                        <td>
+                          {s.nextShippedDate ? formatDate(s.nextShippedDate) : "-"}
+                        </td>
+                        <td className=" text-end">
+                          {subStatus === "訂閱中" ? (
+                            <SoftBadge variant="orange"> <span className="text-primary">訂閱中</span></SoftBadge>
+                          ) : (
+                            <SoftBadge variant="gray">{subStatus}</SoftBadge>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
@@ -422,30 +458,50 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="small">
-                {latestMembers.map((m) => (
-                  <tr key={m.id}>
-                    <td className="ad-orange fw-bold">{m.id}</td>
-                    <td>{m.name}</td>
-                    <td>{m.birthday}</td>
-                    <td>{m.phone}</td>
-                    <td className="text-truncate" style={{ maxWidth: 200 }}>
-                      {m.email}
-                    </td>
-                    <td className="text-truncate" style={{ maxWidth: 280 }}>
-                      {m.address}
-                    </td>
-                    <td>{m.createdAt}</td>
-                    <td className="text-end">
-                      <button
-                        type="button"
-                        className="btn btn-light border ad-iconBtn"
-                        title="編輯"
-                      >
-                        <Pencil size={16} />
-                      </button>
+                {loading ? (
+                  <tr>
+                    <td colSpan={8} className="text-center py-4 text-secondary">
+                      資料載入中...
                     </td>
                   </tr>
-                ))}
+                ) : latestMembers.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="text-center py-4 text-secondary">
+                      目前沒有會員資料
+                    </td>
+                  </tr>
+                ) : (
+                  latestMembers.map((m) => (
+                    <tr key={m.id}>
+                      <td
+                        className="ad-orange fw-bold text-truncate"
+                        style={{ maxWidth: 180 }}
+                        title={m.id}
+                      >
+                        {m.id}
+                      </td>
+                      <td>{m.name || "-"}</td>
+                      <td>{m.birthday ? formatDate(m.birthday) : "-"}</td>
+                      <td>{m.phone || "-"}</td>
+                      <td className="text-truncate" style={{ maxWidth: 220 }}>
+                        {m.email || "-"}
+                      </td>
+                      <td className="text-truncate" style={{ maxWidth: 280 }}>
+                        {m.address || "-"}
+                      </td>
+                      <td>{m.createdAt ? formatDateTime(m.createdAt) : "-"}</td>
+                      <td className="text-end">
+                        <button
+                          type="button"
+                          className="btn ad-iconBtn"
+                          title="編輯"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

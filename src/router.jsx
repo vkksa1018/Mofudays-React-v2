@@ -37,7 +37,7 @@ import Signup from "./pages/FrontEndLayout/Signup/Signup";
 import { 
   AdminLogin, AdminDashboard, AdminOrders, 
   AdminSubscriptions, AdminInfos, AdminUsers
-} from "./pages/BackEndLayout/adminIndex";
+} from "./pages/BackEndLayout/adminRouterIndex";
 
 // 404
 import NotFound from "./layout/NotFound";
