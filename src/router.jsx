@@ -1,4 +1,4 @@
-import { createHashRouter, Navigate } from "react-router-dom";
+import { createHashRouter, Navigate, useLocation } from "react-router-dom";
 
 // layouts（ 這些檔案都要記得import並放 <Outlet /> ）
 import FrontLayout from "./layout/FrontEndLayout";
@@ -51,12 +51,10 @@ import NotFound from "./layout/NotFound";
 // auth hooks
 import { useAuth } from "./contexts/AuthContext";
 
-// 前台會員權限守衛
+// 前台會員權限守衛->利用AuthContext這支hook驅動
 function RequireAuth({ children }) {
   const { isAuthed, isLoading } = useAuth();
-  const location = useLocation();
-
-  // 1. 處理讀取中狀態：避免 API 還沒回傳時就執行 Navigate
+  // 1. 處理讀取中狀態：這是防止被踢回登入頁的最重要防線
   if (isLoading) {
     return (
       <div
@@ -75,17 +73,13 @@ function RequireAuth({ children }) {
     );
   }
 
-  // 2. 判斷是否登入：isAuthed 是基於 token 是否存在
-  return isAuthed ? (
-    children
-  ) : (
-    <Navigate to="/login" replace state={{ from: location }} />
-  );
+  // 2. 判斷是否登入：此時 isLoading 必為 false
+  // 如果 isAuthed 為 false，才執行跳轉
+  return isAuthed ? children : <Navigate to="/login" replace />;
 }
 
 //後台管理員權限守衛
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { selectIsAdminAuthed } from "./slices/adminAuthSlice";
 export default function RequireAdmin({ children }) {
   const isAuthed = useSelector(selectIsAdminAuthed);
@@ -108,6 +102,13 @@ export const router = createHashRouter([
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
       // { path: "blog/:postId", element: <BlogPost /> },
+      // { path: "petinfo", element: <PetInfo /> },
+      // { path: "plan", element: <Plan /> },
+      // { path: "cart", element: <Cart /> },
+      // { path: "checkout", element: <Checkout /> },
+      // { path: "finish", element: <Finish /> },
+
+      //加回前台權限守衛
       {
         path: "petinfo",
         element: (
