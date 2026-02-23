@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 // 引入圖片
 import heroHeadlineDesktop from "../../../../assets/images/index/01_hero_headline_desktop.svg";
 import heroHeadlineMobile from "../../../../assets/images/index/01_hero_headline_mobile.svg";
