@@ -98,10 +98,10 @@ function Finish() {
 
               {/* 說明文字 */}
               <p className="fs-14-sm text-center px-12-sm mb-48-sm">
-                您可到
-                <a href="./member.html" className="text-primary-500">
-                  訂單查詢
-                </a>
+                您可至
+                <Link to="/usercenter/orders" className="text-primary-500">
+                  訂單管理頁面
+                </Link>
                 查看訂購紀錄，如有任何問題或其他意見，歡迎
                 <a
                   href="mailto:service.maorihe@gmail.com"
