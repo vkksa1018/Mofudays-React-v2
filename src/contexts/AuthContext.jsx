@@ -18,7 +18,6 @@ function clearStorage(...keys) {
 
 export const AuthProvider = ({ children }) => {
   const [isAuthed, setIsAuthed] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); //0223 vivian新增
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(() => getStorage("token"));
