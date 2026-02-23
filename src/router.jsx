@@ -80,7 +80,6 @@ function RequireAuth({ children }) {
 
 //後台管理員權限守衛
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { selectIsAdminAuthed } from "./slices/adminAuthSlice";
 export default function RequireAdmin({ children }) {
   const isAuthed = useSelector(selectIsAdminAuthed);

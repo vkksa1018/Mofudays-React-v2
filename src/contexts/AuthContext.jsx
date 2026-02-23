@@ -18,32 +18,47 @@ function clearStorage(...keys) {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthed, setIsAuthed] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); //0223 vivian新增
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(() => getStorage("token"));
 
-  // 每次 token 變動時，呼叫 API 驗證身分並還原 user
   useEffect(() => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (token) {
-      setIsAuthed(true);
-      // 這裡可以選擇透過 API 獲取最新的使用者資料
-    }
-    setIsLoading(false); //0223 vivian新增
-  }, []);
+    const initAuth = async () => {
+      const currentToken = getStorage("token");
+
+      if (!currentToken) {
+        setUser(null);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const userData = await getUserProfile();
+        if (userData) {
+          setUser(userData);
+        } else {
+          clearStorage("token", "userId", "userName", "userRole");
+          setToken(null);
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Auth 驗證發生錯誤:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initAuth();
+  }, [token]);
 
   const login = (userData, accessToken, rememberMe) => {
     const storage = rememberMe ? localStorage : sessionStorage;
-
     storage.setItem("token", accessToken);
     storage.setItem("userId", String(userData.id));
     storage.setItem("userName", userData.name || "");
     storage.setItem("userRole", userData.role || "user");
-
-    setToken(accessToken); // 觸發 useEffect 重新驗證
+    setToken(accessToken);
     setUser(userData);
   };
 
@@ -55,10 +70,7 @@ export const AuthProvider = ({ children }) => {
       try {
         await axios.patch(
           `${API_BASE_URL}/users/${userId}`,
-          {
-            isLoggedIn: false,
-            updatedAt: new Date().toISOString(),
-          },
+          { isLoggedIn: false, updatedAt: new Date().toISOString() },
           { headers: { Authorization: `Bearer ${currentToken}` } },
         );
       } catch (err) {
@@ -72,7 +84,7 @@ export const AuthProvider = ({ children }) => {
 
     toast.success("您已成功登出", {
       position: "top-center",
-      autoClose: 2000, // 2秒後自動消失
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -81,7 +93,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthed, isLoading, user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isAuthed: !!token && (isLoading || !!user),
+        user,
+        isLoading,
+        token,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
