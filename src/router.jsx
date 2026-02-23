@@ -49,11 +49,8 @@ import {
 // 404
 import NotFound from "./layout/NotFound";
 
-//API測試頁
-// import TestAuthPage from "./pages/Test/TestAuthPage";
-
 // auth hooks
-import { useAuth } from "./features/auth/hooks";
+import { useAuth } from "./contexts/AuthContext";
 
 // 前台會員權限守衛
 function RequireAuth({ children }) {

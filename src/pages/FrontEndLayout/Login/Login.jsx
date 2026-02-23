@@ -70,9 +70,19 @@ export default function Login() {
       const { accessToken, user } = res.data;
       if (!accessToken) throw new Error("登入成功但未取得 token");
 
-      // ↓ 這行統一交給 login() 處理，不用再手動 setItem
-      login(user, accessToken, data.rememberMe);
+      // 同步更新資料庫的 isLoggedIn 與 updatedAt
+      await axios.patch(
+        `${API_BASE_URL}/users/${user.id}`,
+        {
+          isLoggedIn: true,
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      );
 
+      login(user, accessToken, data.rememberMe);
       navigate("/", { replace: true });
     } catch (err) {
       console.error("登入錯誤詳情：", err.response?.data);

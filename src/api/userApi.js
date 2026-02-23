@@ -10,6 +10,10 @@ const getAuthHeader = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+const getStorageItem = (key) => {
+  return localStorage.getItem(key) || sessionStorage.getItem(key) || null;
+};
+
 // 錯誤處理輔助函式：專門對付 json-server-auth 的 owner id 錯誤
 const handleProtectedError = (error, fallbackValue = null) => {
   const errorMsg = error.response?.data;
@@ -54,12 +58,12 @@ export const loginUser = async (credentials) => {
 
 // 3. 確認會員登入狀態 (簡易判斷)
 export const checkLoginStatus = () => {
-  return !!localStorage.getItem("token");
+  return !!(localStorage.getItem("token") || sessionStorage.getItem("token"));
 };
 
 // 4. 取得會員詳細資料 (/600)
 export const getUserProfile = async () => {
-  const userId = localStorage.getItem("userId");
+  const userId = getStorageItem("userId");
   if (!userId) return null;
 
   try {
@@ -74,7 +78,7 @@ export const getUserProfile = async () => {
 
 // 5. 取得會員訂單資料 (/600)
 export const getUserOrders = async () => {
-  const userId = localStorage.getItem("userId");
+  const userId = getStorageItem("userId");
   try {
     const response = await axios.get(
       `${API_BASE_URL}/600/orders?userId=${userId}`,

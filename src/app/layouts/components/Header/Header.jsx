@@ -2,7 +2,7 @@ import "./Header.scss";
 import "./Header-logout.scss";
 import { useNavigate } from "react-router-dom";
 import { Menu, ShoppingCart, Newspaper, HeartPlus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
