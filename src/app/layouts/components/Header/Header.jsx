@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
 import avatarDefalut from "../../../../assets/images/header/avatar_defalut.png";
 
+import { toast } from "react-toastify";
+
 // 購物車跳轉邏輯 hook
 function useCartNavigate() {
   const navigate = useNavigate();
@@ -17,8 +19,8 @@ function useCartNavigate() {
 
   const handleCartClick = async () => {
     if (!isAuthed) {
-      alert("尚未登入，請先註冊或登入會員！");
-      navigate("/signup");
+      toast.warn("尚未登入，請先登入會員！");
+      navigate("/login");
       return;
     }
 
@@ -31,12 +33,12 @@ function useCartNavigate() {
       if (data && data.length > 0) {
         navigate("/cart");
       } else {
-        alert("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
+        toast.info("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
         navigate("/petinfo");
       }
     } catch (err) {
       console.error("查詢購物車失敗", err);
-      alert("查詢購物車時發生錯誤，請稍後再試。");
+      toast.error("查詢購物車時發生錯誤，請稍後再試。");
     }
   };
 
