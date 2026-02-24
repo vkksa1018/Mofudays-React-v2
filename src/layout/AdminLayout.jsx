@@ -1,6 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AdminSideBar from "../pages/BackEndLayout/AdminSideBar/AdminSideBar";
 import "../styles/AdminStyle/adminLayout.scss";
 
@@ -17,7 +19,10 @@ export default function AdminLayout() {
 
   // 記住 sidebar 收合狀態（桌機）
   useEffect(() => {
-    localStorage.setItem("admin_sidebar_collapsed", isSideCollapsed ? "1" : "0");
+    localStorage.setItem(
+      "admin_sidebar_collapsed",
+      isSideCollapsed ? "1" : "0",
+    );
   }, [isSideCollapsed]);
 
   // 路由切換時，自動關閉手機 drawer
@@ -80,6 +85,19 @@ export default function AdminLayout() {
         </div>
 
         <Outlet />
+        <ToastContainer
+          position="top-right"
+          autoClose={2200}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable
+          limit={3}
+          theme="light"
+          toastClassName="ad-toast"
+          bodyClassName="ad-toast__body"
+          progressClassName="ad-toast__progress"
+        />
       </main>
     </div>
   );

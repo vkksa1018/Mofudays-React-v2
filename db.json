@@ -656,20 +656,20 @@
     },
     {
       "id": "MOF20260112-0003",
-      "userId": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
-      "cartId": "cart_0003",
-      "orderDate": "2026-01-12T10:30:00+08:00",
+      "userId": "",
+      "cartId": "",
+      "orderDate": "2026-01-12T02:30:00.000Z",
       "termCycles": 3,
       "perCycleAmount": 699,
       "orderTotalAmount": 2097,
       "currency": "TWD",
       "paymentStatus": "已付款",
-      "buyer": "許小花 (hua.hsu@example.com)",
+      "buyer": "許小花 (huahsu@gmail.com)",
       "buyerInfo": {
         "name": "許小花",
-        "email": "hua.hsu@example.com",
+        "email": "huahsu@gmail.com",
         "phone": "0918-222-333",
-        "address": "台中市西屯區台灣大道三段300號"
+        "address": "莊敬路253號"
       },
       "note": "自動從購物車 cart_0003 建立。",
       "subscriptionPlans": [
@@ -719,7 +719,12 @@
         }
       ],
       "createdAt": "2026-01-12T10:30:00+08:00",
-      "updatedAt": "2026-01-12T10:30:00+08:00"
+      "updatedAt": "2026-02-24T08:56:09.871Z",
+      "orderNo": "MOF20260112-0003",
+      "orderStatus": "處理中",
+      "shippingStatus": "待出貨",
+      "subscriptionStatus": "訂閱中",
+      "isActive": true
     }
   ],
   "subscriptions": [
