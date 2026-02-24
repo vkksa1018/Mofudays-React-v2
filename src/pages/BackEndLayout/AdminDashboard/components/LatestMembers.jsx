@@ -1,6 +1,13 @@
 import { formatDate, formatDateTime } from "../../utils/adminDashboard";
 import { Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
+import { adminToast } from "../../utils/adminToast";
+// 功能尚未開放按鈕
+  const handleFeatureComingSoon = (label = "此功能") => {
+    adminToast.info(`${label}功能尚未開放`, {
+      toastId: `coming-soon:${label}`,
+    });
+  };
 export default function LatestUsers({ loading, latestMembers }) {
   return (
     <section className="card shadow-sm border-0 rounded-4 ad-card">
@@ -64,6 +71,7 @@ export default function LatestUsers({ loading, latestMembers }) {
                         type="button"
                         className="btn ad-iconBtn"
                         title="編輯"
+                        onclick={()=>{handleFeatureComingSoon()}}
                       >
                         <Pencil size={16} />
                       </button>

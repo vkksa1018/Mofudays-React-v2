@@ -19,6 +19,19 @@
   }
 }
 
+.btn-refresh {
+    border: 1px solid $primary-500;
+    background-color: $primary-500 !important;
+    color: $white !important;
+  }
+
+  .btn-refresh:hover,
+  .btn-refresh:active {
+    border: 1px solid $primary-300;
+    color: $white !important;
+    background-color: $primary-300 !important;
+  }
+
 /* icon button */
 .ad-iconBtn {
   width: 36px;

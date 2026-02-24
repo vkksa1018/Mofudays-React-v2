@@ -185,7 +185,7 @@ export default function AdminDashboard() {
 
         <button
           type="button"
-          className="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2"
+          className="btn btn-sm btn-refresh d-inline-flex align-items-center gap-2"
           onClick={handleRefresh}
           disabled={loading || refreshing}
           title="重新整理資料"
