@@ -719,7 +719,7 @@
         }
       ],
       "createdAt": "2026-01-12T10:30:00+08:00",
-      "updatedAt": "2026-02-24T08:56:09.871Z",
+      "updatedAt": "2026-02-26T05:56:48.409Z",
       "orderNo": "MOF20260112-0003",
       "orderStatus": "處理中",
       "shippingStatus": "待出貨",
@@ -1084,10 +1084,11 @@
       "playStyle": [
         "IQ"
       ],
-      "isActive": false,
+      "isActive": true,
       "description": "透過滾動漏食延長進食時間，減少狼吞虎嚥。",
       "createdAt": "2025-04-24T23:00:00+08:00",
-      "deletedAt": "2025-12-20T23:00:00+08:00"
+      "deletedAt": null,
+      "updatedAt": "2026-02-26T15:39:34.713Z"
     },
     {
       "id": "9f1f1d6a-2f28-4ac2-9a1b-2b8b2b1f5d51",
@@ -1645,15 +1646,16 @@
         "PUPPY",
         "ADULT"
       ],
-      "isActive": false,
+      "isActive": true,
       "description": "可拆洗床墊套，維持睡眠區整潔。",
       "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
       "createdAt": "2025-03-15T23:00:00+08:00",
-      "deletedAt": "2025-12-25T23:00:00+08:00",
+      "deletedAt": null,
       "tags": [
         "home",
         "washable"
-      ]
+      ],
+      "updatedAt": "2026-02-26T17:17:07.137Z"
     },
     {
       "id": "c3f8a9f1-0a9f-4b92-8b2a-77d0d4d9d3a5",

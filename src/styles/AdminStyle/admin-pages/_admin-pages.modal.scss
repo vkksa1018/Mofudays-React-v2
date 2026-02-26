@@ -112,12 +112,12 @@
 
   .btn-modal-edit:hover,
   .btn-modal-edit:active {
-    border: 1px solid $tertiary-500; 
+    border: 1px solid $tertiary-500;
     color: $white !important;
     background-color: $tertiary-300 !important;
   }
 
-  .btn-detail-modal{
+  .btn-detail-modal {
     border: 1px solid $brown-500;
     background-color: $brown-500 !important;
     color: $white !important;
@@ -125,9 +125,36 @@
 
   .btn-detail-modal:hover,
   .btn-detail-modal:active {
-    border: 1px solid $brown-300; 
+    border: 1px solid $brown-300;
     color: $white !important;
     background-color: $brown-300 !important;
+  }
+
+  .admin-pages__detailCard {
+    height: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.85rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  }
+
+  .admin-pages__detailLabel {
+    font-size: 0.82rem;
+    color: $neutral-500;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .admin-pages__detailValue {
+    color: $brown-500;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .admin-pages__detailNote {
+    border-radius: 0.75rem;
+    background: rgba(141, 110, 99, 0.06);
   }
 
   .ad-dot {

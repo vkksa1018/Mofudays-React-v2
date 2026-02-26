@@ -88,7 +88,7 @@ export default function AdminDashboard() {
         const message = getErrorMessage(error, "資料載入失敗，請稍後再試");
         setErrorMsg(message);
 
-        // ✅ 初次載入失敗時給一顆 toast（避免重複可加 toastId）
+        // 初次載入失敗時給一顆 toast（避免重複可加 toastId）
         adminToast.error(message, { toastId: "dashboard-init-fail" });
       } finally {
         if (!alive) return;
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="ad-main__inner ad-dashboard-page">
+    <div className={`ad-main__inner ad-dashboard-page ${loading ? "is-loading" : "is-ready"}`}>
 
       <div className="d-flex align-items-center justify-content-start mb-3 gap-2">
         <h2 className="h5 fw-bolder m-0">數據總覽</h2>
