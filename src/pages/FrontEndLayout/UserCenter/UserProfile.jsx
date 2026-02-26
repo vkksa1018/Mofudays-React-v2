@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import shippingCart from "../../../assets/images/userCenter/member_shipping_cart.png";
-import aboutBg from "../../../assets/images/userCenter/about-bg.png";
-import waitingDog from "../../../assets/images/userCenter/member_waiting_dog.png";
 import { getUserProfile, updateUserProfile } from "../../../api/userApi";
 import { taiwanRegions } from "../Signup/taiwanRegions";
 import { toast } from "react-toastify";

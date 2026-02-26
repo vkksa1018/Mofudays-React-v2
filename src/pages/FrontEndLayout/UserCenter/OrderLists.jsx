@@ -169,7 +169,7 @@ export default function OrderLists() {
     <div className="member-orderlist mt-32">
       {/* 標題 + Tab 列（橘框外） */}
       <div className="member-orderlist__header">
-        <h2 className="member-orderlist__title">訂閱管理</h2>
+        <h2 className="member-orderlist__title h2">訂閱管理</h2>
 
         <div className="member-orderlist__tabs">
           {TABS.map((tab) => (
