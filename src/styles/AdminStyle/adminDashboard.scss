@@ -1,8 +1,17 @@
 /* ===== Dashboard 頁面樣式（卡片 / 表格 / 狀態） ===== */
 
+.ad-dashboard-page,
+.ad-dashboard-page > *,
+.ad-dashboard-page .row,
+.ad-dashboard-page [class*="col-"],
+.ad-card,
+.ad-card .card-body {
+  min-width: 0;
+}
+
 .ad-card {
   background: rgba(255, 255, 255, 0.92);
-  overflow: hidden; // ✅ 避免內部元素視覺外溢
+  overflow: visible;
 }
 
 .ad-orange {
@@ -17,6 +26,19 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.btn-refresh {
+  border: 1px solid $primary-500;
+  background-color: $primary-500 !important;
+  color: $white !important;
+}
+
+.btn-refresh:hover,
+.btn-refresh:active {
+  border: 1px solid $primary-300;
+  color: $white !important;
+  background-color: $primary-300 !important;
 }
 
 /* icon button */
@@ -36,14 +58,17 @@
 
 /* table 外層只在卡片內自己橫向捲動 */
 .ad-card .table-responsive {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 欄位較多時維持表格寬度，交給 table-responsive 處理 */
 .ad-table {
-  min-width: 980px; // 可依實際欄數再調整 1000 / 1100
+  width: 100%;
+  min-width: 760px; // 先比 980 小很多，手機比較不會看起來整個炸開
 }
 
 .ad-table thead th {
@@ -90,16 +115,26 @@
 }
 
 /* ===== Dashboard 進場動畫 ===== */
-/* 針對 AdminDashboard root：標題列、統計卡區、各 section 卡片做錯開進場 */
-.ad-dashboard-page > * {
+// .ad-dashboard-page > * {
+//   opacity: 0;
+//   transform: translateY(18px);
+//   animation: ad-fade-up 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+//   will-change: transform, opacity;
+// }
+
+.ad-dashboard-page.is-ready > * {
   opacity: 0;
   transform: translateY(18px);
   animation: ad-fade-up 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity;
 }
 
-/* stagger 順序 */
-/* 1: 標題列, 2: 統計卡 row, 3: 最新訂單, 4: 最新訂閱, 5: 最新會員 */
+// loading 時直接顯示，不要隱藏
+.ad-dashboard-page.is-loading > * {
+  opacity: 1;
+  transform: none;
+}
+
 .ad-dashboard-page > *:nth-child(1) { animation-delay: 0.18s; }
 .ad-dashboard-page > *:nth-child(2) { animation-delay: 0.26s; }
 .ad-dashboard-page > *:nth-child(3) { animation-delay: 0.34s; }
@@ -107,7 +142,6 @@
 .ad-dashboard-page > *:nth-child(5) { animation-delay: 0.50s; }
 .ad-dashboard-page > *:nth-child(6) { animation-delay: 0.58s; }
 
-/* 如果你希望「三張統計卡」也各自錯開（不是整排一起），加這段 */
 .ad-dashboard-page > .row.g-3 > [class*="col-"] {
   opacity: 0;
   transform: translateY(14px);
@@ -118,7 +152,6 @@
 .ad-dashboard-page > .row.g-3 > [class*="col-"]:nth-child(2) { animation-delay: 0.34s; }
 .ad-dashboard-page > .row.g-3 > [class*="col-"]:nth-child(3) { animation-delay: 0.40s; }
 
-/* 減少動畫偏好 */
 @media (prefers-reduced-motion: reduce) {
   .ad-dashboard-page > *,
   .ad-dashboard-page > .row.g-3 > [class*="col-"] {
@@ -132,6 +165,12 @@
 /* 小螢幕微調 */
 @media (max-width: 992px) {
   .ad-table {
-    min-width: 900px;
+    min-width: 720px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ad-table {
+    min-width: 640px;
   }
 }

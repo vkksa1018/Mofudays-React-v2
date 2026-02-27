@@ -12,6 +12,7 @@
 
 // 入場動畫
 
+/* ===== 基本 Layout ===== */
 .ad-dashboard {
   --side-w: 240px;
   --side-w-collapsed: 76px;
@@ -56,8 +57,8 @@
   flex-direction: column;
   gap: 12px;
 
-  height: 100dvh;   // 不跟著 main 高度變動
-  overflow-y: auto; // sidebar 自己捲
+  height: 100dvh;
+  overflow-y: auto;
   overflow-x: hidden;
   scrollbar-gutter: stable;
 }
@@ -82,7 +83,9 @@
   color: #4a4a4a;
   flex-shrink: 0;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);
@@ -96,7 +99,7 @@
 
 .ad-side__logo {
   width: 100%;
-  height: 34px;
+  height: auto;
   display: grid;
   align-items: center;
   overflow: hidden;
@@ -106,18 +109,21 @@
     height: auto;
     display: block;
     transform-origin: left center;
-    transition: opacity var(--ad-transition), transform var(--ad-transition);
+    transition:
+      opacity var(--ad-transition),
+      transform var(--ad-transition);
   }
 }
 
-/* sidebar nav*/
+/* ===== sidebar nav ===== */
 .ad-side__nav {
   display: grid;
   gap: 6px;
 }
 
 .ad-side__link,
-.ad-side__linkBtn {
+.ad-side__linkBtn,
+.ad-side__groupBtn {
   width: 100%;
   display: flex;
   align-items: center;
@@ -139,17 +145,124 @@
 }
 
 .ad-side__link:hover,
-.ad-side__linkBtn:hover {
+.ad-side__linkBtn:hover,
+.ad-side__groupBtn:hover {
   background: rgba(255, 106, 0, 0.08);
 }
 
 .ad-side__link.is-active {
-  background: rgba(255, 106, 0, 0.10);
+  background: rgba(255, 106, 0, 0.1);
   color: $primary-500;
   outline: 1px solid rgba(255, 106, 0, 0.18);
 }
 
-/* 底部 */
+/* ===== 群組 toggle（訂單管理） ===== */
+.ad-side__group {
+  display: grid;
+  gap: 4px;
+}
+
+.ad-side__group.is-active > .ad-side__groupBtn {
+  background: rgba(255, 106, 0, 0.1);
+  color: $primary-500;
+  outline: 1px solid rgba(255, 106, 0, 0.18);
+}
+
+.ad-side__chev {
+  margin-left: auto;
+  flex-shrink: 0;
+  transition:
+    transform 220ms ease,
+    opacity 180ms ease;
+}
+
+.ad-side__group.is-open .ad-side__chev {
+  transform: rotate(180deg);
+}
+
+.ad-side__subNav {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height 260ms ease,
+    opacity 180ms ease,
+    transform 220ms ease;
+  padding-left: 10px;
+}
+
+.ad-side__group.is-open .ad-side__subNav {
+  max-height: 220px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 子選單每列本身也做進場 */
+.ad-side__sublink {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px 9px 14px;
+  border-radius: 10px;
+  color: #5a5a5a;
+  text-decoration: none;
+  font-weight: 600;
+
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    padding var(--ad-transition),
+    gap var(--ad-transition);
+
+  &:hover {
+    background: rgba(255, 106, 0, 0.06);
+    color: $primary-500;
+  }
+
+  &.is-active {
+    background: rgba(255, 106, 0, 0.1);
+    color: $primary-500;
+  }
+}
+
+/* 展開後，子項目再顯示 */
+.ad-side__group.is-open .ad-side__sublink {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ad-side__group.is-open .ad-side__sublink:nth-child(1) {
+  transition-delay: 40ms;
+}
+
+.ad-side__group.is-open .ad-side__sublink:nth-child(2) {
+  transition-delay: 80ms;
+}
+
+.ad-side__group.is-open .ad-side__sublink:nth-child(3) {
+  transition-delay: 120ms;
+}
+
+.ad-side__subIcon {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ad-side__sublink:hover .ad-side__subIcon,
+.ad-side__sublink.is-active .ad-side__subIcon {
+  opacity: 1;
+}
+
+/* ===== 底部 ===== */
 .ad-side__bottom {
   margin-top: auto;
   display: grid;
@@ -190,7 +303,9 @@
   background: #fafafa;
   border: 1px solid rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  transition: padding var(--ad-transition), gap var(--ad-transition);
+  transition:
+    padding var(--ad-transition),
+    gap var(--ad-transition);
 }
 
 .ad-side__avatar {
@@ -244,7 +359,6 @@
   flex-shrink: 0;
 }
 
-
 /* ===== 收合狀態（桌機） ===== */
 .ad-dashboard.is-side-collapsed .ad-side {
   padding-inline: 10px;
@@ -260,7 +374,8 @@
 }
 
 .ad-dashboard.is-side-collapsed .ad-side__link,
-.ad-dashboard.is-side-collapsed .ad-side__mini {
+.ad-dashboard.is-side-collapsed .ad-side__mini,
+.ad-dashboard.is-side-collapsed .ad-side__groupBtn {
   justify-content: center;
   gap: 0;
   padding-inline: 8px;
@@ -283,13 +398,24 @@
   padding-inline: 0.5rem !important;
 }
 
+/* 收合時：子選單不顯示 */
+.ad-dashboard.is-side-collapsed .ad-side__subNav {
+  display: none;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__chev {
+  opacity: 0;
+  width: 0;
+  margin-left: 0;
+}
+
 /* ===== Main 右側內容 ===== */
 .ad-main {
   min-width: 0;
   min-height: 0;
-  height: 100dvh;     // main 自己捲動
+  height: 100dvh;
   overflow: auto;
-  overflow-x: hidden; // 不要整頁水平卷軸
+  overflow-x: hidden;
   scrollbar-gutter: stable both-edges;
 
   background:
@@ -352,26 +478,47 @@
 }
 
 /* nav stagger */
-.ad-side__nav > *:nth-child(1) { animation-delay: 0.20s; }
-.ad-side__nav > *:nth-child(2) { animation-delay: 0.26s; }
-.ad-side__nav > *:nth-child(3) { animation-delay: 0.32s; }
-.ad-side__nav > *:nth-child(4) { animation-delay: 0.38s; }
-.ad-side__nav > *:nth-child(5) { animation-delay: 0.44s; }
-.ad-side__nav > *:nth-child(6) { animation-delay: 0.50s; }
+.ad-side__nav > *:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.ad-side__nav > *:nth-child(2) {
+  animation-delay: 0.26s;
+}
+.ad-side__nav > *:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.ad-side__nav > *:nth-child(4) {
+  animation-delay: 0.38s;
+}
+.ad-side__nav > *:nth-child(5) {
+  animation-delay: 0.44s;
+}
+.ad-side__nav > *:nth-child(6) {
+  animation-delay: 0.5s;
+}
 
-/* bottom stagger（通知 / 設定 / user / 登出） */
-.ad-side__bottom > *:nth-child(1) { animation-delay: 0.52s; }
-.ad-side__bottom > *:nth-child(2) { animation-delay: 0.58s; }
-.ad-side__bottom > *:nth-child(3) { animation-delay: 0.64s; }
-.ad-side__bottom > *:nth-child(4) { animation-delay: 0.70s; }
-.ad-side__bottom > *:nth-child(5) { animation-delay: 0.76s; }
+/* bottom stagger */
+.ad-side__bottom > *:nth-child(1) {
+  animation-delay: 0.52s;
+}
+.ad-side__bottom > *:nth-child(2) {
+  animation-delay: 0.58s;
+}
+.ad-side__bottom > *:nth-child(3) {
+  animation-delay: 0.64s;
+}
+.ad-side__bottom > *:nth-child(4) {
+  animation-delay: 0.7s;
+}
+.ad-side__bottom > *:nth-child(5) {
+  animation-delay: 0.76s;
+}
 
 /* 手機版 drawer 開啟時，不要重播進場（避免每次打開都閃） */
 @media (max-width: 992px) {
   .ad-side.is-mobile-open .ad-side__brand,
   .ad-side.is-mobile-open .ad-side__nav > *,
   .ad-side.is-mobile-open .ad-side__bottom > * {
-    /* 如果想每次開抽屜都播放動畫，可把下面兩行刪掉 */
     animation-play-state: running;
   }
 }
@@ -385,7 +532,9 @@
   .ad-side__userMeta,
   .ad-side__brand,
   .ad-side__nav > *,
-  .ad-side__bottom > * {
+  .ad-side__bottom > *,
+  .ad-side__subNav,
+  .ad-side__chev {
     transition: none !important;
     animation: none !important;
     opacity: 1 !important;
@@ -499,7 +648,8 @@
   }
 
   .ad-dashboard.is-side-collapsed .ad-side__link,
-  .ad-dashboard.is-side-collapsed .ad-side__mini {
+  .ad-dashboard.is-side-collapsed .ad-side__mini,
+  .ad-dashboard.is-side-collapsed .ad-side__groupBtn {
     justify-content: flex-start;
     gap: 10px;
     padding-inline: 10px;
@@ -516,6 +666,15 @@
     max-width: 180px;
     opacity: 1;
     transform: translateX(0);
-    
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__subNav {
+    display: block;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__chev {
+    opacity: 1;
+    width: auto;
+    margin-left: auto;
   }
 }

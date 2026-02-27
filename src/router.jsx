@@ -1,4 +1,9 @@
-import { createHashRouter, Navigate, useLocation } from "react-router-dom";
+import {
+  createHashRouter,
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 
 // layouts（ 這些檔案都要記得import並放 <Outlet /> ）
 import FrontLayout from "./layout/FrontEndLayout";
@@ -33,8 +38,6 @@ import ResubscribePreview from "./pages/FrontEndLayout/UserCenter/components/Res
 import Login from "./pages/FrontEndLayout/Login/Login";
 import Signup from "./pages/FrontEndLayout/Signup/Signup";
 
-// Admin pages（先做 placeholder 也行）
-// 先放 Dashboard 占位，後續再補其他後台頁
 // import AdminDashboard from "./pages/BackEndLayout/AdminDashboard/AdminDashboard";
 import {
   AdminLogin,
@@ -43,6 +46,10 @@ import {
   AdminSubscriptions,
   AdminInfos,
   AdminUsers,
+  AdminPlans,
+  AdminToys,
+  AdminTreats,
+  AdminHousehold,
 } from "./pages/BackEndLayout/adminRouterIndex";
 
 // 404
@@ -187,13 +194,10 @@ export const router = createHashRouter([
   {
     path: "/admin",
     children: [
-      // 後台登入
       {
         element: <AdminAuthLayout />,
         children: [{ path: "login", element: <AdminLogin /> }],
       },
-
-      // 後台入口
       {
         element: (
           <RequireAdmin>
@@ -203,12 +207,43 @@ export const router = createHashRouter([
         children: [
           { index: true, element: <Navigate to="dashboard" replace /> },
           { path: "dashboard", element: <AdminDashboard /> },
-          { path: "orders", element: <AdminOrders /> },
-          { path: "subscriptions", element: <AdminSubscriptions /> },
-          { path: "admins", element: <AdminInfos /> },
-          { path: "users", element: <AdminUsers /> },
-          // { path: "notifications", element: <AdminNotifications /> },
-          // { path: "settings", element: <AdminSettings /> },
+
+          // 訂單管理群組
+          {
+            path: "orders",
+            element: <Outlet />,
+            children: [
+              { index: true, element: <AdminOrders /> },
+              { path: "plans", element: <AdminPlans /> },
+              { path: "subscriptions", element: <AdminSubscriptions /> },
+            ],
+          },
+
+          // 會員管理群組
+          {
+            path: "users",
+            element: <Outlet />,
+            children: [{ index: true, element: <AdminUsers /> }],
+          },
+
+          // 管理員管理群組
+          {
+            path: "admins",
+            element: <Outlet />,
+            children: [{ index: true, element: <AdminInfos /> }],
+          },
+
+          // 庫存管理群組
+          {
+            path: "inventory",
+            element: <Outlet />,
+            children: [
+              { index: true, element: <Navigate to="toys" replace /> },
+              { path: "toys", element: <AdminToys /> },
+              { path: "treats", element: <AdminTreats /> },
+              { path: "household", element: <AdminHousehold /> },
+            ],
+          },
         ],
       },
     ],

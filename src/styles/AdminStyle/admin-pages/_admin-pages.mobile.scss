@@ -1,0 +1,16 @@
+/* 手機按鈕群組微調 */
+@media (max-width: 576px) {
+  .admin-pages .btn-group > .btn {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .admin-pages .admin-pages__detailCard {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .admin-pages .btn-detail-modal {
+    width: 100%;
+    justify-content: center;
+  }
+}

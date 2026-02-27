@@ -1,0 +1,140 @@
+/* ===== 進場動畫 ===== */
+
+.admin-pages {
+  
+  @keyframes admin-page-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  /* 進場動畫：title / filters / results / pagination */
+  > .admin-pages__title,
+  > .admin-pages__filters,
+  > .admin-pages__results,
+  > .admin-pages__pagination {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: admin-page-fade-up 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
+  }
+
+  > .admin-pages__title {
+    animation-delay: 0.16s;
+  }
+  > .admin-pages__filters {
+    animation-delay: 0.24s;
+  }
+  > .admin-pages__results {
+    animation-delay: 0.32s;
+  }
+  > .admin-pages__pagination {
+    animation-delay: 0.4s;
+  }
+
+  /* ----- 共用：簡單收闔（OrderFormModal / OrderFormDetail）----- */
+  &__collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 220ms ease;
+    opacity: 0.98; // 避免某些瀏覽器閃爍
+    will-change: grid-template-rows, opacity;
+  }
+
+  &__collapse.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  /* 包住實際內容，負責裁切高度 */
+  &__collapseInner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* 內容本體：做淡入 / 位移 */
+  &__collapseContent {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 360ms ease,
+      transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+    
+  }
+
+  &__collapse.is-open .admin-pages__collapseContent {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 30ms; // 先展開高度，再淡入內容，視覺更順
+  }
+
+  /* 簡單收闔按鈕（你目前用 btn-outline-secondary） */
+  &__collapseToggle {
+    border-radius: 0.65rem;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 120ms ease,
+      box-shadow 160ms ease;
+  }
+
+  &__collapseToggle:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  &__collapseToggle:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* 小箭頭旋轉（如果你用 <span className="admin-pages__collapseCaret">▸</span>） */
+  &__collapseCaret {
+    display: inline-block;
+    line-height: 1;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center;
+  }
+
+  .admin-pages__collapseToggle[aria-expanded="true"] .admin-pages__collapseCaret {
+    transform: rotate(90deg);
+  }
+
+  /* table 區塊展開時避免內容突然溢出（修正 selector） */
+  &__collapseContent .table-responsive {
+    margin-bottom: 0;
+  }
+}
+
+/* 尊重減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .admin-pages > .admin-pages__title,
+  .admin-pages > .admin-pages__filters,
+  .admin-pages > .admin-pages__results,
+  .admin-pages > .admin-pages__pagination,
+  .admin-pages .modal.show .modal-dialog {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* 補：收闔動畫關閉 */
+  .admin-pages .admin-pages__collapse,
+  .admin-pages .admin-pages__collapseContent,
+  .admin-pages .admin-pages__collapseCaret,
+  .admin-pages .admin-pages__collapseToggle {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

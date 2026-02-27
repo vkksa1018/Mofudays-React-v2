@@ -36,7 +36,9 @@ function pad(n) {
 function genOrderId(existingOrders = []) {
   const d = new Date();
   const ymd = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
-  const existingIds = new Set((existingOrders || []).map((o) => String(o?.id ?? "")));
+  const existingIds = new Set(
+    (existingOrders || []).map((o) => String(o?.id ?? "")),
+  );
 
   let candidate = "";
   let tryCount = 0;
@@ -58,12 +60,16 @@ function toIsoFromDateTimeLocal(value, fallback = "") {
 }
 
 function syncSubscriptionsSummary(existingSubscriptions, summary) {
-  const list = Array.isArray(existingSubscriptions) ? [...existingSubscriptions] : [];
+  const list = Array.isArray(existingSubscriptions)
+    ? [...existingSubscriptions]
+    : [];
   if (list.length === 0) return list;
 
   const first = { ...list[0] };
-  first.shippingStatus = summary.shippingStatus ?? first.shippingStatus ?? "待出貨";
-  first.subscriptionStatus = summary.subscriptionStatus ?? first.subscriptionStatus ?? "訂閱中";
+  first.shippingStatus =
+    summary.shippingStatus ?? first.shippingStatus ?? "待出貨";
+  first.subscriptionStatus =
+    summary.subscriptionStatus ?? first.subscriptionStatus ?? "訂閱中";
 
   if (!first.startDate && summary.orderDateISO) {
     first.startDate = String(summary.orderDateISO).slice(0, 10);
@@ -86,7 +92,8 @@ export default function AdminOrders() {
   const [editing, setEditing] = useState(null);
 
   // filters
-  const { filters, setFilter, clearFilters, hasActiveFilters, visibleOrders } = useOrderFilters(orders);
+  const { filters, setFilter, clearFilters, hasActiveFilters, visibleOrders } =
+    useOrderFilters(orders);
 
   // pagination
   const {
@@ -127,25 +134,51 @@ export default function AdminOrders() {
     fetchOrders();
   }, []);
 
+  // 新增訂單 => 2026/02/26 增加預設orderNo
   const openCreate = () => {
+    const draftOrderNo = genOrderId(orders);
+    const now = nowISO();
+
     setMode("create");
-    setEditing(null);
+    setEditing({
+      orderNo: draftOrderNo,
+      orderDate: now,
+
+      termCycles: 3,
+      perCycleAmount: 0,
+      orderTotalAmount: 0,
+
+      paymentStatus: "待付款",
+      orderStatus: "待確認",
+
+      buyerInfo: {
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+      },
+
+      note: "",
+      createdAt: now,
+      updatedAt: now,
+    });
+
     setFlash(null);
     setOpen(true);
   };
-
+  // 修改訂單
   const openEdit = (order) => {
     setMode("edit");
     setEditing(order);
     setFlash(null);
     setOpen(true);
   };
-
+  // 關閉 Modal
   const closeModal = () => {
     setOpen(false);
     setEditing(null);
   };
-
+  // 取消訂單(軟刪除)
   const cancel = async (order) => {
     if (!order?.id) return;
 
@@ -176,7 +209,7 @@ export default function AdminOrders() {
       });
     }
   };
-
+  // 取消後復原訂單
   const restore = async (order) => {
     if (!order?.id) return;
 
@@ -204,10 +237,9 @@ export default function AdminOrders() {
       });
     }
   };
-
+  //存檔
   const handleSave = async (data) => {
     setFlash(null);
-
     const buyerInfo = {
       name: String(data.buyerName ?? "").trim(),
       email: String(data.buyerEmail ?? "").trim(),
@@ -215,11 +247,15 @@ export default function AdminOrders() {
       address: String(data.buyerAddress ?? "").trim(),
     };
 
-    const orderDateISO = toIsoFromDateTimeLocal(data.orderDate, editing?.orderDate || nowISO());
+    const orderDateISO = toIsoFromDateTimeLocal(
+      data.orderDate,
+      editing?.orderDate || nowISO(),
+    );
 
     const summaryStatuses = {
       shippingStatus: String(data.shippingStatus ?? "").trim() || "待出貨",
-      subscriptionStatus: String(data.subscriptionStatus ?? "").trim() || "訂閱中",
+      subscriptionStatus:
+        String(data.subscriptionStatus ?? "").trim() || "訂閱中",
       orderDateISO,
     };
 
@@ -235,7 +271,7 @@ export default function AdminOrders() {
       orderTotalAmount: toNum(data.orderTotalAmount, 0),
       currency: String(data.currency ?? "").trim() || "TWD",
 
-      paymentStatus: String(data.paymentStatus ?? "").trim() || "已付款",
+      paymentStatus: String(data.paymentStatus ?? "").trim() || "待付款",
       orderStatus: String(data.orderStatus ?? "").trim() || "待確認",
       shippingStatus: summaryStatuses.shippingStatus,
       subscriptionStatus: summaryStatuses.subscriptionStatus,
@@ -245,17 +281,19 @@ export default function AdminOrders() {
 
       note: String(data.note ?? "").trim(),
 
-      // ✅ 避免 Boolean(undefined) 變 false
       isActive: data?.isActive === false ? false : true,
       updatedAt: nowISO(),
     };
 
     try {
       if (mode === "create") {
-        const generatedId = payloadCommon.orderNo || genOrderId(orders);
+        const generatedId =
+          String(data.orderNo ?? "").trim() ||
+          String(editing?.orderNo ?? "").trim() ||
+          genOrderId(orders);
 
         const createBody = {
-          ...payloadCommon, // ✅ 先展開，避免把下面的 orderNo 蓋掉
+          ...payloadCommon,
           id: generatedId,
           orderNo: generatedId,
           subscriptionPlans: [],
@@ -275,10 +313,13 @@ export default function AdminOrders() {
         const nextOrderStatus = payloadCommon.orderStatus;
 
         if (!canTransitionOrderStatus(prevOrderStatus, nextOrderStatus)) {
-          throw "此訂單狀態不可這樣變更（例如已完成/已取消不可再修改狀態）";
+          throw "此訂單狀態不可這樣變更";
         }
 
-        const nextSubscriptions = syncSubscriptionsSummary(editing?.subscriptions, summaryStatuses);
+        const nextSubscriptions = syncSubscriptionsSummary(
+          editing?.subscriptions,
+          summaryStatuses,
+        );
 
         const patchBody = {
           ...payloadCommon,
@@ -286,7 +327,11 @@ export default function AdminOrders() {
           subscriptions: nextSubscriptions,
         };
 
-        await axios.patch(`${API_BASE}/orders/${editing.id}`, patchBody, authHeaders());
+        await axios.patch(
+          `${API_BASE}/orders/${editing.id}`,
+          patchBody,
+          authHeaders(),
+        );
         setFlash({ type: "success", message: "更新訂單成功！" });
       }
 

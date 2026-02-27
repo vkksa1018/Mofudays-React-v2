@@ -1,0 +1,229 @@
+/* ----- Modal ----- */
+.admin-pages {
+  .admin-modal__backdrop {
+    background: rgba(0, 0, 0, 0.35);
+    padding-inline: 0.5rem;
+  }
+
+  .admin-modal__dialog {
+    width: 100%;
+    max-width: min(1280px, calc(100vw - 2rem));
+    margin: 0.75rem auto;
+  }
+
+  .admin-modal__content {
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    background: #fff;
+    max-height: calc(100dvh - 1.5rem);
+  }
+
+  .admin-modal__header.modal-header {
+    padding: 0.5rem 0.9rem;
+    min-height: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  /* Header 主容器：左右分開 + 垂直置中 */
+  .admin-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.75rem;
+  }
+
+  /* 左邊標題區（通用） */
+  .admin-modal__titleBar {
+    display: flex;
+    align-items: start;
+    gap: 0.5rem;
+    min-width: 0; /* 避免長字把右側按鈕擠掉 */
+    flex: 1 1 auto;
+  }
+
+  /* 標題文字（通用） */
+  .admin-modal__title {
+    display: flex;
+    align-items: center;
+    min-height: 30px; /* 對齊右側關閉按鈕高度 */
+    margin: 0;
+    line-height: 1.2;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .admin-modal__body.modal-body {
+    padding: 1rem;
+    min-height: 0;
+    overflow-y: auto;
+
+    @media (min-width: 992px) {
+      padding: 1.25rem 1.25rem 1rem;
+    }
+  }
+
+  .admin-modal__footer.modal-footer {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0.9rem 1rem 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media (min-width: 992px) {
+      padding: 1rem 1.25rem 1.1rem;
+    }
+  }
+
+  .admin-modal__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+  }
+
+  .btn-modal-delete {
+    border: 1px solid $primary-500;
+    background-color: $primary-500 !important;
+    color: $white !important;
+  }
+
+  .btn-modal-delete:hover,
+  .btn-modal-delete:active {
+    border: 1px solid $primary-300;
+    color: $white !important;
+    background-color: $primary-300 !important;
+  }
+
+  .btn-modal-edit {
+    border: 1px solid $tertiary-500;
+    background-color: $tertiary-500 !important;
+    color: $white !important;
+  }
+
+  .btn-modal-edit:hover,
+  .btn-modal-edit:active {
+    border: 1px solid $tertiary-500;
+    color: $white !important;
+    background-color: $tertiary-300 !important;
+  }
+
+  .btn-detail-modal {
+    border: 1px solid $brown-500;
+    background-color: $brown-500 !important;
+    color: $white !important;
+  }
+
+  .btn-detail-modal:hover,
+  .btn-detail-modal:active {
+    border: 1px solid $brown-300;
+    color: $white !important;
+    background-color: $brown-300 !important;
+  }
+
+  .admin-pages__detailCard {
+    height: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.85rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  }
+
+  .admin-pages__detailLabel {
+    font-size: 0.82rem;
+    color: $neutral-500;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .admin-pages__detailValue {
+    color: $brown-500;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .admin-pages__detailNote {
+    border-radius: 0.75rem;
+    background: rgba(141, 110, 99, 0.06);
+  }
+
+  .ad-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    flex: 0 0 auto;
+  }
+
+  .ad-dot--primary {
+    background-color: #0d6efd;
+  }
+
+  .ad-dot--success {
+    background-color: #198754;
+  }
+
+  .ad-dot--danger {
+    background-color: #dc3545;
+  }
+
+  .ad-dot--warning {
+    background-color: #ffc107;
+  }
+
+  .ad-dot--info {
+    background-color: #0dcaf0;
+  }
+
+  .ad-dot--secondary {
+    background-color: #6c757d;
+  }
+
+  // .admin-modal__closeBtn {
+  //   width: 30px;
+  //   height: 30px;
+  //   border: 0;
+  //   border-radius: 0.5rem;
+  //   background: $brown-500;
+  //   color: #fff;
+  //   display: inline-flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   padding: 0;
+  //   cursor: pointer;
+  //   transition:
+  //     background-color 160ms ease,
+  //     transform 160ms ease;
+  //   flex: 0 0 auto;
+  // }
+
+  // .admin-modal__closeBtn:hover {
+  //   background: $brown-300;
+  // }
+
+  // .admin-modal__closeBtn:active {
+  //   background: $brown-300;
+  //   transform: scale(0.96);
+  // }
+
+  // .admin-modal__closeBtn:disabled {
+  //   opacity: 0.55;
+  //   cursor: not-allowed;
+  // }
+
+  @media (max-width: 576px) {
+    .admin-modal__header.modal-header {
+      padding: 0.45rem 0.7rem;
+    }
+  }
+}

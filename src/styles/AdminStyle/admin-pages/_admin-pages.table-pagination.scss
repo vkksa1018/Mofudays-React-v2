@@ -1,0 +1,149 @@
+/* ----- 搜尋結果 table（乾淨版、避免互相覆蓋） ----- */
+.admin-pages {
+  /* 外層不要吃掉橫向捲動 */
+  &__panel {
+    overflow: visible;
+  }
+
+  /* 橫向捲動容器 */
+  &__tableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  &__table {
+    /* 覆蓋 Bootstrap table 內建變數 */
+    --bs-table-bg: #{$white};
+    --bs-table-striped-bg: #{$white};
+    --bs-table-active-bg: #{$white};
+    --bs-table-hover-bg: #{$brown-300};
+
+    width: max-content;
+    min-width: 100%;
+    table-layout: auto !important;
+
+    @media (max-width: 576px) {
+      min-width: 980px;
+    }
+
+    thead th {
+      background: $brown-500;
+      color: $white;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      font-weight: 700;
+      vertical-align: middle;
+      white-space: nowrap;
+      padding: 0.95rem 1rem;
+
+      @media (min-width: 992px) {
+        padding: 1.05rem 1.25rem;
+      }
+    }
+
+    tbody tr {
+      background-color: $white;
+      transition: background-color 160ms ease-in-out;
+    }
+
+    tbody tr > * {
+      background-color: $white;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      vertical-align: middle;
+      padding: 0.95rem 1rem;
+      font-weight: 500;
+
+      @media (min-width: 992px) {
+        padding: 1.05rem 1.25rem;
+      }
+    }
+
+    tbody tr:hover,
+    tbody tr:hover > * {
+      background-color: #f1f3f5;
+    }
+  }
+
+  &__colActions {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  &__tdActions {
+    width: 200px;
+    min-width: 200px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  &__table td.admin-pages__tdActions .admin-pages__actions {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+  }
+
+  &__table td.admin-pages__tdActions .admin-pages__actions > .btn,
+  &__restoreBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+
+    width: auto !important;
+    min-width: 84px;
+
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    line-break: strict !important;
+
+    /* 保險：避免被奇怪的 writing-mode 影響 */
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+  }
+
+  &__btnText {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+
+  /* buttons */
+  .btn-bg-delete {
+    border: 1px solid $primary-500;
+    background-color: $primary-500 !important;
+    color: $white !important;
+  }
+
+  .btn-bg-delete:hover,
+  .btn-bg-delete:active {
+    border: 1px solid $primary-300;
+    color: $white !important;
+    background-color: $primary-300 !important;
+  }
+
+  .btn-bg-edit {
+    border: 1px solid $tertiary-500;
+    background-color: $tertiary-500 !important;
+    color: $white !important;
+  }
+
+  .btn-bg-edit:hover,
+  .btn-bg-edit:active {
+    border: 1px solid $tertiary-300;
+    color: $white !important;
+    background-color: $tertiary-300 !important;
+  }
+
+  .badge-bg-notActive{
+    background-color: $secondary-500;
+  }
+  .badge-bg-isActive{
+    background-color: $tertiary-500;
+  }
+}
