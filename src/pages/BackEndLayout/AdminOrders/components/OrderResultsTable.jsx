@@ -38,7 +38,7 @@ export default function OrderResultsTable({
               <tr className="small">
                 <th className="text-center text-nowrap">操作</th>
                 <th className="text-center text-nowrap">訂閱編號</th>
-                <th className="text-center text-nowrap">訂單編號</th>
+                <th className="text-center text-nowrap">客戶名稱</th>
                 <th className="text-center text-nowrap">付款狀態</th>
                 <th className="text-center text-nowrap">訂單狀態</th>
                 <th className="text-center text-nowrap">總額</th>

@@ -90,10 +90,11 @@ export default function AdminDashboard() {
 
         // 初次載入失敗時給一顆 toast（避免重複可加 toastId）
         adminToast.error(message, { toastId: "dashboard-init-fail" });
-      } finally {
-        if (!alive) return;
-        setLoading(false);
-      }
+      } 
+      // finally {
+      //   if (!alive) return;
+      //   setLoading(false);
+      // }
     };
 
     init();
@@ -171,11 +172,11 @@ export default function AdminDashboard() {
   };
 
   // 功能尚未開放按鈕
-  const handleFeatureComingSoon = (label = "此功能") => {
-    adminToast.info(`${label}功能尚未開放`, {
-      toastId: `coming-soon:${label}`,
-    });
-  };
+  // const handleFeatureComingSoon = (label = "此功能") => {
+  //   adminToast.info(`${label}功能尚未開放`, {
+  //     toastId: `coming-soon:${label}`,
+  //   });
+  // };
 
   return (
     <div className={`ad-main__inner ad-dashboard-page ${loading ? "is-loading" : "is-ready"}`}>

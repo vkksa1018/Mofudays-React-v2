@@ -36,7 +36,7 @@ export default function OrderFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.orderNo}
                     onChange={setFilter("orderNo")}
-                    placeholder="MOF20260109-0001"
+                    placeholder=""
                   />
                 </div>
               </div>

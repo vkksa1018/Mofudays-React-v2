@@ -31,7 +31,7 @@ export default function SubscriptionFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.subscriptionId}
                     onChange={setFilter("subscriptionId")}
-                    placeholder="SUB-20260109-0001"
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -47,7 +47,7 @@ export default function SubscriptionFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.orderId}
                     onChange={setFilter("orderId")}
-                    placeholder="MOF20260109-0001"
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default function SubscriptionFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.planName}
                     onChange={setFilter("planName")}
-                    placeholder="基礎型｜小型幼犬盒"
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function SubscriptionFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.shippingStatus}
                     onChange={setFilter("shippingStatus")}
-                    placeholder="待出貨 / 已出貨1/3"
+                    placeholder=""
                   />
                 </div>
               </div>

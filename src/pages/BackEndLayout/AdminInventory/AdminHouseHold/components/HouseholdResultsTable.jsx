@@ -25,7 +25,7 @@ export default function HouseholdResultsTable({
                 <th style={{ width: 180 }}></th>
                 <th className="text-center">品項名稱</th>
                 <th className="text-center">分類</th>
-                <th className="text-center">Tag</th>
+                <th className="text-center">標籤</th>
                 <th className="text-center" style={{ width: 90 }}>
                   啟用
                 </th>

@@ -95,7 +95,7 @@ export default function ToyFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 
@@ -144,7 +144,7 @@ export default function ToyFormModal({
               )}
 
               <div className="row g-4">
-                <div className="col-12">
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       玩具名稱
@@ -162,73 +162,19 @@ export default function ToyFormModal({
                     </div>
                   </div>
                 </div>
-
                 <div className="col-12 col-xl-4">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      體型
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup
-                        name="petSize"
-                        options={PET_SIZE_OPTIONS}
-                        register={register}
-                        error={errors.petSize}
-                        baseId="toy_petSize"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      年齡
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup
-                        name="dietStage"
-                        options={DIET_STAGE_OPTIONS}
-                        register={register}
-                        error={errors.dietStage}
-                        baseId="toy_dietStage"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      玩法
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup
-                        name="playStyle"
-                        options={PLAY_STYLE_OPTIONS}
-                        register={register}
-                        error={errors.playStyle}
-                        baseId="toy_playStyle"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
                   <div className="row g-2 admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       描述
                     </label>
                     <div className="col-12 col-sm-10">
                       <textarea
-                        rows="4"
                         className="form-control form-control-sm"
                         {...register("description")}
                       />
                     </div>
                   </div>
                 </div>
-
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
@@ -267,6 +213,57 @@ export default function ToyFormModal({
                           </label>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      體型
+                    </label>
+                    <div className="col-12 col-sm-10 align-items-center pt-sm-3">
+                      <CheckboxGroup
+                        name="petSize"
+                        options={PET_SIZE_OPTIONS}
+                        register={register}
+                        error={errors.petSize}
+                        baseId="toy_petSize"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      年齡
+                    </label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup
+                        name="dietStage"
+                        options={DIET_STAGE_OPTIONS}
+                        register={register}
+                        error={errors.dietStage}
+                        baseId="toy_dietStage"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      玩法
+                    </label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup
+                        name="playStyle"
+                        options={PLAY_STYLE_OPTIONS}
+                        register={register}
+                        error={errors.playStyle}
+                        baseId="toy_playStyle"
+                      />
                     </div>
                   </div>
                 </div>
