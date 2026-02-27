@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
 
-export default function SubscriptionModal({
+export default function SubscriptionDetailModal({
   subscription,
   defaultOpen = false,
+  treatNameById = {},
+  toyNameById = {},
+  householdNameById = {},
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -19,13 +22,22 @@ export default function SubscriptionModal({
         snacks: renderContentItems(
           subscription?.planContent?.snacks,
           "treatId",
+          { treatNameById, toyNameById, householdNameById },
         ),
-        cans: renderContentItems(subscription?.planContent?.cans, "treatId"),
-        toys: renderContentItems(subscription?.planContent?.toys, "toyId"),
+        households: renderContentItems(
+          subscription?.planContent?.cans,
+          "householdsId",
+          { treatNameById, toyNameById, householdNameById },
+        ),
+        toys: renderContentItems(subscription?.planContent?.toys, "toyId", {
+          treatNameById,
+          toyNameById,
+          householdNameById,
+        }),
         status: getCycleStatus(subscription, cycleNo),
       };
     });
-  }, [subscription]);
+  }, [subscription, treatNameById, toyNameById, householdNameById]);
 
   if (!subscription) return null;
 
@@ -53,10 +65,10 @@ export default function SubscriptionModal({
       >
         <div className="admin-pages__collapseInner">
           <div className="admin-pages__collapseContent">
-            <div className="admin-pages__detailNote alert alert-light border small mb-3">
+            {/* <div className="admin-pages__detailNote alert alert-light border small mb-3">
               目前 db.json 的 subscription 只有一份 <code>planContent</code>，
               所以下方先以「每期共用同一份內容」的方式呈現。
-            </div>
+            </div> */}
 
             <div className="row g-3 mb-3">
               <div className="col-12 col-md-4">
@@ -96,8 +108,8 @@ export default function SubscriptionModal({
                   <tr className="small">
                     <th className="text-center text-nowrap">期數</th>
                     <th className="text-center text-nowrap">點心</th>
-                    <th className="text-center text-nowrap">主食罐</th>
                     <th className="text-center text-nowrap">玩具</th>
+                    <th className="text-center text-nowrap">生活小物</th>
                     <th className="text-center text-nowrap">本期狀態</th>
                   </tr>
                 </thead>
@@ -113,11 +125,11 @@ export default function SubscriptionModal({
                     cycleRows.map((row) => (
                       <tr key={row.cycleNo}>
                         <td className="text-center text-nowrap fw-semibold">
-                          第 {row.cycleNo} 期
+                           {row.cycleNo} 
                         </td>
                         <td className="text-center">{row.snacks}</td>
-                        <td className="text-center">{row.cans}</td>
                         <td className="text-center">{row.toys}</td>
+                        <td className="text-center">{row.households}</td>
                         <td className="text-center text-nowrap">
                           {row.status}
                         </td>
@@ -134,10 +146,35 @@ export default function SubscriptionModal({
   );
 }
 
-function renderContentItems(items = [], idKey) {
+function renderContentItems(items = [], idKey, maps = {}) {
   if (!Array.isArray(items) || items.length === 0) return "—";
+
+  const { treatNameById = {}, toyNameById = {}, householdNameById = {} } = maps;
+
   return items
-    .map((item) => `${item?.[idKey] ?? "?"} × ${item?.qty ?? 0}`)
+    .map((item) => {
+      const qty = Number(item?.qty ?? 0);
+
+      if (idKey === "treatId") {
+        const id = String(item?.treatId ?? "");
+        const name = String(item?.treatName ?? treatNameById[id] ?? "");
+        return `${name ? `${name} ` : ""}× ${qty}`;
+      }
+
+      if (idKey === "toyId") {
+        const id = String(item?.toyId ?? "");
+        const name = String(item?.toyName ?? toyNameById[id] ?? "");
+        return `${name ? `${name} ` : ""}× ${qty}`;
+      }
+
+      if (idKey === "householdId") {
+        const id = String(item?.householdId ?? "");
+        const name = String(item?.householdName ?? householdNameById[id] ?? "");
+        return `${name ? `${name} ` : ""}× ${qty}`;
+      }
+
+      return `× ${qty}`;
+    })
     .join("、");
 }
 

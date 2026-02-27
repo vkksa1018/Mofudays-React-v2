@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectAdminAuth } from "../../../slices/adminAuthSlice";
@@ -76,6 +76,10 @@ export default function AdminSubscriptions() {
   const [mode, setMode] = useState("create");
   const [editing, setEditing] = useState(null);
 
+  const [treats, setTreats] = useState([]);
+  const [toys, setToys] = useState([]);
+  const [household, setHousehold] = useState([]);
+
   const {
     filters,
     setFilter,
@@ -119,9 +123,57 @@ export default function AdminSubscriptions() {
     }
   };
 
+  const fetchCatalog = async () => {
+    try {
+      const [treatRes, toyRes, householdRes] = await Promise.all([
+        axios.get(`${API_BASE}/treats`, authHeaders()),
+        axios.get(`${API_BASE}/toys`, authHeaders()),
+        axios.get(`${API_BASE}/household`, authHeaders()),
+      ]);
+
+      setTreats(Array.isArray(treatRes.data) ? treatRes.data : []);
+      setToys(Array.isArray(toyRes.data) ? toyRes.data : []);
+      setHousehold(Array.isArray(householdRes.data) ? householdRes.data : []);
+    } catch (e) {
+      setTreats([]);
+      setToys([]);
+      setHousehold([]);
+    }
+  };
+
   useEffect(() => {
     fetchSubscriptions();
+    fetchCatalog();
   }, []);
+
+  const treatNameById = useMemo(() => {
+    const map = {};
+    for (const t of treats) {
+      const id = String(t?.id ?? "");
+      if (!id) continue;
+      map[id] = String(t?.treatName ?? "");
+    }
+    return map;
+  }, [treats]);
+
+  const toyNameById = useMemo(() => {
+    const map = {};
+    for (const t of toys) {
+      const id = String(t?.id ?? "");
+      if (!id) continue;
+      map[id] = String(t?.toyName ?? "");
+    }
+    return map;
+  }, [toys]);
+  const householdNameById = useMemo(() => {
+    const map = {};
+    for (const h of household) {
+      const id = String(h?.id ?? "");
+      if (!id) continue;
+      map[id] = String(h?.householdName ?? "");
+    }
+    return map;
+  }, [household]);
 
   const openCreate = () => {
     const draftId = genSubscriptionId(subscriptions);
@@ -363,6 +415,9 @@ export default function AdminSubscriptions() {
         initialData={editing}
         onClose={closeModal}
         onSave={handleSave}
+        treatNameById={treatNameById}
+        toyNameById={toyNameById}
+        householdNameById={householdNameById}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import SubscriptionModal from "./SubscriptionModal";
+import SubscriptionDetailModal from "./SubscriptionDetailModal";
 
 const SUBSCRIPTION_STATUS_OPTIONS = ["訂閱中", "暫停中", "已完成", "已取消"];
 
@@ -10,6 +10,9 @@ export default function SubscriptionFormModal({
   initialData,
   onClose,
   onSave,
+  treatNameById = {},
+  toyNameById = {},
+  householdNameById = {},
 }) {
   const [rootError, setRootError] = useState("");
 
@@ -167,40 +170,6 @@ export default function SubscriptionFormModal({
                 </div>
 
                 <div className="col-12 col-xl-4">
-                  <label className="form-label small">購物車編號</label>
-                  <input
-                    className="form-control form-control-sm"
-                    {...register("cartId")}
-                  />
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <label className="form-label small">會員編號</label>
-                  <input
-                    className="form-control form-control-sm"
-                    {...register("userId")}
-                  />
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <label className="form-label small">狗狗編號</label>
-                  <input
-                    className="form-control form-control-sm"
-                    {...register("dogId")}
-                  />
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <label className="form-label small">方案編號</label>
-                  <input
-                    type="number"
-                    min="0"
-                    className="form-control form-control-sm"
-                    {...register("planId")}
-                  />
-                </div>
-
-                <div className="col-12 col-xl-6">
                   <label className="form-label small">方案名稱</label>
                   <input
                     className={`form-control form-control-sm ${
@@ -217,25 +186,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-3">
-                  <label className="form-label small">數量</label>
-                  <input
-                    type="number"
-                    min="1"
-                    className="form-control form-control-sm"
-                    {...register("subscriptionQuantity", {
-                      valueAsNumber: true,
-                      min: { value: 1, message: "數量至少為 1" },
-                    })}
-                  />
-                  {errors.subscriptionQuantity && (
-                    <div className="invalid-feedback d-block">
-                      {errors.subscriptionQuantity.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">期數</label>
                   <input
                     type="number"
@@ -253,7 +204,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">目前期數</label>
                   <input
                     type="number"
@@ -267,7 +218,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">總期數</label>
                   <input
                     className="form-control form-control-sm"
@@ -276,7 +227,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">開始日</label>
                   <input
                     type="date"
@@ -294,16 +245,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-3">
-                  <label className="form-label small">已出貨日</label>
-                  <input
-                    type="date"
-                    className="form-control form-control-sm"
-                    {...register("shippedDate")}
-                  />
-                </div>
-
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">下次出貨日</label>
                   <input
                     type="date"
@@ -312,7 +254,9 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-3">
+                <div className="col-12 col-xl-4"></div>
+
+                <div className="col-12 col-xl-4">
                   <label className="form-label small">出貨狀態</label>
                   <input
                     className="form-control form-control-sm"
@@ -334,6 +278,8 @@ export default function SubscriptionFormModal({
                   </select>
                 </div>
 
+                <div className="col-12 col-xl-4"></div>
+
                 <div className="col-12 col-xl-4">
                   <label className="form-label small">建立日</label>
                   <input
@@ -354,7 +300,13 @@ export default function SubscriptionFormModal({
               </div>
 
               {mode === "edit" && initialData && (
-                <SubscriptionModal subscription={initialData} defaultOpen={false} />
+                <SubscriptionDetailModal
+                  subscription={initialData}
+                  defaultOpen={false}
+                  treatNameById={treatNameById}
+                  toyNameById={toyNameById}
+                  householdNameById={householdNameById}
+                />
               )}
             </div>
 

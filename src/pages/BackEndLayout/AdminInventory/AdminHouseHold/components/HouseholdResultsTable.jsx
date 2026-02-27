@@ -1,8 +1,11 @@
 import { Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { formatYMD } from "../../../utils/date";
 
-const joinText = (arr) =>
-  Array.isArray(arr) && arr.length ? arr.join("、") : "—";
+import {
+  joinLabels,
+  HOUSEHOLD_TAG_LABEL,
+  HOUSEHOLD_CATEGORY_LABEL,
+} from "../../../utils/inventoryMapMeta";
 
 export default function HouseholdResultsTable({
   loading,
@@ -89,8 +92,13 @@ export default function HouseholdResultsTable({
                       </td>
 
                       <td>{row.itemName ?? "—"}</td>
-                      <td>{row.category ?? "—"}</td>
-                      <td>{joinText(row.tags)}</td>
+                      <td>
+                        {joinLabels(
+                          [row.category].filter(Boolean),
+                          HOUSEHOLD_CATEGORY_LABEL,
+                        )}
+                      </td>
+                      <td>{joinLabels(row.tags, HOUSEHOLD_TAG_LABEL)}</td>
                       <td>
                         {row.isActive === false ? (
                           <span className="badge badge-bg-notActive">停用</span>

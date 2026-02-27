@@ -51,7 +51,8 @@ export default function AdminSideBar({
   const isOrderGroupActive = location.pathname.startsWith("/admin/orders");
   const isUserGroupActive = location.pathname.startsWith("/admin/users");
   const isAdminGroupActive = location.pathname.startsWith("/admin/admins");
-  const isInventoryGroupActive = location.pathname.startsWith("/admin/inventory");
+  const isInventoryGroupActive =
+    location.pathname.startsWith("/admin/inventory");
 
   // 預設如果正在群組頁面內，就自動展開
   const [ordersOpen, setOrdersOpen] = useState(isOrderGroupActive);
@@ -144,6 +145,7 @@ export default function AdminSideBar({
 
       {/* sidebar內容 */}
       <nav className="ad-side__nav">
+        {/* 數據總攬 */}
         <NavLink
           className={linkClass}
           to="/admin/dashboard"
@@ -154,54 +156,34 @@ export default function AdminSideBar({
           <span className="ad-side__label">數據總覽</span>
         </NavLink>
 
-        {/* 訂單管理群組 */}
+        {/* 管理員管理群組 */}
         <div
-          className={`ad-side__group ${isOrderGroupActive ? "is-active" : ""} ${
-            ordersOpen ? "is-open" : ""
+          className={`ad-side__group ${isAdminGroupActive ? "is-active" : ""} ${
+            adminsOpen ? "is-open" : ""
           }`}
         >
           <button
             type="button"
             className="ad-side__groupBtn"
-            onClick={handleToggleOrders}
-            aria-expanded={ordersOpen}
-            aria-controls="ad-side-order-group"
-            title="訂單管理"
+            onClick={handleToggleAdmins}
+            aria-expanded={adminsOpen}
+            aria-controls="ad-side-admin-group"
+            title="管理員管理"
           >
-            <FolderKanban size={18} />
-            <span className="ad-side__label">訂單管理</span>
+            <BrickWallShield size={18} />
+            <span className="ad-side__label">管理員管理</span>
             <ChevronDown size={16} className="ad-side__chev" />
           </button>
 
-          <div className="ad-side__subNav" id="ad-side-order-group">
+          <div className="ad-side__subNav" id="ad-side-admin-group">
             <NavLink
               className={subLinkClass}
-              to="/admin/orders"
-              title="訂單資料"
+              to="/admin/admins"
+              title="管理員管理"
               onClick={handleNavClick}
             >
-              <ClipboardList size={15} className="ad-side__subIcon" aria-hidden />
-              <span className="ad-side__label">訂單資料</span>
-            </NavLink>
-
-            <NavLink
-              className={subLinkClass}
-              to="/admin/orders/subscriptions"
-              title="訂閱資料"
-              onClick={handleNavClick}
-            >
-              <Repeat size={15} className="ad-side__subIcon" aria-hidden />
-              <span className="ad-side__label">訂閱資料</span>
-            </NavLink>
-
-            <NavLink
-              className={subLinkClass}
-              to="/admin/orders/plans"
-              title="訂閱方案管理"
-              onClick={handleNavClick}
-            >
-              <Component size={15} className="ad-side__subIcon" aria-hidden />
-              <span className="ad-side__label">訂閱方案類型</span>
+              <ShieldUser size={15} className="ad-side__subIcon" aria-hidden />
+              <span className="ad-side__label">管理員資料</span>
             </NavLink>
           </div>
         </div>
@@ -238,34 +220,58 @@ export default function AdminSideBar({
           </div>
         </div>
 
-        {/* 管理員管理群組 */}
+        {/* 訂單管理群組 */}
         <div
-          className={`ad-side__group ${isAdminGroupActive ? "is-active" : ""} ${
-            adminsOpen ? "is-open" : ""
+          className={`ad-side__group ${isOrderGroupActive ? "is-active" : ""} ${
+            ordersOpen ? "is-open" : ""
           }`}
         >
           <button
             type="button"
             className="ad-side__groupBtn"
-            onClick={handleToggleAdmins}
-            aria-expanded={adminsOpen}
-            aria-controls="ad-side-admin-group"
-            title="管理員管理"
+            onClick={handleToggleOrders}
+            aria-expanded={ordersOpen}
+            aria-controls="ad-side-order-group"
+            title="訂單管理"
           >
-            <BrickWallShield size={18} />
-            <span className="ad-side__label">管理員管理</span>
+            <FolderKanban size={18} />
+            <span className="ad-side__label">訂單管理</span>
             <ChevronDown size={16} className="ad-side__chev" />
           </button>
 
-          <div className="ad-side__subNav" id="ad-side-admin-group">
+          <div className="ad-side__subNav" id="ad-side-order-group">
             <NavLink
               className={subLinkClass}
-              to="/admin/admins"
-              title="管理員管理"
+              to="/admin/orders"
+              title="訂單資料"
               onClick={handleNavClick}
             >
-              <ShieldUser size={15} className="ad-side__subIcon" aria-hidden />
-              <span className="ad-side__label">管理員資料</span>
+              <ClipboardList
+                size={15}
+                className="ad-side__subIcon"
+                aria-hidden
+              />
+              <span className="ad-side__label">訂單資料</span>
+            </NavLink>
+
+            <NavLink
+              className={subLinkClass}
+              to="/admin/orders/subscriptions"
+              title="訂閱資料"
+              onClick={handleNavClick}
+            >
+              <Repeat size={15} className="ad-side__subIcon" aria-hidden />
+              <span className="ad-side__label">訂閱資料</span>
+            </NavLink>
+
+            <NavLink
+              className={subLinkClass}
+              to="/admin/orders/plans"
+              title="訂閱方案管理"
+              onClick={handleNavClick}
+            >
+              <Component size={15} className="ad-side__subIcon" aria-hidden />
+              <span className="ad-side__label">訂閱方案類型</span>
             </NavLink>
           </div>
         </div>

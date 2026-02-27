@@ -1,8 +1,13 @@
 import { Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { formatYMD } from "../../../utils/date";
 
-const joinText = (arr) =>
-  Array.isArray(arr) && arr.length ? arr.join("、") : "—";
+import {
+  joinLabels,
+  SIZE_LABEL,
+  DIET_STAGE_LABEL,
+  PLAY_STYLE_LABEL,
+} from "../../../utils/inventoryMapMeta";
+
 
 export default function ToyResultsTable({
   loading,
@@ -61,7 +66,10 @@ export default function ToyResultsTable({
                     <tr key={row.id}>
                       <td>
                         {!isDeleted ? (
-                          <div className="d-flex justify-content-center gap-2 flex-wrap" role="group">
+                          <div
+                            className="d-flex justify-content-center gap-2 flex-wrap"
+                            role="group"
+                          >
                             <button
                               className="btn btn-sm btn-bg-edit"
                               onClick={() => onEdit(row)}
@@ -89,9 +97,9 @@ export default function ToyResultsTable({
                       </td>
 
                       <td>{row.toyName ?? "—"}</td>
-                      <td>{joinText(row.petSize)}</td>
-                      <td>{joinText(row.dietStage)}</td>
-                      <td>{joinText(row.playStyle)}</td>
+                      <td>{joinLabels(row.petSize, SIZE_LABEL)}</td>
+                      <td>{joinLabels(row.dietStage, DIET_STAGE_LABEL)}</td>
+                      <td>{joinLabels(row.playStyle, PLAY_STYLE_LABEL)}</td>
                       <td>
                         {row.isActive === false ? (
                           <span className="badge badge-bg-notActive">停用</span>

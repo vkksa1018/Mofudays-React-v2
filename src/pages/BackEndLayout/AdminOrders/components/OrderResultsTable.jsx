@@ -10,7 +10,6 @@ import {
   getOrderStatusLabel,
 } from "../../utils/orderMeta";
 
-
 export default function OrderResultsTable({
   loading,
   orders,
@@ -22,15 +21,24 @@ export default function OrderResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
+            <colgroup>
+              <col className="admin-pages__colActions" />
+              <col />
+              <col />
+              <col />
+              <col />
+              <col />
+              <col />
+              <col />
+            </colgroup>
+
             <thead>
               <tr className="small">
-                <th className="text-center text-nowrap" style={{ width: 220 }}>
-                  操作
-                </th>
+                <th className="text-center text-nowrap">操作</th>
+                <th className="text-center text-nowrap">訂閱編號</th>
                 <th className="text-center text-nowrap">訂單編號</th>
-                <th className="text-center text-nowrap">客戶名稱</th>
                 <th className="text-center text-nowrap">付款狀態</th>
                 <th className="text-center text-nowrap">訂單狀態</th>
                 <th className="text-center text-nowrap">總額</th>
@@ -62,20 +70,21 @@ export default function OrderResultsTable({
                   const isDeleted = Boolean(o?.deletedAt);
                   const resolvedOrderStatus = getResolvedOrderStatus(o);
                   const statusLabel = getOrderStatusLabel(resolvedOrderStatus);
-                  const dotVariant = getOrderStatusDotVariant(resolvedOrderStatus);
+                  const dotVariant =
+                    getOrderStatusDotVariant(resolvedOrderStatus);
 
                   return (
                     <tr key={o.id}>
-                      <td className="text-center">
+                      <td className="text-center admin-pages__tdActions">
                         {!isDeleted ? (
-                          <div className="d-flex justify-content-center gap-2 flex-wrap">
+                          <div className="d-flex justify-content-center gap-2 flex-nowrap admin-pages__actions">
                             <button
                               type="button"
                               className="btn btn-sm btn-bg-edit"
                               onClick={() => onEdit(o)}
                             >
                               <Pencil size={14} className="me-1" />
-                              編輯
+                              <span className="admin-pages__btnText">編輯</span>
                             </button>
 
                             <button
@@ -84,23 +93,27 @@ export default function OrderResultsTable({
                               onClick={() => onCancel(o)}
                             >
                               <Trash2 size={14} className="me-1" />
-                              取消
+                              <span className="admin-pages__btnText">取消</span>
                             </button>
                           </div>
                         ) : (
                           <button
                             type="button"
-                            className="btn btn-sm btn-outline-success"
+                            className="btn btn-sm btn-outline-success admin-pages__restoreBtn"
                             onClick={() => onRestore(o)}
                           >
                             <RotateCcw size={14} className="me-1" />
-                            復原
+                            <span className="admin-pages__btnText">復原</span>
                           </button>
                         )}
                       </td>
 
-                      <td className="text-center text-nowrap">{getOrderNo(o)}</td>
-                      <td className="text-center text-nowrap">{getBuyerName(o)}</td>
+                      <td className="text-center text-nowrap">
+                        {getOrderNo(o)}
+                      </td>
+                      <td className="text-center text-nowrap">
+                        {getBuyerName(o)}
+                      </td>
                       <td className="text-center text-nowrap">
                         {getPaymentStatusLabel(o?.paymentStatus)}
                       </td>
@@ -112,7 +125,9 @@ export default function OrderResultsTable({
                         </span>
                       </td>
 
-                      <td className="text-end text-nowrap">$ {formatMoney(getOrderAmount(o))}</td>
+                      <td className="text-end text-nowrap">
+                        $ {formatMoney(getOrderAmount(o))}
+                      </td>
                       <td className="text-center text-nowrap text-muted">
                         {formatYMD(getOrderDate(o))}
                       </td>

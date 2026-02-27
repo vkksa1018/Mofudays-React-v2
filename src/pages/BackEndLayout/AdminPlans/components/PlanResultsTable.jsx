@@ -1,9 +1,25 @@
-import { Pencil, PauseCircle, PlayCircle } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { formatYMD } from "../../utils/date";
 
-function renderNamePool(namePool = []) {
+function renderNamePool(namePool, limit = 10) {
   if (!Array.isArray(namePool) || namePool.length === 0) return "—";
-  return namePool.join("、");
+
+  const text = namePool.filter(Boolean).join("、");
+  if (text.length <= limit) return text;
+
+  return (
+    <span title={text}>
+      {text.slice(0, limit)}...
+    </span>
+  );
+}
+
+function renderSubtitle(text, limit = 10) {
+  const s = String(text ?? "").trim();
+  if (!s) return "—";
+  if (s.length <= limit) return s;
+
+  return <span title={s}>{s.slice(0, limit)}...</span>;
 }
 
 function renderContent(content = {}) {
@@ -24,23 +40,17 @@ export default function PlanResultsTable({
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th style={{ width: 180 }}></th>
-                <th className="text-center" style={{ width: 90 }}>
-                  月數
-                </th>
-                <th className="text-center" style={{ width: 110 }}>
+                <th style={{ width: 120 }}></th>
+                <th className="text-center" style={{ width: 40 }}>
                   價格
                 </th>
-                <th className="text-center">方案名稱池</th>
-                <th className="text-center">副標</th>
-                <th className="text-center">內容物</th>
-                <th className="text-center" style={{ width: 90 }}>
-                  啟用
-                </th>
-                <th className="text-center text-nowrap" style={{ width: 150 }}>
+                <th className="text-center" style={{ width: 150 }}>方案名稱池</th>
+                <th className="text-center" style={{ width: 150 }}>副標</th>
+                <th className="text-center" style={{ width: 150 }}>內容物</th>
+                <th className="text-center text-nowrap" style={{ width: 90 }}>
                   建立日
                 </th>
-                <th className="text-center text-nowrap" style={{ width: 150 }}>
+                <th className="text-center text-nowrap" style={{ width: 90 }}>
                   更新日
                 </th>
               </tr>
@@ -68,51 +78,36 @@ export default function PlanResultsTable({
                 plans.map((row) => (
                   <tr key={row.id}>
                     <td>
-                      <div className="btn-group" role="group">
-                        <button
-                          className="btn btn-sm btn-bg-edit"
-                          onClick={() => onEdit(row)}
-                        >
-                          <Pencil size={14} className="me-1" />
-                          編輯
-                        </button>
 
-                        {row.isActive ? (
-                          <button
-                            className="btn btn-sm btn-bg-delete"
-                            onClick={() => onToggleActive(row, false)}
-                          >
-                            <PauseCircle size={14} className="me-1" />
-                            停用
-                          </button>
-                        ) : (
-                          <button
-                            className="btn btn-sm btn-outline-success"
-                            onClick={() => onToggleActive(row, true)}
-                          >
-                            <PlayCircle size={14} className="me-1" />
-                            啟用
-                          </button>
-                        )}
-                      </div>
+                      <div className="d-flex justify-content-center gap-2 flex-wrap">
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-bg-edit"
+                              onClick={() => onEdit(row)}
+                            >
+                              <Pencil size={14} className="me-1" />
+                              編輯
+                            </button>
+
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-bg-delete"
+                              onClick={() => onToggleActive(row)}
+                            >
+                              <Trash2 size={14} className="me-1" />
+                              取消
+                            </button>
+                          </div>
                     </td>
 
-                    <td>{row.months ?? "—"} 個月</td>
-                    <td>${Number(row.planPrice ?? 0).toLocaleString()}</td>
+                    <td className="text-end">${Number(row.planPrice ?? 0).toLocaleString()}</td>
                     <td>{renderNamePool(row.namePool)}</td>
-                    <td>{row.subtitle ?? "—"}</td>
-                    <td>{renderContent(row.content)}</td>
-                    <td>
-                      {row.isActive ? (
-                        <span className="badge badge-bg-isActive">啟用</span>
-                      ) : (
-                        <span className="badge badge-bg-notActive">停用</span>
-                      )}
-                    </td>
-                    <td className="text-muted text-nowrap">
+                    <td>{renderSubtitle(row.subtitle, 10)}</td>
+                    <td className="text-center">{renderContent(row.content)}</td>
+                    <td className="text-muted text-center">
                       {formatYMD(row.createdAt)}
                     </td>
-                    <td className="text-muted text-nowrap">
+                    <td className="text-muted text-center">
                       {formatYMD(row.updatedAt)}
                     </td>
                   </tr>

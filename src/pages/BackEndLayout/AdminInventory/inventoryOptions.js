@@ -28,3 +28,4 @@ export const HOUSEHOLD_CATEGORY_OPTIONS = [
   { value: "grooming", label: "美容梳洗" },
   { value: "bedding", label: "居家寢具" },
 ];
+
