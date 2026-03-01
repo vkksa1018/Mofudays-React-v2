@@ -20,6 +20,7 @@ export const HEALTH_CARE_OPTIONS = [
   "SKIN",
   "WEIGHT",
   "BONES",
+  "JOINT",
 ];
 
 export const HOUSEHOLD_CATEGORY_OPTIONS = [
