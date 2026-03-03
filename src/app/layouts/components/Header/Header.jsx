@@ -717,7 +717,7 @@ function LoggedInMenu({ variant, user, logout }) {
               會員專屬活動
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               className="dropdown-item text-center py-2 border-bottom"
               to="/coupons"
@@ -725,7 +725,7 @@ function LoggedInMenu({ variant, user, logout }) {
             >
               我的折扣碼
             </Link>
-          </li>
+          </li> */}
           {/* <li>
             <hr className="dropdown-divider" />
           </li> */}
