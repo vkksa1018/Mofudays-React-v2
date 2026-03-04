@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -36,7 +35,10 @@ function CheckboxGroup({ name, options, register, error, baseId }) {
                   (Array.isArray(v) && v.length > 0) || "請至少選擇一項",
               })}
             />
-            <label className="form-check-label small" htmlFor={`${baseId}_${opt}`}>
+            <label
+              className="form-check-label small"
+              htmlFor={`${baseId}_${opt}`}
+            >
               {opt}
             </label>
           </div>
@@ -47,7 +49,13 @@ function CheckboxGroup({ name, options, register, error, baseId }) {
   );
 }
 
-export default function TreatFormModal({ open, mode, initialData, onClose, onSave }) {
+export default function TreatFormModal({
+  open,
+  mode,
+  initialData,
+  onClose,
+  onSave,
+}) {
   const [rootError, setRootError] = useState("");
 
   const defaultValues = useMemo(
@@ -83,7 +91,7 @@ export default function TreatFormModal({ open, mode, initialData, onClose, onSav
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 
@@ -93,111 +101,112 @@ export default function TreatFormModal({ open, mode, initialData, onClose, onSav
       await onSave(data);
       onClose();
     } catch (err) {
-      setRootError(typeof err === "string" ? err : err?.message || "送出失敗，請稍後再試。");
+      setRootError(
+        typeof err === "string"
+          ? err
+          : err?.message || "送出失敗，請稍後再試。",
+      );
     }
   };
 
   if (!open) return null;
 
   return (
-    <div className="modal d-block admin-modal__backdrop" tabIndex="-1" role="dialog" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="modal-dialog modal-dialog-centered admin-modal__dialog" role="document">
+    <div
+      className="modal d-block admin-modal__backdrop"
+      tabIndex="-1"
+      role="dialog"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="modal-dialog modal-dialog-centered admin-modal__dialog"
+        role="document"
+      >
         <div className="modal-content border-0 shadow admin-modal__content">
           <div className="admin-modal__header admin-pages__panelHeader">
-            <h4 className="text-white fw-bold">{mode === "create" ? "新增零食" : "編輯零食"}</h4>
+            <h4 className="text-white fw-bold">
+              {mode === "create" ? "新增零食" : "編輯零食"}
+            </h4>
           </div>
 
           <form onSubmit={handleSubmit(submit)}>
             <div className="modal-body admin-modal__body admin-pages__panelBody">
-              {rootError && <div className="alert alert-danger py-2 mb-3">{rootError}</div>}
+              {rootError && (
+                <div className="alert alert-danger py-2 mb-3">{rootError}</div>
+              )}
 
               <div className="row g-4">
-                <div className="col-12">
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">零食名稱</label>
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      零食名稱
+                    </label>
                     <div className="col-12 col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.treatName ? "is-invalid" : ""}`}
-                        {...register("treatName", { required: "請輸入零食名稱" })}
+                        {...register("treatName", {
+                          required: "請輸入零食名稱",
+                        })}
                       />
-                      {errors.treatName && <div className="invalid-feedback">{errors.treatName.message}</div>}
+                      {errors.treatName && (
+                        <div className="invalid-feedback">
+                          {errors.treatName.message}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      描述
+                    </label>
                     <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="petSize" options={PET_SIZE_OPTIONS} register={register} error={errors.petSize} baseId="treat_petSize" />
+                      <textarea
+                        className="form-control form-control-sm"
+                        {...register("description")}
+                      />
                     </div>
                   </div>
                 </div>
-
-                <div className="col-12 col-xl-4">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="dietStage" options={DIET_STAGE_OPTIONS} register={register} error={errors.dietStage} baseId="treat_dietStage" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-4">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">成分</label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="ingredients" options={INGREDIENT_OPTIONS} register={register} error={errors.ingredients} baseId="treat_ingredients" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">口感</label>
-                    <div className="col-12 col-sm-10">
-                      <select
-                        className={`form-select form-select-sm ${errors.texture ? "is-invalid" : ""}`}
-                        {...register("texture", { required: "請選擇口感" })}
-                      >
-                        <option value="">請選擇</option>
-                        {TEXTURE_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-                      </select>
-                      {errors.texture && <div className="invalid-feedback">{errors.texture.message}</div>}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">保健</label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="healthCare" options={HEALTH_CARE_OPTIONS} register={register} error={errors.healthCare} baseId="treat_healthCare" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">描述</label>
-                    <div className="col-12 col-sm-10">
-                      <textarea rows="4" className="form-control form-control-sm" {...register("description")} />
-                    </div>
-                  </div>
-                </div>
-
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">啟用</label>
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      啟用
+                    </label>
                     <div className="col-12 col-sm-10">
                       <div className="admin-pages__radioGroup">
                         <div className="form-check form-check-inline m-0">
-                          <input id="treat_active_true" type="radio" value="true" className="form-check-input" {...register("isActive")} />
-                          <label className="form-check-label small" htmlFor="treat_active_true">啟用</label>
+                          <input
+                            id="treat_active_true"
+                            type="radio"
+                            value="true"
+                            className="form-check-input"
+                            {...register("isActive")}
+                          />
+                          <label
+                            className="form-check-label small"
+                            htmlFor="treat_active_true"
+                          >
+                            啟用
+                          </label>
                         </div>
                         <div className="form-check form-check-inline m-0">
-                          <input id="treat_active_false" type="radio" value="false" className="form-check-input" {...register("isActive")} />
-                          <label className="form-check-label small" htmlFor="treat_active_false">停用</label>
+                          <input
+                            id="treat_active_false"
+                            type="radio"
+                            value="false"
+                            className="form-check-input"
+                            {...register("isActive")}
+                          />
+                          <label
+                            className="form-check-label small"
+                            htmlFor="treat_active_false"
+                          >
+                            停用
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -205,19 +214,128 @@ export default function TreatFormModal({ open, mode, initialData, onClose, onSav
                 </div>
 
                 <div className="col-12 col-xl-4">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">建立日</label>
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      體型
+                    </label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup
+                        name="petSize"
+                        options={PET_SIZE_OPTIONS}
+                        register={register}
+                        error={errors.petSize}
+                        baseId="treat_petSize"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      年齡
+                    </label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup
+                        name="dietStage"
+                        options={DIET_STAGE_OPTIONS}
+                        register={register}
+                        error={errors.dietStage}
+                        baseId="treat_dietStage"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-12 col-xl-4"></div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      保健
+                    </label>
                     <div className="col-12 col-sm-10">
-                      <input className="form-control form-control-sm" value={displayMeta.createdAt} readOnly disabled />
+                      <CheckboxGroup
+                        name="healthCare"
+                        options={HEALTH_CARE_OPTIONS}
+                        register={register}
+                        error={errors.healthCare}
+                        baseId="treat_healthCare"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      成分
+                    </label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup
+                        name="ingredients"
+                        options={INGREDIENT_OPTIONS}
+                        register={register}
+                        error={errors.ingredients}
+                        baseId="treat_ingredients"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-12 col-xl-4"></div>
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      口感
+                    </label>
+                    <div className="col-12 col-sm-10">
+                      <select
+                        className={`form-select form-select-sm ${errors.texture ? "is-invalid" : ""}`}
+                        {...register("texture", { required: "請選擇口感" })}
+                      >
+                        <option value="">請選擇</option>
+                        {TEXTURE_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.texture && (
+                        <div className="invalid-feedback">
+                          {errors.texture.message}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">更新日</label>
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      建立日
+                    </label>
                     <div className="col-12 col-sm-10">
-                      <input className="form-control form-control-sm" value={displayMeta.updatedAt} readOnly disabled />
+                      <input
+                        className="form-control form-control-sm"
+                        value={displayMeta.createdAt}
+                        readOnly
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      更新日
+                    </label>
+                    <div className="col-12 col-sm-10">
+                      <input
+                        className="form-control form-control-sm"
+                        value={displayMeta.updatedAt}
+                        readOnly
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -225,8 +343,19 @@ export default function TreatFormModal({ open, mode, initialData, onClose, onSav
             </div>
 
             <div className="modal-footer admin-modal__footer admin-pages__panelFooter">
-              <button className="btn btn-modal-delete" type="button" onClick={onClose} disabled={isSubmitting}>取消</button>
-              <button className="btn btn-modal-edit" type="submit" disabled={isSubmitting}>
+              <button
+                className="btn btn-modal-delete"
+                type="button"
+                onClick={onClose}
+                disabled={isSubmitting}
+              >
+                取消
+              </button>
+              <button
+                className="btn btn-modal-edit"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "送出中..." : "儲存"}
               </button>
             </div>

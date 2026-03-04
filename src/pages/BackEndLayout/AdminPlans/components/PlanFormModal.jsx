@@ -71,7 +71,7 @@ export default function PlanFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 
@@ -121,6 +121,68 @@ export default function PlanFormModal({
               )}
 
               <div className="row g-4">
+                {/* namePool */}
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      名稱池
+                    </label>
+                    <div className="col-12 col-sm-10">
+                      <textarea
+                        rows="4"
+                        className={`form-control form-control-sm ${errors.namePoolText ? "is-invalid" : ""}`}
+                        placeholder={`一行一個，或用逗號分隔例如：\n小小探險家\n嫩嫩咬咬\n初次見面盒`}
+                        {...register("namePoolText", {
+                          required: "請輸入至少一個方案名稱",
+                          validate: (value) =>
+                            value.trim().length > 0 || "請輸入至少一個方案名稱",
+                        })}
+                      />
+                      {errors.namePoolText && (
+                        <div className="invalid-feedback">
+                          {errors.namePoolText.message}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {/* 副標 */}
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      副標題
+                    </label>
+                    <div className="col-12 col-sm-10">
+                      <textarea
+                        rows="4"
+                        className={`form-control form-control-sm ${errors.subtitle ? "is-invalid" : ""}`}
+                        {...register("subtitle", {
+                          required: "請輸入副標",
+                        })}
+                      />
+                      {errors.subtitle && (
+                        <div className="invalid-feedback">
+                          {errors.subtitle.message}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {/* 圖片 */}
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      圖片
+                    </label>
+                    <div className="col-12 col-sm-10">
+                      <input
+                        className="form-control form-control-sm"
+                        placeholder="請輸入圖片 URL"
+                        {...register("imageUrl")}
+                      />
+                    </div>
+                  </div>
+                </div>
                 {/* 價格 */}
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
@@ -216,59 +278,11 @@ export default function PlanFormModal({
                   </div>
                 </div>
 
-                {/* 副標 */}
-                <div className="col-12">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      副標
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <input
-                        className={`form-control form-control-sm ${errors.subtitle ? "is-invalid" : ""}`}
-                        {...register("subtitle", {
-                          required: "請輸入副標",
-                        })}
-                      />
-                      {errors.subtitle && (
-                        <div className="invalid-feedback">
-                          {errors.subtitle.message}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* namePool */}
-                <div className="col-12">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      名稱池
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <textarea
-                        rows="4"
-                        className={`form-control form-control-sm ${errors.namePoolText ? "is-invalid" : ""}`}
-                        placeholder={`一行一個，或用逗號分隔\n例如：\n小小探險家\n嫩嫩咬咬\n初次見面盒`}
-                        {...register("namePoolText", {
-                          required: "請輸入至少一個方案名稱",
-                          validate: (value) =>
-                            value.trim().length > 0 || "請輸入至少一個方案名稱",
-                        })}
-                      />
-                      {errors.namePoolText && (
-                        <div className="invalid-feedback">
-                          {errors.namePoolText.message}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
                 {/* content */}
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      零食數
+                      零食
                     </label>
                     <div className="col-12 col-sm-10">
                       <input
@@ -283,7 +297,7 @@ export default function PlanFormModal({
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      玩具數
+                      玩具
                     </label>
                     <div className="col-12 col-sm-10">
                       <input
@@ -298,7 +312,7 @@ export default function PlanFormModal({
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      生活小物數
+                      生活小物
                     </label>
                     <div className="col-12 col-sm-10">
                       <input
@@ -310,24 +324,8 @@ export default function PlanFormModal({
                   </div>
                 </div>
 
-                {/* 圖片 */}
-                <div className="col-12">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
-                      圖片
-                    </label>
-                    <div className="col-12 col-sm-10">
-                      <input
-                        className="form-control form-control-sm"
-                        placeholder="請輸入圖片 URL"
-                        {...register("imageUrl")}
-                      />
-                    </div>
-                  </div>
-                </div>
-
                 {/* 時間 */}
-                <div className="col-12 col-xl-6">
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       建立日
@@ -343,7 +341,7 @@ export default function PlanFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-6">
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       更新日

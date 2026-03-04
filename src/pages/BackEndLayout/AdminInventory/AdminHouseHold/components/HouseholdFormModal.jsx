@@ -87,7 +87,7 @@ export default function HouseholdFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 
@@ -118,7 +118,8 @@ export default function HouseholdFormModal({
               {rootError && <div className="alert alert-danger py-2 mb-3">{rootError}</div>}
 
               <div className="row g-4">
-                <div className="col-12">
+
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">品項名稱</label>
                     <div className="col-12 col-sm-10">
@@ -131,70 +132,11 @@ export default function HouseholdFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
-                    <div className="col-12 col-sm-10">
-                      <select
-                        className={`form-select form-select-sm ${errors.category ? "is-invalid" : ""}`}
-                        {...register("category", { required: "請選擇分類" })}
-                      >
-                        <option value="">請選擇</option>
-                        {HOUSEHOLD_CATEGORY_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        ))}
-                      </select>
-                      {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">圖片</label>
-                    <div className="col-12 col-sm-10">
-                      <input className="form-control form-control-sm" placeholder="請輸入圖片 URL" {...register("imageUrl")} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="petSize" options={PET_SIZE_OPTIONS} register={register} error={errors.petSize} baseId="household_petSize" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12 col-xl-6">
-                  <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
-                    <div className="col-12 col-sm-10">
-                      <CheckboxGroup name="dietStage" options={DIET_STAGE_OPTIONS} register={register} error={errors.dietStage} baseId="household_dietStage" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">Tags</label>
-                    <div className="col-12 col-sm-10">
-                      <input
-                        className="form-control form-control-sm"
-                        placeholder="例如：walk, daily, travel"
-                        {...register("tagsText")}
-                      />
-                      <div className="small text-muted mt-1">請用逗號分隔</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
+                <div className="col-12 col-xl-4">
                   <div className="row g-2 admin-pages__field">
                     <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">描述</label>
                     <div className="col-12 col-sm-10">
-                      <textarea rows="4" className="form-control form-control-sm" {...register("description")} />
+                      <textarea className="form-control form-control-sm" {...register("description")} />
                     </div>
                   </div>
                 </div>
@@ -216,6 +158,68 @@ export default function HouseholdFormModal({
                     </div>
                   </div>
                 </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
+                    <div className="col-12 col-sm-10">
+                      <select
+                        className={`form-select form-select-sm ${errors.category ? "is-invalid" : ""}`}
+                        {...register("category", { required: "請選擇分類" })}
+                      >
+                        <option value="">請選擇</option>
+                        {HOUSEHOLD_CATEGORY_OPTIONS.map((opt) => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                      </select>
+                      {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
+                    <div className="col-12 col-sm-10">
+                      <input
+                        className="form-control form-control-sm"
+                        placeholder="例如：walk, daily, travel"
+                        {...register("tagsText")}
+                      />
+                      <div className="small text-muted mt-1">請用逗號分隔</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 align-items-center admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">圖片</label>
+                    <div className="col-12 col-sm-10">
+                      <input className="form-control form-control-sm" placeholder="請輸入圖片 URL" {...register("imageUrl")} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup name="petSize" options={PET_SIZE_OPTIONS} register={register} error={errors.petSize} baseId="household_petSize" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4">
+                  <div className="row g-2 admin-pages__field">
+                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
+                    <div className="col-12 col-sm-10 pt-sm-3">
+                      <CheckboxGroup name="dietStage" options={DIET_STAGE_OPTIONS} register={register} error={errors.dietStage} baseId="household_dietStage" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 col-xl-4"></div>
+                
 
                 <div className="col-12 col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">

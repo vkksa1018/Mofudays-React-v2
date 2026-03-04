@@ -32,7 +32,7 @@ export default function AdminFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.email}
                     onChange={setFilter("email")}
-                    placeholder="bingjiao@example.com"
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -49,7 +49,7 @@ export default function AdminFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.name}
                     onChange={setFilter("name")}
-                    placeholder="王小明"
+                    placeholder=""
                   />
                 </div>
               </div>
@@ -66,7 +66,7 @@ export default function AdminFiltersPanel({
                     className="form-control form-control-sm"
                     value={filters.nickname}
                     onChange={setFilter("nickname")}
-                    placeholder="鬢角"
+                    placeholder=""
                   />
                 </div>
               </div>

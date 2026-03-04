@@ -11,25 +11,17 @@ export default function OrderFormModal({
 }) {
   const [rootError, setRootError] = useState("");
 
-  // 簡單收闔：預設顯示 order 內容
-  const [orderSectionOpen, setOrderSectionOpen] = useState(true);
-
-  // 以目前畫面有的欄位為主
+   
   const defaultValues = useMemo(
     () => ({
       id: initialData?.id ?? "",
       orderNo: initialData?.orderNo ?? initialData?.id ?? "",
-
-      // 建立模式給現在時間，避免 required + readOnly 時空值
       orderDate: toDateTimeLocalInput(initialData?.orderDate ?? new Date()),
-
       termCycles: Number(initialData?.termCycles ?? 3),
       perCycleAmount: Number(initialData?.perCycleAmount ?? 0),
       orderTotalAmount: Number(initialData?.orderTotalAmount ?? 0),
-
       paymentStatus: initialData?.paymentStatus ?? "待付款",
       orderStatus: initialData?.orderStatus ?? "待確認",
-
       buyerName: initialData?.buyerInfo?.name ?? "",
       buyerEmail: initialData?.buyerInfo?.email ?? "",
       buyerPhone: initialData?.buyerInfo?.phone ?? "",
@@ -72,8 +64,8 @@ export default function OrderFormModal({
     if (open) {
       reset(defaultValues);
       setRootError("");
-      setOrderSectionOpen(true); // 每次開啟預設展開訂單內容
     }
+   
   }, [open, defaultValues, reset]);
 
   // 自動計算總金額（期數 * 每期金額）
@@ -131,19 +123,6 @@ export default function OrderFormModal({
                   {rootError}
                 </div>
               )}
-
-              {/* 簡單收闔：訂單內容 */}
-              {/* <div className="mb-3">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2"
-                  onClick={() => setOrderSectionOpen((prev) => !prev)}
-                  aria-expanded={orderSectionOpen}
-                >
-                  <span aria-hidden>{orderSectionOpen ? "▾" : "▸"}</span>
-                  <span>訂單內容</span>
-                </button>
-              </div> */}
 
               {/* {orderSectionOpen && ( */}
                 <div className="row g-4">

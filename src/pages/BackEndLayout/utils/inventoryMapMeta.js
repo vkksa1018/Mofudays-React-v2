@@ -35,7 +35,7 @@ export const TEXTURE_LABEL = Object.freeze({
 });
 
 export const HEALTH_CARE_LABEL = Object.freeze({
-  BONES: "骨骼關節",
+  JOINT: "骨骼關節",
   DIGEST: "腸胃消化",
   SKIN: "皮膚毛髮",
   TEETH: "口腔潔牙",

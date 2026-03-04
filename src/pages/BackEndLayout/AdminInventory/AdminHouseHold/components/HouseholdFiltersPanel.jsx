@@ -78,9 +78,9 @@ export default function HouseholdFiltersPanel({
 
             <div className="col-12 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">Tag</label>
+                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
                 <div className="col-12 col-sm-10">
-                  <input className="form-control form-control-sm" value={filters.tag} onChange={setFilter("tag")} placeholder="walk / daily / travel..." />
+                  <input className="form-control form-control-sm" value={filters.tag} onChange={setFilter("tag")} placeholder="" />
                 </div>
               </div>
             </div>
