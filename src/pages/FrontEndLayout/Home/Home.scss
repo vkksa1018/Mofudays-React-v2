@@ -1,3 +1,10 @@
+/* 確保所有元素預設不撐開寬度 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* noto字體 */
 body {
   font-family: "Noto Sans TC", sans-serif;
@@ -736,6 +743,11 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 375px) {
+    padding: 15px 8px; // 縮小側邊按鈕大小以免佔據太多螢幕
+    font-size: 14px;
+  }
 }
 
 .customer-service-btn:hover {
@@ -769,6 +781,13 @@ body::before {
   transform: scale(0.8) translateY(20px);
   transition: all 0.3s ease;
   pointer-events: none;
+
+  @media (max-width: 768px) {
+    right: 20px;
+    bottom: 110px;
+    width: calc(100vw - 40px);
+    max-width: 335px;
+  }
 }
 
 .customer-service-chat.show {

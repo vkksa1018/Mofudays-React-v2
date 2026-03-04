@@ -290,7 +290,6 @@ function NavCartItem() {
 function AuthMenu({ variant = "desktop" }) {
   const isAuthed = useSelector(selectIsUserAuthed);
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
 
   if (!isAuthed) {
     return (
@@ -304,14 +303,15 @@ function AuthMenu({ variant = "desktop" }) {
     );
   }
 
-  return <LoggedInMenu variant={variant} user={user} dispatch={dispatch} />;
+  return <LoggedInMenu variant={variant} user={user} />;
 }
 
-function LoggedInMenu({ variant, user, logout }) {
+function LoggedInMenu({ variant, user }) {
   const storedName = localStorage.getItem("userName"); // 看你 localStorage 存的 key 名稱
   const displayName = user?.name || storedName || "會員";
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleClickOutside = (e) => {

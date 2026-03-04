@@ -29,7 +29,7 @@ const FloatingChat = ({ isOpen, toggleChat }) => {
         <div className="chat-header mb-4 text-center">
           <div className="title-large px-4">您好，我們能提供什麼幫助？</div>
         </div>
-        <div className="chat-body mx-12">
+        <div className="chat-body px-4">
           <a
             href="/faq"
             onClick={goToFaq}
