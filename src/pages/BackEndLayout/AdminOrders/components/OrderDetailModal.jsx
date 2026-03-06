@@ -21,8 +21,8 @@ export default function OrderFormDetail({ subscriptions = [], defaultOpen = fals
       </div>
 
       {open && (
-        <div className="table-responsive">
-          <table className="table admin-pages__table align-middle mb-0">
+        <div className="table-responsive ad-modal-border">
+          <table className="table admin-pages__table align-middle mb-0 ">
             <thead>
               <tr className="small">
                 <th className="text-center text-nowrap">操作</th>

@@ -51,8 +51,7 @@ export default function AdminSideBar({
   const isOrderGroupActive = location.pathname.startsWith("/admin/orders");
   const isUserGroupActive = location.pathname.startsWith("/admin/users");
   const isAdminGroupActive = location.pathname.startsWith("/admin/admins");
-  const isInventoryGroupActive =
-    location.pathname.startsWith("/admin/inventory");
+  const isInventoryGroupActive = location.pathname.startsWith("/admin/inventory");
 
   // 預設如果正在群組頁面內，就自動展開
   const [ordersOpen, setOrdersOpen] = useState(isOrderGroupActive);

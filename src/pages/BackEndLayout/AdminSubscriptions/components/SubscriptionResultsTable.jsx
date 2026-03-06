@@ -4,9 +4,9 @@ import {
   getCycleText,
   getPlanName,
   getResolvedSubscriptionStatus,
-  getStatusDotVariant,
   getSubscriptionId,
 } from "../../utils/subscriptionMeta";
+import { getSubscriptionStatusDotVariant } from "../../utils/dotVariant";
 
 export default function SubscriptionResultsTable({
   loading,
@@ -60,7 +60,7 @@ export default function SubscriptionResultsTable({
                 subscriptions.map((sub) => {
                   const isDeleted = Boolean(sub?.deletedAt) || sub?.isActive === false;
                   const resolvedStatus = getResolvedSubscriptionStatus(sub);
-                  const dotVariant = getStatusDotVariant(resolvedStatus);
+                  const dotVariant = getSubscriptionStatusDotVariant(resolvedStatus);
 
                   return (
                     <tr key={sub.id}>

@@ -2,20 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { X } from "lucide-react";
 
-function formatDateTimeDisplay(input) {
-  if (!input) return "";
-  const d = new Date(input);
-  if (Number.isNaN(d.getTime())) return String(input);
+import {formatDateTimeDisplay, nowDateTimeDisplay} from "../../utils/date"
 
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
-    d.getHours(),
-  )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
 
-function nowDateTimeDisplay() {
-  return formatDateTimeDisplay(new Date());
-}
 
 export default function AdminFormModal({
   open, // 開啟或關閉
