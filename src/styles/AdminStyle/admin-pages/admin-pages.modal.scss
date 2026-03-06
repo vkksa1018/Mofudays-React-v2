@@ -206,18 +206,16 @@
   }
 
   @media (max-width: 1076px) {
-    .admin-pages {
-      .admin-modal__backdrop {
-        padding-block: 1.5rem;
-      }
+    .admin-modal__backdrop {
+      padding-block: 1.5rem;
+    }
 
-      .admin-modal__dialog {
-        max-width: calc(100vw - 1rem);
-      }
+    .admin-modal__dialog {
+      max-width: calc(100vw - 1rem);
+    }
 
-      .admin-modal__content {
-        max-height: calc(100dvh - 2.5rem);
-      }
+    .admin-modal__content {
+      max-height: calc(100dvh - 2.5rem);
     }
   }
 
