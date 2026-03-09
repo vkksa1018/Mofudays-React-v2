@@ -24,7 +24,18 @@ function getOrderQty(order) {
 }
 
 function getOrderStatus(order) {
-  return order.paymentStatus || "待處理";
+  // 後台編輯過有 orderStatus 就優先顯示
+  // 沒有的話看 subscriptions 裡的 subscriptionStatus
+  // 全部已取消 → 已取消，否則取第一筆的 subscriptionStatus
+  if (order.orderStatus) return order.orderStatus;
+
+  const subs = order.subscriptions ?? [];
+  if (subs.length === 0) return "待處理";
+
+  const allCancelled = subs.every((s) => s.subscriptionStatus === "已取消");
+  if (allCancelled) return "已取消";
+
+  return subs[0].subscriptionStatus ?? "待處理";
 }
 
 export default function LatestOrders({ loading, latestOrders = [], onEdit }) {
