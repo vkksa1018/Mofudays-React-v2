@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./floating-chat-dogs.scss";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE;
 
 const SIZE_MAP = { S: "小型", M: "中型", L: "大型" };
 const DIET_MAP = { PUPPY: "幼犬", ADULT: "成犬", SENIOR: "熟齡" };
