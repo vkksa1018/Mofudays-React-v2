@@ -76,7 +76,7 @@ export default function Header() {
 
 function DesktopMenu() {
   return (
-    <div className="desktop-menu ms-auto align-items-center">
+    <div className="desktop-menu ms-auto align-items-center d-none d-xl-flex">
       <button
         className="navbar-toggler"
         type="button"
@@ -91,7 +91,7 @@ function DesktopMenu() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <NavNewsItem />
-          <NavBlogItem />
+          {/* <NavBlogItem /> */}
           <AuthMenu variant="desktop" />
           <NavCartItem />
         </ul>
@@ -115,7 +115,7 @@ function MobileOffcanvasMenu() {
 
   return (
     <div
-      className="offcanvas offcanvas-top offcanvas-mobile-full d-md-none"
+      className="offcanvas offcanvas-top offcanvas-mobile-full"
       tabIndex={-1}
       id="mobileMenu"
       aria-labelledby="mobileMenuLabel"
@@ -142,12 +142,12 @@ function MobileOffcanvasMenu() {
                 最新消息
               </a>
             </li>
-            <li className="nav-item text-center py-3">
+            {/* <li className="nav-item text-center py-3">
               <a className="nav-link" href="/blog">
                 <HeartPlus className="align-bottom me-2 nav-icon" />
                 毛孩照護
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
@@ -226,16 +226,16 @@ function MobileOffcanvasMenu() {
 function MobileTopActions() {
   const handleCartClick = useCartNavigate();
   return (
-    <div className="d-flex align-items-center gap-3 d-lg-none">
+    <div className="d-flex align-items-center gap-3 d-xl-none">
       <button
-        className="btn p-0 border-0 d-md-none"
+        className="btn p-0 border-0 d-xl-none"
         onClick={handleCartClick}
         aria-label="Cart"
       >
         <ShoppingCart className="nav-icon" />
       </button>
       <button
-        className="btn p-0 border-0 d-md-none"
+        className="btn p-0 border-0 d-xl-none"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#mobileMenu"
@@ -265,21 +265,21 @@ function NavNewsItem() {
   );
 }
 
-function NavBlogItem() {
-  return (
-    <li className="nav-item me-6">
-      <a className="nav-link" href="/blog">
-        <HeartPlus className="align-bottom me-2 nav-icon" />
-        毛孩照護
-      </a>
-    </li>
-  );
-}
+// function NavBlogItem() {
+//   return (
+//     <li className="nav-item me-6">
+//       <a className="nav-link" href="/blog">
+//         <HeartPlus className="align-bottom me-2 nav-icon" />
+//         毛孩照護
+//       </a>
+//     </li>
+//   );
+// }
 
 function NavCartItem() {
   const handleCartClick = useCartNavigate();
   return (
-    <li className="nav-item d-none d-md-flex">
+    <li className="nav-item">
       <button
         className="nav-link cart-btn border-2"
         onClick={handleCartClick}

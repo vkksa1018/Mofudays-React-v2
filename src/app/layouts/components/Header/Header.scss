@@ -1,24 +1,16 @@
 @import "bootstrap/scss/functions";
 @import "../../../../styles/variables";
 
-@media (max-width: 768.98px) {
+@media (max-width: 1199.98px) {
   .desktop-menu {
     display: none !important;
   }
-  .mobile-menu {
-    display: flex !important;
-  }
 }
-
-@media (min-width: 768px) {
-  .mobile-menu {
-    display: none !important;
-  }
+@media (min-width: 1200px) {
   .desktop-menu {
     display: flex !important;
   }
 }
-
 .navbar {
   transition: all 0.3s ease;
 }
@@ -133,7 +125,7 @@ header .navbar {
   background-color: $primary-500;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   header .cart-btn {
     display: flex;
     justify-content: center;
