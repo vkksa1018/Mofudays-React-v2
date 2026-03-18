@@ -171,7 +171,6 @@ export default function UserProfile({ onSave }) {
             <h2 className="h h2 fs-6 mb-32">
               <i className="bi bi-newspaper me-2"></i>基本資訊
             </h2>
-
             {/* 姓名 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="user-name" className="col-md-2 form-label p1">
@@ -193,7 +192,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">姓名不得為空或是超過20個字!</div>
             </div>
-
             {/* 暱稱 */}
             <div className="row mb-56 position-relative">
               <label
@@ -214,7 +212,6 @@ export default function UserProfile({ onSave }) {
                 />
               </div>
             </div>
-
             {/* 生日 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="birthday" className="col-md-2 form-label p1">
@@ -227,6 +224,7 @@ export default function UserProfile({ onSave }) {
                   id="birthday"
                   name="birthday"
                   required
+                  style={{ height: "38px" }}
                   max={new Date().toISOString().split("T")[0]}
                   value={formData.birthday}
                   onChange={handleChange}
@@ -235,7 +233,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">請選擇生日!</div>
             </div>
-
             {/* Email */}
             <div className="row mb-56 position-relative">
               <label htmlFor="email" className="col-md-2 form-label p1">
@@ -258,7 +255,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">請輸入正確電子信箱!</div>
             </div>
-
             {/* 手機 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="phone" className="col-md-2 form-label p1">
@@ -284,7 +280,6 @@ export default function UserProfile({ onSave }) {
                 請輸入正確的手機號碼（09 開頭，共10碼）!
               </div>
             </div>
-
             {/* 住家地址 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="city" className="col-md-2 col-form-label p1">
@@ -335,6 +330,7 @@ export default function UserProfile({ onSave }) {
                       name="address"
                       placeholder="請輸入詳細地址"
                       required
+                      style={{ height: "38px" }}
                       value={formData.address}
                       onChange={handleChange}
                     />
@@ -351,76 +347,97 @@ export default function UserProfile({ onSave }) {
               <i className="bi bi-cart me-2"></i>送貨資料
             </h2>
 
+            {/* <img
+              src={shippingCart}
+              alt="行進中的貨車圖"
+              className="position-absolute img-shipping-cart img-shake top-0 end-0 z-2"
+            /> */}
+            {/* <img
+              src={aboutBg}
+              alt="黃色底框"
+              className="position-absolute img-shipping-cart img-shake top-0 end-0 z-1"
+            /> */}
+            {/* <img
+              src={waitingDog}
+              alt="等待中的小狗狗"
+              className="position-absolute img-waiting-dog transform-x img-shake top-1 end-1 z-1"
+            /> */}
+
             <div className="row mb-3">
               <label
                 htmlFor="shippingCity"
-                className="col-md-2 col-form-label p1"
+                className="col-md-2 form-label p1 mb-2"
               >
                 送貨地址
               </label>
 
-              <div className="col-md-10">
-                <div className="row g-3 mb-2">
-                  <div className="col-6">
-                    <select
-                      className="form-select"
-                      id="shippingCity"
-                      name="shippingCity"
-                      required
-                      disabled={sameAsHome}
-                      value={formData.shippingCity}
-                      onChange={handleChange}
-                    >
-                      <option value="" disabled>
-                        請選擇縣市
+              <div className="row g-3 mb-2 col-md-10">
+                {/* 送貨縣市 */}
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                    id="shippingCity"
+                    name="shippingCity"
+                    required
+                    disabled={sameAsHome}
+                    value={formData.shippingCity}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      請選擇縣市
+                    </option>
+                    {taiwanRegions.map((city) => (
+                      <option key={city.name} value={city.name}>
+                        {city.name}
                       </option>
-                      {taiwanRegions.map((city) => (
-                        <option key={city.name} value={city.name}>
-                          {city.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-6">
-                    <select
-                      className="form-select"
-                      id="shippingDistrict"
-                      name="shippingDistrict"
-                      required
-                      disabled={sameAsHome}
-                      value={formData.shippingDistrict}
-                      onChange={handleChange}
-                    >
-                      <option value="" disabled>
-                        請選擇區域
-                      </option>
-                      {shippingDistricts.map((dist) => (
-                        <option key={dist} value={dist}>
-                          {dist}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-12">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="shippingAddress"
-                      name="shippingAddress"
-                      placeholder="詳細地址"
-                      required
-                      disabled={sameAsHome}
-                      value={formData.shippingAddress}
-                      onChange={handleChange}
-                    />
-                    <div className="invalid-tooltip">請輸入送達地址!</div>
-                  </div>
+                    ))}
+                  </select>
                 </div>
 
-                {/* 同住家地址 Checkbox */}
-                <div className="form-check mb-0 mt-2">
+                {/* 送貨區域 */}
+                <div className="col-6 col-md-3">
+                  <select
+                    className="form-select"
+                    id="shippingDistrict"
+                    name="shippingDistrict"
+                    required
+                    disabled={sameAsHome}
+                    value={formData.shippingDistrict}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      請選擇區域
+                    </option>
+                    {shippingDistricts.map((dist) => (
+                      <option key={dist} value={dist}>
+                        {dist}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 送貨詳細地址 */}
+                <div className="col-12 col-md-6">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="shippingAddress"
+                    name="shippingAddress"
+                    placeholder="詳細地址"
+                    required
+                    style={{ height: "38px" }}
+                    disabled={sameAsHome}
+                    value={formData.shippingAddress}
+                    onChange={handleChange}
+                  />
+                  <div className="invalid-tooltip">請輸入送達地址!</div>
+                </div>
+              </div>
+
+              {/* 同住家地址 Checkbox */}
+              <div className="row">
+                <div className="col-2"></div>
+                <div className="form-check mb-0 col-10">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -435,6 +452,7 @@ export default function UserProfile({ onSave }) {
               </div>
             </div>
           </div>
+
           <div className="d-flex justify-content-center mt-80">
             <button
               type="submit"
