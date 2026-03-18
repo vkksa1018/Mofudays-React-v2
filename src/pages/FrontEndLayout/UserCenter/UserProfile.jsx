@@ -292,7 +292,7 @@ export default function UserProfile({ onSave }) {
               </label>
               <div className="row g-3 col-md-10">
                 {/* 縣市 */}
-                <div className="col-5 col-md-3">
+                <div className="col-6 col-md-3">
                   <select
                     className="form-select"
                     id="city"
@@ -310,7 +310,7 @@ export default function UserProfile({ onSave }) {
                 </div>
 
                 {/* 區域 */}
-                <div className="col-5 col-md-3">
+                <div className="col-6 col-md-3">
                   <select
                     className="form-select"
                     id="district"
@@ -377,7 +377,7 @@ export default function UserProfile({ onSave }) {
 
               <div className="row g-3 mb-2 col-md-10">
                 {/* 送貨縣市 */}
-                <div className="col-5 col-md-3">
+                <div className="col-6 col-md-3">
                   <select
                     className="form-select"
                     id="shippingCity"
@@ -399,7 +399,7 @@ export default function UserProfile({ onSave }) {
                 </div>
 
                 {/* 送貨區域 */}
-                <div className="col-5 col-md-3">
+                <div className="col-6 col-md-3">
                   <select
                     className="form-select"
                     id="shippingDistrict"
