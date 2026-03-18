@@ -227,6 +227,7 @@ export default function UserProfile({ onSave }) {
                   id="birthday"
                   name="birthday"
                   required
+                  style={{ height: "38px" }}
                   max={new Date().toISOString().split("T")[0]}
                   value={formData.birthday}
                   onChange={handleChange}
@@ -336,6 +337,7 @@ export default function UserProfile({ onSave }) {
                     name="address"
                     placeholder="請輸入詳細地址"
                     required
+                    style={{ height: "38px" }}
                     value={formData.address}
                     onChange={handleChange}
                   />
