@@ -506,8 +506,8 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingOne"
                   collapseId="collapseOne"
-                  tag="功能更新"
-                  title="全新訂閱頁面上線啦！操作更順暢，推薦更精準"
+                  tag="更新"
+                  title="訂閱頁面全新上線！操作更順暢，推薦更精準"
                   date="2025 / 08 / 25"
                 >
                   我們的訂閱頁面全面升級囉！
@@ -521,8 +521,8 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingTwo"
                   collapseId="collapseTwo"
-                  tag="官方公告"
-                  title="配送時間異動通知 因應颱風物流調整，敬請留意"
+                  tag="公告"
+                  title="配送時間異動通知，因應颱風物流調整敬請留意"
                   date="2025 / 08 / 02"
                 >
                   受到颱風影響，部分地區配送時間可能延後 2～3 天。
@@ -536,7 +536,7 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingThree"
                   collapseId="collapseThree"
-                  tag="參與活動"
+                  tag="活動"
                   title="月月開箱投稿募集！曬毛孩照片登上首頁"
                   date="2025 / 08 / 01"
                 >
@@ -551,8 +551,8 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingFour"
                   collapseId="collapseFour"
-                  tag="品牌合作"
-                  title="全品牌快閃市集毛日和首次實體活動即將開跑！"
+                  tag="合作"
+                  title="毛日和首次實體快閃市集即將開跑！"
                   date="2025 / 07 / 15"
                 >
                   毛日和要走出螢幕，和你們面對面見面啦！
