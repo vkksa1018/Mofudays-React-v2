@@ -511,12 +511,12 @@ export default function Signup() {
                       </button>
                     </div>
 
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
                       <p className="mb-0 me-2 text-brown-300">已經是會員？</p>
                       <Link to="/login">
                         <button
                           type="button"
-                          className="btn btn-form-signup fw-bold"
+                          className="btn btn-form-signup fw-bold text-nowrap"
                         >
                           立即登入
                         </button>

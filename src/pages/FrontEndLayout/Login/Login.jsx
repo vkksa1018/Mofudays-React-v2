@@ -164,7 +164,7 @@ export default function Login() {
                 <div className="login-form">
                   <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="text-center mb-7">
-                      <h2 className="text-brown-500">會員登入</h2>
+                      <h2 className="text-brown-500 text-nowrap">會員登入</h2>
                     </div>
 
                     {/* Email */}
@@ -221,8 +221,8 @@ export default function Login() {
                     </div>
 
                     {/* Remember me */}
-                    <div className="d-flex justify-content-between mb-5">
-                      <div className="form-check">
+                    <div className="d-flex justify-content-between align-items-center mb-5 gap-2">
+                      <div className="form-check mb-0 flex-shrink-0 me-md-2">
                         <input
                           className="form-check-input"
                           type="checkbox"
@@ -230,14 +230,14 @@ export default function Login() {
                           {...register("rememberMe")}
                         />
                         <label
-                          className="form-check-label text-brown-500"
+                          className="form-check-label text-brown-500 text-nowrap"
                           htmlFor="rememberMe"
                         >
                           記住我
                         </label>
                       </div>
-                      <div className="forgot-password">
-                        <a href="#" className="text-brown-500">
+                      <div className="forgot-password flex-shrink-0 ">
+                        <a href="#" className="text-brown-500 text-nowrap">
                           忘記密碼？
                         </a>
                       </div>
@@ -255,12 +255,15 @@ export default function Login() {
                     </div>
 
                     {/* Signup */}
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2">
                       <p className="mb-0 me-2 text-brown-300">還不是會員嗎？</p>
-                      <Link to="/signup">
+                      <Link
+                        to="/signup"
+                        className="d-flex justify-content-center"
+                      >
                         <button
                           type="button"
-                          className="btn btn-form-signup fw-bold"
+                          className="btn btn-form-signup fw-bold text-nowrap"
                           disabled={isSubmitting}
                         >
                           馬上加入
