@@ -4,7 +4,7 @@ import {
   cancelSubscriptions,
   getUserDogs,
   addToCart,
-} from "../api/Subscriptionapi";
+} from "../api/subscriptionApi";
 
 // Async Thunks
 

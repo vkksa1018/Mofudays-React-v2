@@ -130,14 +130,14 @@ const ProcessSection = () => {
           {/* 步驟1 */}
           <div className="row d-flex justify-content-center mb-md-5">
             <div
-              className="col-md-4 col-12 process-item image-item me-md-5 order-1 order-md-1"
+              className="col-md-4 process-item image-item me-md-5 order-1 order-md-1"
               data-aos="fade-right"
               data-aos-delay="100"
             >
               <img src={step01Img} alt="step1" />
             </div>
             <div
-              className="col-md-4 col-12 process-item text-item order-2 order-md-2"
+              className="col-md-4 process-item text-item order-2 order-md-2"
               data-aos="fade-left"
               data-aos-delay="200"
             >
@@ -155,7 +155,7 @@ const ProcessSection = () => {
           {/* 步驟2 */}
           <div className="row d-flex justify-content-center mb-md-5">
             <div
-              className="col-md-4 col-12 process-item text-item me-md-5 order-2 order-md-1"
+              className="col-md-4 process-item text-item me-md-5 order-2 order-md-1"
               data-aos="fade-right"
               data-aos-delay="200"
             >
@@ -169,7 +169,7 @@ const ProcessSection = () => {
               </div>
             </div>
             <div
-              className="col-md-4 col-12 process-item image-item order-1 order-md-2"
+              className="col-md-4 process-item image-item order-1 order-md-2"
               data-aos="fade-left"
               data-aos-delay="100"
             >
@@ -180,14 +180,14 @@ const ProcessSection = () => {
           {/* 步驟3 */}
           <div className="row d-flex justify-content-center mb-md-5">
             <div
-              className="col-md-4 col-12 process-item image-item me-md-5 order-1 order-md-1"
+              className="col-md-4 process-item image-item me-md-5 order-1 order-md-1"
               data-aos="fade-right"
               data-aos-delay="100"
             >
               <img src={step03Img} alt="step3" />
             </div>
             <div
-              className="col-md-4 col-12 process-item text-item order-2 order-md-2"
+              className="col-md-4 process-item text-item order-2 order-md-2"
               data-aos="fade-left"
               data-aos-delay="200"
             >
@@ -205,7 +205,7 @@ const ProcessSection = () => {
           {/* 步驟4 */}
           <div className="row d-flex justify-content-center mb-9 mb-md-11">
             <div
-              className="col-md-4 col-12 process-item text-item me-md-5 order-2 order-md-1"
+              className="col-md-4 process-item text-item me-md-5 order-2 order-md-1"
               data-aos="fade-right"
               data-aos-delay="200"
             >
@@ -219,7 +219,7 @@ const ProcessSection = () => {
               </div>
             </div>
             <div
-              className="col-md-4 col-12 process-item image-item order-1 order-md-2"
+              className="col-md-4 process-item image-item order-1 order-md-2"
               data-aos="fade-left"
               data-aos-delay="100"
             >

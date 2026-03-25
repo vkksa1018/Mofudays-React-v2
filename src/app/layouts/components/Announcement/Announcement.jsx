@@ -28,7 +28,7 @@ const Announcement = () => {
             <AnnouncementCarousel items={announcementMessages} />
           </div>
 
-          <div className="col-12 col-sm-5 col-md-2 text-center order-last order-sm-0">
+          <div className="col-sm-5 col-md-2 text-center order-last order-sm-0">
             <AnnouncementButton isLoggedIn={isAuthed} />
           </div>
 

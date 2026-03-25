@@ -41,14 +41,14 @@ const AboutSection = () => {
       <div className="container py-9">
         <div className="row justify-content-center g-5">
           <div
-            className="col-12 col-md-10 col-lg-5 mb-4 mb-lg-0"
+            className="col-md-10 col-lg-5 mb-4 mb-lg-0"
             data-aos="fade-right"
             data-aos-delay="100"
           >
             <img src={aboutImg} alt="about" className="img-fluid w-100" />
           </div>
 
-          <div className="col-12 col-md-10 col-lg-5 d-flex flex-column justify-content-center  align-items-center align-items-lg-start mx-auto mx-lg-0">
+          <div className="col-md-10 col-lg-5 d-flex flex-column justify-content-center  align-items-center align-items-lg-start mx-auto mx-lg-0">
             <img
               src={aboutHeadline}
               alt="about_headline"
