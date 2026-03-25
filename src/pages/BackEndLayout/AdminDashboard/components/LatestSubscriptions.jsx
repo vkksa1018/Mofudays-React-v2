@@ -48,7 +48,7 @@ export default function LatestSubscriptions({ loading, latestSubs = [] }) {
           </div>
 
           <div className="d-flex align-items-center gap-3">
-            <Link className="ad-link" to="/admin/subscriptions">
+            <Link className="ad-link" to="/admin/orders/subscriptions">
               查看所有訂閱
             </Link>
           </div>
