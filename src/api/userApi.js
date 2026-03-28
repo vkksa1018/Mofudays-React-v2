@@ -1,66 +1,68 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE;
-
-// 輔助函式：取得 Auth Header
-const getAuthHeader = () => {
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
 
 const getStorageItem = (key) => {
   return localStorage.getItem(key) || sessionStorage.getItem(key) || null;
 };
 
-// 錯誤處理輔助函式：專門對付 json-server-auth 的 owner id 錯誤
+const getAuthHeader = () => {
+  const token = getStorageItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+/**
+ * 處理受保護路由的錯誤與 Token 失效
+ */
 const handleProtectedError = (error, fallbackValue = null) => {
   const errorMsg = error.response?.data;
+  const status = error.response?.status;
 
-  // 如果是 json-server-auth 特有的權限/資料缺失錯誤
-  if (
+  const isDatabaseMismatch =
     typeof errorMsg === "string" &&
-    errorMsg.includes("reference to the owner id")
-  ) {
-    console.warn("API 攔截：資料庫中找不到對應 userId 的資料，回傳預設值。");
+    errorMsg.includes("reference to the owner id");
+
+  if (isDatabaseMismatch) {
+    toast.warn("系統無法正確讀取個人資料，請嘗試重新操作");
     return fallbackValue;
   }
 
-  // 如果是 401 Unauthorized，通常是 Token 過期
-  if (error.response?.status === 401) {
-    console.error("Token 失效，請重新登入");
-    // 這裡可以選擇是否要自動清除 localStorage
+  if (status === 401) {
+    toast.error("登入已過期，請重新登入");
   }
 
-  throw error; // 其他錯誤繼續往外丟，讓 UI 決定怎麼辦
+  throw error;
 };
 
-// 1. 註冊
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/register`, userData);
+    toast.success("註冊成功！");
     return response.data;
   } catch (error) {
-    throw error.response?.data || "註冊失敗";
+    const message = error.response?.data || "註冊失敗，請稍後再試";
+    toast.error(message);
+    throw message;
   }
 };
 
-// 2. 登入
 export const loginUser = async (credentials) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/login`, credentials);
-    return response.data; // 包含 accessToken 和 user 物件
+    toast.success("登入成功");
+    return response.data;
   } catch (error) {
-    throw error.response?.data || "登入失敗";
+    const message = error.response?.data || "登入失敗，請檢查帳號密碼";
+    toast.error(message);
+    throw message;
   }
 };
 
-// 3. 確認會員登入狀態 (簡易判斷)
 export const checkLoginStatus = () => {
-  return !!(localStorage.getItem("token") || sessionStorage.getItem("token"));
+  return !!getStorageItem("token");
 };
 
-// 4. 取得會員詳細資料 (/600)
 export const getUserProfile = async () => {
   const userId = getStorageItem("userId");
   if (!userId) return null;
@@ -75,15 +77,12 @@ export const getUserProfile = async () => {
   }
 };
 
-// 5. 取得會員訂單資料 (/600)
 export const getUserOrders = async () => {
   const userId = getStorageItem("userId");
   try {
     const response = await axios.get(
       `${API_BASE_URL}/600/orders?userId=${userId}`,
-      {
-        headers: getAuthHeader(),
-      },
+      { headers: getAuthHeader() },
     );
     return response.data;
   } catch (error) {
@@ -91,16 +90,12 @@ export const getUserOrders = async () => {
   }
 };
 
-// 6. 取得會員購物車 (/600)
 export const getUserCart = async () => {
-  const userId = localStorage.getItem("userId");
+  const userId = getStorageItem("userId");
   try {
-    // 假設你的購物車 table 叫 carts 或 cart
     const response = await axios.get(
       `${API_BASE_URL}/600/carts?userId=${userId}`,
-      {
-        headers: getAuthHeader(),
-      },
+      { headers: getAuthHeader() },
     );
     return response.data;
   } catch (error) {
@@ -108,7 +103,6 @@ export const getUserCart = async () => {
   }
 };
 
-// 7. 更新會員資料 (/600)
 export const updateUserProfile = async (profileData) => {
   const userId = getStorageItem("userId");
   if (!userId) throw new Error("未登入，找不到 userId");
@@ -124,6 +118,7 @@ export const updateUserProfile = async (profileData) => {
         },
       },
     );
+    toast.success("個人資料已更新");
     return response.data;
   } catch (error) {
     return handleProtectedError(error, null);

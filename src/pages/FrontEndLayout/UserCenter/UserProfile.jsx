@@ -66,8 +66,8 @@ export default function UserProfile({ onSave }) {
         if (user) {
           setFormData(mapUserToForm(user));
         }
-      } catch (err) {
-        console.error("載入會員資料失敗", err);
+      } catch {
+        toast.error("無法載入個人資料，請檢查網路連線");
       } finally {
         setIsLoading(false);
       }
@@ -136,8 +136,7 @@ export default function UserProfile({ onSave }) {
       onSave?.(result);
       toast.success("會員資料已更新！");
       setWasValidated(false);
-    } catch (err) {
-      console.error("[UserProfile] 儲存失敗:", err);
+    } catch {
       toast.error("儲存失敗，請稍後再試");
     } finally {
       setIsSaving(false);

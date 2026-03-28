@@ -1,16 +1,8 @@
 .member-activity-1 {
-  /* === 單一斷點設定：手機 < 768px、電腦 >= 768px === */
-  $bp-desktop: 768px;
-  @mixin desktop-up {
-    @media (min-width: $bp-desktop) {
-      @content;
-    }
-  }
-
   /* === 共用區塊 === */
   .section-spacer {
     padding: 60px 0 !important;
-    @include desktop-up {
+    @media (min-width: 768px) {
       padding: 80px 0 !important;
     }
   }
@@ -483,7 +475,7 @@
     color: $white;
     border-radius: 16px;
     padding: 16px;
-    @include desktop-up {
+    @media (min-width: 768px) {
       padding: 24px;
     }
   }

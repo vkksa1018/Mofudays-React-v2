@@ -31,24 +31,14 @@ $radius-card: 16px;
 $radius-pill: 40px;
 $radius-sm: 8px;
 
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .member-orderlist {
   font-family: $font-body;
   padding: 40px 0 0; // 上方留空給 header
 
   &__header {
-    @include flex-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 120px;
     margin-bottom: 48px;
     padding-left: 110px;
@@ -160,7 +150,9 @@ $radius-sm: 8px;
   }
 
   &__page-btn {
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 36px;
     height: 36px;
     border: none;

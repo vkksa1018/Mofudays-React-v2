@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   getCarts,
   deleteCart,
@@ -36,7 +37,7 @@ function Cart() {
           setSelectedPeriod(data[0].totalCycles);
         }
       } catch (err) {
-        console.error(err);
+        toast.error(err.message || "操作失敗");
       }
     };
     fetchCarts();

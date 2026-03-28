@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getOrderById } from "../../../api/planApi";
 
 import "./Finish.scss";
@@ -23,7 +24,7 @@ function Finish() {
         const order = await getOrderById(orderId);
         setOrder(order);
       } catch (err) {
-        console.error(err);
+        toast.error(err.message || "操作失敗");
       }
     };
     fetchOrder();

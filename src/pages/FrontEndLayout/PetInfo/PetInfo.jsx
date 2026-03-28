@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useBlocker } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   createDog,
   updateDog,
@@ -104,7 +105,7 @@ function PetInfo() {
           const dog = dogs.find((d) => d.id === dogId);
           if (dog) setConfirmedExistingDog(dog);
         } catch (err) {
-          console.error(err);
+          toast.error(err.message || "操作失敗");
         }
       };
       fetchDog();
@@ -242,13 +243,15 @@ function PetInfo() {
       petGender: petGender === "",
       petDiet: selectedDiets.length === 0,
     };
+
     setErrors(newErrors);
+
     if (Object.values(newErrors).some(Boolean)) {
-      alert("請確認所有必填欄位都已填寫完整！");
+      toast.warn("請確認所有必填欄位都已填寫完整");
       return;
     }
 
-    // 轉換成 API 代碼
+    // 1. 資料格式轉換 (Data Transformation)
     const sizeCode = SIZE_TO_CODE[selectedSize];
     const dietStageCode = YEAR_TO_DIET_STAGE[selectedYear];
     const genderCode = petGender === "male" ? "M" : "F";
@@ -258,7 +261,6 @@ function PetInfo() {
       : [];
     const playStyleArray = selectedPlay ? [PLAY_TO_CODE[selectedPlay]] : [];
 
-    // 給 Plan 頁面 generatePlans 用的 formData
     const formData = {
       petName: petName.trim(),
       gender: genderCode,
@@ -269,7 +271,6 @@ function PetInfo() {
       playStyle: playStyleArray,
     };
 
-    // POST 給後端 /dogs 的資料
     const dogPayload = {
       name: petName.trim(),
       ownerId: getCurrentUserId(),
@@ -282,18 +283,19 @@ function PetInfo() {
       healthCareNeeds: healthCareArray,
       isActive: true,
     };
-    let generatedPlans;
+
     try {
       setIsSubmitting(true);
 
-      // 取得 db 資料
       const API_BASE = import.meta.env.VITE_API_BASE;
+      // 批次取得必要的資料庫內容
       const [plans, toys, treats, household] = await Promise.all([
         axios.get(`${API_BASE}/plans`),
         axios.get(`${API_BASE}/toys`),
         axios.get(`${API_BASE}/treats`),
         axios.get(`${API_BASE}/household`),
       ]);
+
       const db = {
         plans: plans.data,
         toys: toys.data,
@@ -301,24 +303,31 @@ function PetInfo() {
         household: household.data,
       };
 
-      //產生推薦方案
-      generatedPlans = generatePlans(formData, db);
+      const generatedPlans = generatePlans(formData, db);
 
+      // 2. 判斷是更新還是新增毛孩資料
       let dogId;
       if (confirmedExistingDog) {
         await updateDog(confirmedExistingDog.id, dogPayload);
         dogId = confirmedExistingDog.id;
       } else {
-        dogId = (await createDog(dogPayload)).id;
+        const newDog = await createDog(dogPayload);
+        dogId = newDog.id;
       }
+
+      // 3. 儲存狀態並跳轉
       localStorage.setItem(
         "planState",
         JSON.stringify({ formData, dogId, generatedPlans }),
       );
+
+      toast.success(`已成功為 ${petName.trim()} 準備好專屬方案！`);
       navigate("/plan", { state: { formData, dogId, generatedPlans } });
     } catch (err) {
-      console.error("建立毛孩失敗", err);
-      alert("發生錯誤，請稍後再試");
+      const message = err.response?.data || "資料傳輸失敗，請稍後再試";
+      toast.error(`無法建立毛孩資料：${message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   const clearError = (field) => {

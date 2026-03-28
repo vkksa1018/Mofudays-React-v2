@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { addToCart, getCarts, getCurrentUserId } from "../../../api/planApi";
 
 import "./Plan.scss";
@@ -29,13 +30,13 @@ function Plan() {
 
   const handleSubmitPlan = async () => {
     if (!selectedPlan) {
-      alert("請先選擇一個方案");
+      toast.warn("請先選擇一個方案");
       return;
     }
 
     const planIndex = { plan1: 0, plan2: 1, plan3: 2 }[selectedPlan];
     const plan = generatedPlans[planIndex];
-    const userId = getCurrentUserId(); // 未來換 auth 只改這一行
+    const userId = getCurrentUserId();
 
     const cartPayload = {
       userId,
@@ -69,21 +70,22 @@ function Plan() {
 
     try {
       const existingCarts = await getCarts(userId);
-      const existingCart = existingCarts.find(
+      const hasExistingCart = existingCarts.some(
         (c) => c.userId === userId && c.dogId === (dogId ?? null),
       );
 
-      if (existingCart) {
-        alert(
-          "此毛孩已有訂閱方案在購物車中，請先完成結帳，或至購物車刪除後再重新添加。",
-        );
+      if (hasExistingCart) {
+        toast.info("此毛孩已有訂閱方案在購物車中，已為您導向結帳頁面");
         navigate("/cart");
         return;
       }
+
       await addToCart(cartPayload);
+      toast.success("方案已成功加入購物車！");
       navigate("/cart");
     } catch (err) {
-      console.error("加入購物車失敗", err);
+      const message = err.response?.data || "加入購物車時發生錯誤，請稍後再試";
+      toast.error(message);
     }
   };
 

@@ -81,7 +81,6 @@ export default function Signup() {
   const onSubmit = async (data) => {
     try {
       const { passwordConfirm: _passwordConfirm, ...formFields } = data;
-
       const now = new Date().toISOString();
 
       const registerData = {
@@ -100,73 +99,25 @@ export default function Signup() {
       navigate("/login");
     } catch (err) {
       if (err.response) {
-        console.error("API 錯誤詳情：", err.response.data);
         const status = err.response.status;
         const errorMsg = err.response.data;
 
         if (status === 400 || status === 409) {
+          // 檢查後端回傳是否包含 Email 重複的關鍵字
           if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
             setError("email", { type: "manual", message: "此 Email 已被註冊" });
           } else {
-            toast.warn("註冊資料格式錯誤，請檢查欄位");
+            toast.warn("請檢查欄位格式是否正確");
           }
         } else {
           toast.error("註冊失敗，伺服器連線異常");
         }
       } else {
-        console.error("JavaScript 或網路錯誤：", err.message);
-        toast.error("程式執行發生錯誤，請查看控制台");
+        // 處理 JavaScript 或網路斷線錯誤
+        toast.error("網路連線不穩定，請稍後再試");
       }
     }
   };
-
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   nickname: "",
-  //   birthday: "",
-  //   phone: "",
-  //   email: "",
-  //   password: "",
-  //   passwordConfirm: "",
-  //   address: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   const { id, value } = e.target;
-
-  //   // 把 id 轉成 state key
-  //   const keyMap = {
-  //     name: "name",
-  //     nickname: "nickname",
-  //     birthday: "birthday",
-  //     phone: "phone",
-  //     email: "email",
-  //     password: "password",
-  //     "password-confirm": "passwordConfirm",
-  //     address: "address",
-  //   };
-
-  //   const key = keyMap[id];
-  //   if (!key) return;
-
-  //   setFormData((prev) => ({ ...prev, [key]: value }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const formEl = formRef.current;
-  //   if (!formEl) return;
-
-  //   // 先跑瀏覽器內建驗證（required / type / pattern 等）
-  //   const ok = formEl.checkValidity();
-  //   setWasValidated(true);
-
-  //   if (!ok) return;
-
-  //   // 表單都合法：你在這裡串接註冊 API
-
-  // };
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from "../../../api/userApi";
+import { toast } from "react-toastify";
 import {
   getCarts,
   deleteCart,
@@ -85,7 +86,7 @@ function Checkout() {
         const profile = await getUserProfile();
         if (profile) setMemberProfile(profile);
       } catch (err) {
-        console.error(err);
+        toast.error(err.message || "操作失敗");
       }
     };
     fetchData();
@@ -149,7 +150,7 @@ function Checkout() {
       tel: !form.tel.trim()
         ? "請輸入手機號碼"
         : !telReg.test(form.tel.trim())
-          ? "請檢查是否輸入錯誤"
+          ? "請檢查號碼格式是否正確"
           : "",
       email: !form.email.trim()
         ? "請輸入電子郵件"
@@ -158,13 +159,19 @@ function Checkout() {
           : "",
       paymentMethod: !form.paymentMethod ? "請選擇付款方式" : "",
     };
+
     setErrors(newErrors);
-    if (Object.values(newErrors).some(Boolean)) return;
+    if (Object.values(newErrors).some(Boolean)) {
+      toast.warn("請檢查欄位是否填寫正確");
+      return;
+    }
 
     try {
       setIsSubmitting(true);
       const userId = getCurrentUserId();
       const existingOrders = await getOrders();
+
+      // 生成訂單 ID 邏輯
       const today = new Date();
       const dateStr = today.toISOString().slice(0, 10).replace(/-/g, "");
       const maxNum = existingOrders.reduce((max, order) => {
@@ -173,6 +180,8 @@ function Checkout() {
       }, 0);
       const nextNum = String(maxNum + 1).padStart(4, "0");
       const orderId = `MOF${dateStr}-${nextNum}`;
+
+      // 計算出貨日期
       const shippedDate = new Date(today);
       shippedDate.setDate(shippedDate.getDate() + 3);
       const nextShippedDate = new Date(shippedDate);
@@ -196,7 +205,7 @@ function Checkout() {
         note: form.remark,
         subscriptions: carts.map((cart, i) => ({
           subscriptionId: `${orderId}-${i + 1}`,
-          dogId: cart.dogId, // 每筆訂單補上狗狗ID BY James
+          dogId: cart.dogId,
           planName: cart.planName,
           planPrice: cart.planPrice,
           planQty: cart.planQty,
@@ -211,10 +220,12 @@ function Checkout() {
 
       await createOrder(orderPayload);
       await Promise.all(carts.map((c) => deleteCart(c.id)));
+
       navigate(`/payment?orderId=${orderId}`, { replace: true });
     } catch (err) {
-      console.error("建立訂單失敗", err);
-      alert("建立訂單時發生錯誤，請確認網路連線或稍後再試");
+      const errorMsg =
+        err.response?.data || "系統繁忙中，請確認網路連線或稍後再試";
+      toast.error(`建立訂單失敗：${errorMsg}`);
     } finally {
       setIsSubmitting(false);
     }

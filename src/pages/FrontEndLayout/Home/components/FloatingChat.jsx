@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "./floating-chat-dogs.scss";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE;
@@ -55,8 +56,8 @@ const DogList = ({ onBack }) => {
 
         setDogs(dogList);
         setStatusMap(map);
-      } catch (e) {
-        console.error("FloatingChat fetchData error:", e);
+      } catch (err) {
+        toast.error(err.message || "操作失敗");
       } finally {
         setLoading(false);
       }
