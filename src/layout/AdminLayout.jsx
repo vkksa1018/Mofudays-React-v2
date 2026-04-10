@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminSideBar from "../pages/BackEndLayout/AdminSideBar/AdminSideBar";
-import "../styles/AdminStyle/adminLayout.scss";
+import "../styles/AdminStyle/AdminLayout.scss";
 
 export default function AdminLayout() {
   const location = useLocation();
