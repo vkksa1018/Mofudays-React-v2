@@ -204,7 +204,7 @@ export const router = createHashRouter([
               { index: true, element: <Navigate to="toys" replace /> },
               { path: "toys", element: <AdminToys /> },
               { path: "treats", element: <AdminTreats /> },
-              { path: "household", element: <AdminHousehold /> },
+              { path: "household", element: <AdminHouseHold /> },
             ],
           },
         ],
