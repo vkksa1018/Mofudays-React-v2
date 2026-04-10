@@ -42,7 +42,7 @@ import {
   AdminPlans,
   AdminToys,
   AdminTreats,
-  AdminHousehold,
+  AdminHouseHold,
 } from "./pages/BackEndLayout/adminRouterIndex";
 
 // 404
