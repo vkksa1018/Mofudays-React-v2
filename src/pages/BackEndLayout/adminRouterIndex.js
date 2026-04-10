@@ -7,5 +7,4 @@ export { default as AdminInfos } from "./AdminInfos/AdminInfos";
 export { default as AdminPlans } from "./AdminPlans/AdminPlans";
 export { default as AdminToys } from "./AdminInventory/AdminToys/AdminToys";
 export { default as AdminTreats } from "./AdminInventory/AdminTreats/AdminTreats";
-export { default as AdminHousehold } from "./AdminInventory/AdminHousehold/AdminHousehold";
-
+export { default as AdminHousehold } from "./AdminInventory/AdminHouseHold/AdminHouseHold";
